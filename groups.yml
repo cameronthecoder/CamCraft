@@ -1,0 +1,69 @@
+# Group inheritance
+#
+# Any inherited groups prefixed with a g: are global groups
+# and are inherited from the GlobalGroups.yml.
+#
+# Groups without the g: prefix are groups local to this world
+# and are defined in the this groups.yml file.
+#
+# Local group inheritances define your promotion tree when using 'manpromote/mandemote'
+
+groups:
+  Player:
+    default: true
+    permissions:
+    - rank.player
+    inheritance: []
+    info:
+      prefix: ' '
+      build: false
+      suffix: ''
+  Admin:
+    default: false
+    permissions: 
+    - rank.owner
+    - cc.rank
+    - cc.gamemode
+    - cc.teleport
+    - cc.rain
+    - cc.gamemode
+    - cc.vanish
+    - cc.fly
+    - cc.clear
+    - cc.staffmode
+    - groupmanager.*
+    - cc.ban
+    - cc.kick
+    - cc.heal
+    - cc.vanishsee
+    - skript.*
+    inheritance: []
+    info:
+      prefix: ' '
+      build: true
+      suffix: ''
+  Owner:
+    default: false
+    permissions:
+    - rank.owner
+    - skript.*
+    - cc.ban
+    - cc.kick
+    - cc.heal
+    - cc.gamemode
+    - cc.teleport
+    - cc.rank
+    - cc.rain
+    - cc.gamemode
+    - cc.vanish
+    - cc.fly
+    - cc.clear
+    - minecraft.*
+    - cc.vanishsee
+    - cc.staffmode
+    - groupmanager.*
+    inheritance: []
+    info:
+      prefix: ' '
+      build: true
+      suffix: ''

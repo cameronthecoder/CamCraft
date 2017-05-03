@@ -201,11 +201,13 @@ command /rank-reload:
   make player execute command "/manload"
   message "&6&lCamCraft&7>&9All ranks reloaded."
   
-  
-command /github:
- trigger: 
-  git remote add origin https://github.com/Camnooten/CamCraft-Core-Version-1.0.git
-  git push -u origin master
+ command /rank-check <offline player>: 
+  permission: cc.rank
+  permission message" &6&lCamCraft&7>&c&lInvalid permission.
+  trigger: 
+   make player execute command "/manwhois %arg 1%"
+   message "&6&lCamCtaft&7>&9Information about player &e%arg 1%:"
+   
   
  
 	  

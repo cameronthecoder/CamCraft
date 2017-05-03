@@ -18,10 +18,53 @@ groups:
       prefix: ' '
       build: false
       suffix: ''
+  Moderator:
+    default: true
+    permissions:
+    - rank.mod
+    - cc.staffmode
+    - cc.fly
+    - cc.teleport
+    - cc.ban
+    - cc.kick
+    - cc.vanish
+    - cc.vanishsee
+    - cc.heal
+    - cc.clear
+    - cc.rain
+    inheritance: []
+    info:
+      prefix: ' '
+      build: false
+      suffix: ''
   Admin:
     default: false
     permissions: 
     - rank.owner
+    - cc.rank
+    - cc.gamemode
+    - cc.teleport
+    - cc.rain
+    - cc.gamemode
+    - cc.vanish
+    - cc.fly
+    - cc.clear
+    - cc.staffmode
+    - groupmanager.*
+    - cc.ban
+    - cc.kick
+    - cc.heal
+    - cc.vanishsee
+    - skript.*
+    inheritance: []
+    info:
+      prefix: ' '
+      build: true
+      suffix: ''
+  Builder:
+    default: false
+    permissions: 
+    - rank.builder
     - cc.rank
     - cc.gamemode
     - cc.teleport

@@ -192,6 +192,7 @@ command /rank:
  trigger: 
   message "&6Rank Sub-Commands:"
   message "&b/rank-update <player> <rank> &6- &dUpdates their rank."
+  message "&b/rank-check <player> &6- &dChecks their rank."
   
   
 command /rank-reload:

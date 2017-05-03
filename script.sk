@@ -1,0 +1,489 @@
+#Developer Server Code - CamCraft Core 1.0 by Cam - LOBBY SCRIPT
+#permission message: &6&lCamCraft&7>&c&lInvalid permission.
+options:
+	ADMIN: &c&lAdmin
+	OWNER: &6&lOwner
+
+
+command /corever:
+ trigger:
+  message "&6&lVersion"
+  message "&7Running CamCraft &aPUBLIC &7version &a1.0 &7by Cam"
+  
+  
+
+command /social:
+ trigger:
+  message "&6&lSocial Media"
+  message "&9&lTwitter: &7@Camnation407"
+  message "&c&lYoutube: &7camnooten110"
+   
+on load:
+  broadcast "&6MySQL &eConnecting.."
+  set mysql host to "localhost"
+  set mysql username to "root"
+  set mysql password to "whateverpasswordyouwant"
+  set mysql database to "Test"
+  connect to mysql
+  set {_user} to mysql result of query "User * idk"
+  set {_final} to mysql string "User" in {_user}
+  broadcast "&cMYSQL Failed"
+  broadcast "&c..."
+  wait 2 seconds
+  broadcast "&6&lCoreModules"
+  broadcast "&6Ban&7> &dLoading..."
+  broadcast "&6Kick&7> &dLoading..."
+  broadcast "&6Gamemode&7> &dLoading..."
+  broadcast "&6Report&7> &dLoading..."
+  broadcast "&6Heal&7> &dLoading..."
+  broadcast "&6Teleport&7> &dLoading..."
+  broadcast "&6Vanish&7> &dLoading..."
+  broadcast "&6Staffmode&7> &dLoading..."
+  broadcast "&6PvPToggle&7> &dLoading..."
+  broadcast "&6Scoreboard&7> &dLoading..."
+  broadcast "&9&lLoaded Core Modules"
+  
+command /nick <text>:
+ permission: cc.nick
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger: 
+  message "&8Please wait..."
+  wait 2 seconds
+  make player execute command "/disguise player %arg 1%"
+  message "&8+=========&6Nick System&8=========+"
+  message "&e-You now have a nick as &b%arg 1%&e"
+  message "&e- Most things that happen in game will behave as if they came from the disguised player (chat, permissions, ect)"
+  message "&cUse of this command is menitored and logged. Abuse will result in loss of privileges."   
+  
+  
+command /vanish <text>:
+	permission: cc.vanish 
+	trigger: 
+		if arg 1 is not set:
+			message "&6Vanish Help"
+			message "&d/vanish enable &b- &7Enable vanish."
+			message "&d/vanish disable &b &7Disable vanish."
+			stop
+		else:
+		if arg 1 is "enable":
+			hide the player from all players
+			message "&6&lCamCraft&7> &cHidden from all players"
+			stop
+		loop all players:
+			if loop-player has permission "cc.vanishsee":
+			reveal the player from all players	
+		if arg 1 is "disable":
+			reveal the player from all players
+			message "&6&lCamCraft&7>All players can now see you" 
+			stop
+		if arg 1 is not set:
+			message "&6Vanish Help"
+			message "&d/vanish enable &b- &7Enable vanish."
+			message "&d/vanish disable &b &7Disable vanish."
+
+  
+
+command /ban <player> <text>:
+ permission: cc.ban
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  ban "%arg 1%" because "&c&l%arg 2% &6by %player%"
+  message "&6&lCamCraft&7>&cBanned user %arg 1% for &f%arg 2%"
+  message "&7This ban has been logged."
+  log "%player% has banned %arg 1% for %arg 2%" to "bans/ban"
+  broadcast "&6&lCamCraft&7>&c%player% banned %arg 1% for %arg 2%"
+  
+command /bant <text> <text> <text>:
+ permission: cc.bantime
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  message "Not working, we need to finish this command."
+  
+command /unban <offline player>:
+ permission: cc.unban
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  execute console command "/pardon %arg 1%"
+  broadcast "&6&lCamCraft&7>%player% unbanned %arg 1%."
+  message "&7This unban has been logged."
+  log "%player% unbanned %arg 1%." to "unbans/unbans"
+  
+command /kick <player> <text>:
+ permission: cc.kick
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  message "&6&lCamCraft&7> &cKicked user %arg 1% for &f%arg 2%"
+  message "&7This kick has been logged."
+  kick "%arg 1%" due to "%arg 2% by %player%"
+  log "%player% kicked %arg 1% because %arg 2%" to "kicks/kick"
+  broadcast "&6&lCamCraft&7>&c%player% kicked %arg 1% because of %arg 2%"
+ 
+#Broadcast 
+on script load:
+ broadcast "&c------------------------------------------"
+ broadcast "&6CamCraft version &a1.0 &6has been &areloaded/loaded."
+ broadcast "&c------------------------------------------"
+#JOIN
+on join:
+ execute console command "/minecraft:tp %player% 173 184 -178"
+ send player title "&6&lCamCraft" with subtitle "&7New Core!" for 3.5 seconds
+ wait 3 seconds
+ send player title "&6&lCamCraft" with subtitle "&7News Line 2"
+ broadcast "&6&lCamCraft&7>%player% joined."
+ 
+ 
+on quit: 
+ broadcast "&6&lCamCraft&7>%player% left."
+ 
+#Chat
+on chat: 
+   cancel event
+   if player has permission "rank.owner":
+      broadcast "{@OWNER} &7%player%&f: &d%message%"
+   if player has permission "rank.admin":
+      broadcast "{@ADMIN} &7%player%&f: &d%message%"
+   if player has permission "rank.player":
+      broadcast "&2&lPlayer&f: &7%player%&f: &d%message%"
+ 
+ 
+ 
+command /gmc:
+ aliases: /gamemode c, /gamemode creative
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission: cc.gamemode
+ aliases: /gamemode c
+ trigger:
+  player's gamemode is survival
+  set the player's gamemode to creative
+  broadcast "&6&lCamCraft&7>%player% changed their gamemode to creative."
+  message "&9Gamemode updated."
+  
+command /gms:
+ aliases: /gamemode s, /gamemode survival
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  player's gamemode is creative
+  set the player's gamemode to survival
+  broadcast "&6&lCamCraft&7>%player% changed their gamemode to survival."
+  message "&9Gamemode updated."
+ 
+command /saddle:
+ trigger:
+  message "&6&lCamCraft&7>&7Loading..."
+  wait 2 seconds
+  give saddle to player
+  message "&edone."
+  
+command /now:
+ trigger:
+  broadcast "Current server time: %now%"
+ 
+#Ranks 
+command /rank-update <offline player> <text>:
+ permission: cc.rank
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger: 
+  make player execute command "/manuadd %arg 1% %arg 2%"
+  send "&6&lCamCraft&7>&9Your rank has been updated to %arg 2%!" to arg 1
+  
+command /rank: 
+ permission: cc.rank
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger: 
+  message "&6Rank Sub-Commands:"
+  message "&b/rank-update <player> <rank> &6- &dUpdates their rank."
+  
+  
+command /rank-reload:
+ permission: cc.rank
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  make player execute command "/manload"
+  message "&6&lCamCraft&7>&9All ranks reloaded."
+  
+  
+command /github:
+ trigger: 
+  git remote add origin https://github.com/Camnooten/CamCraft-Core-Version-1.0.git
+  git push -u origin master
+  
+ 
+	  
+	  
+command /global <text>:
+ trigger:
+  broadcast "&6&lCamCraft&7> &e%arg 1%"
+  
+command /globala <text>:
+ trigger:
+  send all players title "&6&lCamCraft" with subtitle "&e%arg-1%" for 10 seconds
+  broadcast "&6&lCamCraft&7> &e%arg 1%"
+			
+command /core:
+ trigger:
+  message "&6&lCamCraft&7>&cUnregistered Command"
+  message "&f&lTry these:"
+  message "&5/corever"
+  message "&6/corehelp"
+  
+command /rep <player> <texts>:
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission: cc.report
+ trigger:
+  message "&cReports&f&l>&c&lYou reported player %arg 1% for &f%arg 2%"
+  log "%player% reported %arg 1% for %arg 2%" to "reports/reports"
+  message "Staff will handle this report."
+  broadcast "&cReports&f&l> &6&l%player% reported %arg 1% for %arg 2%"
+loop all players:
+				if loop-player has permission "cc.reportsee":
+					send "&cReports&f&l>&e%player% has reported %arg 1% for %arg 2%" to loop-player
+
+  
+   
+command /staffmode:
+ permission: cc.staffmode
+ permission message: &6&lCamCraft&7>&c&lInvalid permission. 
+ trigger: 
+  open chest with 5 rows named "&c&lCamCraft Staffmode GUI" to player
+  format slot 3 of player with red glass pane named "&c&lVanish" with lore "&6&lEnable vanish || When you enable this, players Mod+ || will not be able to see you." to close then run [do [execute player command "/vanish enable"]->[message "%player% is now in vanish." to console]]
+  format slot 12 of player with emerald block named "&a&lToggle Vanish" with lore "&6&lToggle off vanish || Players will be able to see you" to close then run [do [execute player command "/vanish disable"]->[message "%player% is disabled vanish." to console]]
+  format slot 5 of player with pink glass pane named "&a&lFly" with lore "&6&lEnable flight || When you enable this, you will be able to fly." to close then run [do [execute player command "/fly enable"]->[message "%player% is flying" to console]]
+  format slot 14 of player with emerald block named "&a&lToggle Flight" with lore "&6&lDisable flight || You will not be flying" to close then run [do [execute player command "/fly disable"]->[message "%player% is not flying" to console]]
+  
+
+command /pl:
+ permission: cc.plugins
+ permission message: &6&lCamCraft&7>&fAre you a plugin stealer?
+ trigger: 
+  execute player command "/pl"
+  message "&6There ya go!"
+   
+command /ci:
+ permission: cc.clear
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ aliases: /clear
+ trigger:
+  execute console command "/clear %player%"
+  message "&6&lCamCraft&7>Cleared inventory."
+  
+command /gm:
+ permission: cc.gmhelp
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  message "&f&lTry /gmc or /gms &6&l(Gamemode)"
+    
+on script unload: 
+ broadcast "&c------------------------------------------"
+ broadcast "&6CamCraft version &a1.0 &6has been &cunloaded."
+ broadcast "&c&lThis is fine, don't panic."
+ broadcast "&c------------------------------------------"
+ 
+  
+command /rain:
+ permission: cc.rain
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger:
+  execute console command "/toggledownfall"
+  broadcast "&6&lCamCraft&7>Toggled downfall.. Is that better?"
+  
+command /brb:
+ trigger:
+  message "&6&lCamCraft&7> %player% is now in BRB mode."
+  
+command /unbrb:
+ trigger:
+  message "&6&lCamCraft&7> %player% is now in &aactive &7mode."
+  
+  
+command /heal <player>:
+	permission: cc.heal
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	trigger:
+		if arg 1 is not set:
+			heal player
+			broadcast "&6&lCamCraft&7>%player% healed themself."
+			stop
+		else:
+			broadcast "&6&lCamCraft&7>%player% healed %arg 2%"
+			message "&9Health updated."
+			heal player %arg 1%
+
+  
+command /tp <text>:
+ permission: cc.teleport
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger: 
+  teleport player to arg-1 parsed as player's location
+  message "&6&lCamCraft&7>Teleported to %arg 1%"
+  broadcast "&6&lCamCraft&7>%player% teleported to %arg 1%."
+  stop
+  
+on death of player:
+ broadcast "&6&lCamCraft&7>&c%player% died."
+ 
+command /speed:
+ permission: cc.speed
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger: 
+  apply swiftness 3 to the player for 999 minutes
+  message "&6&lCamCraft&7>Applied speed."
+  
+  
+command /fly <text>: 
+	permission: cc.fly
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	trigger: 
+		if arg 1 is "enable":
+			set player's flight mode to true
+			message "&6&lCamCraft&7>Flight enabled."
+			stop
+  
+		if arg 1 is "disable":
+			set player's flight mode to false
+			message "&6&lCamCraft&7>Fight disabled."
+			stop
+  
+ 
+  
+command /unspeed: 
+ permission: cc.speed
+ permission message: &6&lCamCraft&7>&cInvalid permission.
+ trigger: 
+  remove swiftness from the player
+  
+command /op <player>:
+ permission: cc.op
+ permission message: &6&lCamCraft&7>&bOur server uses permissions for each rank and does not support op due to conflition with our ranks.
+ trigger:
+  message "."
+  
+command /deop <player>:
+ permission: cc.deop
+ permission message: &6&lCamCraft&7>&bOur server uses permissions for each rank and does not support op due to conflition with our ranks.
+ trigger:
+  deop %arg 1%
+  broadcast "&6&lCamCraft&7>%player% deoped %arg 1%"
+  
+
+command /give <items>:
+ permission: cc.give
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ aliases: /g, /item, /i
+ trigger:
+  give argument to the player
+  message "&6&lCamCraft&7>Gave item(s) to you."
+ 
+command /feed:
+ permission: cc.feed
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ trigger: 
+  feed the player
+  broadcast "&6&lCamCraft&7>%player% fed themself."
+  
+
+
+command /tphere <player>:
+ trigger: 
+  teleport argument 1 to player
+  broadcast "&6&lCamCraft&7>%player% teleported %arg 1% to them."
+  
+command /kill <player>:
+ trigger: 
+  kill player argument 1
+  broadcast "&6&lCamCraft&7>%player% &ckilled &7%arg 1%."
+  
+on hunger meeter change:
+ cancel event
+  
+command /suicide:
+ trigger:
+  kill the player
+  broadcast "&6&lCamCraft&7>%player% suicided."
+  
+command /pvp-enable:
+ trigger: 
+  enable pvp in all worlds
+  broadcast "&6&lCamCraft&7>%player% &aenabled &7PvP."
+ 
+command /pvp-disable:
+ trigger:
+  disable pvp in all worlds
+  broadcast "&6&lCamCraft&7>%player% &cdisabled &7PvP."
+  
+every 2 seconds:
+		loop all players:
+			wipe loop-player's sidebar
+				set name of sidebar of loop-player to "&6&lCamCraft"
+				set score "&1 " in sidebar of loop-player to 15
+				set score "&cRank&f: &7Null" in sidebar of loop-player to 14
+				set score "&1 " in sidebar of loop-player to 13
+				set score "&aWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 12
+				set score "this isnt all working
+				
+				
+command /msg <player> <text>:
+	description: Whisper another player
+	usage: /msg <player> <message>
+	aliases: /m
+	trigger:
+		set {chat.private.reply.%player%} to arg 1
+		set {chat.private.reply.%arg 1%} to player
+		send "&c[MSG] &aTO: %arg 1% &e->&c %arg 2%" to player
+		send "&c[MSG] &eFROM: %player% &e->&c %arg 2%" to arg 1
+		
+		
+		
+command /reply <text>:	
+	description: Reply command.
+	usage: /reply <message>
+	aliases: /r
+	trigger:
+		send "&c[MSG] &aTO: %{chat.private.reply.%player%}% &e->&c %arg 1%" to player
+		send "&c[MSG] &eFROM: %player% &e->&c %arg 1%" to {chat.private.reply.%player%}
+		
+		
+command /cc-reload:
+ trigger:
+  make player execute command "/sk reload script"
+  wait 3 seconds
+  message "&6&lCamCraft&7>&aSkript Reloaded."
+  
+  
+command /fakesay <text> <text>:
+ trigger:
+  broadcast "[Spawn]<%arg 1%> %arg 2%"
+  message "&1T&2r&3o&4l&5l&7>&5hehe"
+  
+
+		
+		
+  
+
+  
+#NEW AND NOT IMPORTED TO DEV SCRIPT
+  
+  
+  
+  
+  
+
+  
+
+ 
+
+ 
+  
+
+  
+
+  
+
+  
+  
+ 
+ 
+ 
+ 
+ 
+
+  

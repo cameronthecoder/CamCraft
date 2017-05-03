@@ -3,6 +3,10 @@
 options:
 	ADMIN: &c&lAdmin
 	OWNER: &6&lOwner
+	MODERATOR: &9&lMod
+	DEV: &b&lDev
+	HB: &a&lH&1&lB
+	BUILDER: &3&lBuilder
 
 
 command /corever:
@@ -144,6 +148,14 @@ on chat:
       broadcast "{@ADMIN} &7%player%&f: &d%message%"
    if player has permission "rank.player":
       broadcast "&2&lPlayer&f: &7%player%&f: &d%message%"
+   if player has permission "rank.mod":
+      broadcast "{MODERATOR} &7%player%&f: &d%message%"
+   if player has permission "rank.dev":
+      broadcast "{DEV} &7%player%&f: &d%message%"
+   if player has permission "rank.hb":
+      broadcast "{HB} &7%player%&f: &d%message%"
+   if player has permission "rank.builder":
+      broadcast "{BUILDER} &7%player%&f: &d%message%"
  
  
  

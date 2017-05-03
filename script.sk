@@ -201,6 +201,7 @@ command /rank-update <offline player> <text>:
 command /rank: 
  permission: cc.rank
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ allies: /rank-help, /rankhelp, /rankshelp
  trigger: 
   message "&6Rank Sub-Commands:"
   message "&b/rank-update <player> <rank> &6- &dUpdates their rank."

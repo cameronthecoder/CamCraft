@@ -149,13 +149,13 @@ on chat:
    if player has permission "rank.player":
       broadcast "&2&lPlayer&f: &7%player%&f: &d%message%"
    if player has permission "rank.mod":
-      broadcast "{MODERATOR} &7%player%&f: &d%message%"
+      broadcast "{@MOD} &7%player%&f: &d%message%"
    if player has permission "rank.dev":
-      broadcast "{DEV} &7%player%&f: &d%message%"
+      broadcast "{@DEV} &7%player%&f: &d%message%"
    if player has permission "rank.hb":
-      broadcast "{HB} &7%player%&f: &d%message%"
+      broadcast "{@HB} &7%player%&f: &d%message%"
    if player has permission "rank.builder":
-      broadcast "{BUILDER} &7%player%&f: &d%message%"
+      broadcast "{@BUILDER} &7%player%&f: &d%message%"
  
  
  
@@ -201,7 +201,7 @@ command /rank-update <offline player> <text>:
 command /rank: 
  permission: cc.rank
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
- allies: /rank-help, /rankhelp, /rankshelp
+ aliases: /rank-help, /rankhelp, /rankshelp
  trigger: 
   message "&6Rank Sub-Commands:"
   message "&b/rank-update <player> <rank> &6- &dUpdates their rank."
@@ -217,10 +217,11 @@ command /rank-reload:
   
  command /rank-check <offline player>: 
   permission: cc.rank
-  permission message" &6&lCamCraft&7>&c&lInvalid permission.
-  trigger: 
+  permission message: &6&lCamCraft&7>&c&lInvalid permission.
+  trigger:
+   message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
    make player execute command "/manwhois %arg 1%"
-   message "&6&lCamCtaft&7>&9Information about player &e%arg 1%:"
+   
    
   
  
@@ -469,37 +470,4 @@ command /fakesay <text> <text>:
  trigger:
   broadcast "[Spawn]<%arg 1%> %arg 2%"
   message "&1T&2r&3o&4l&5l&7>&5hehe"
-  
-
-		
-		
-  
-
-  
-#NEW AND NOT IMPORTED TO DEV SCRIPT
-  
-  
-  
-  
-  
-
-  
-
- 
-
- 
-  
-
-  
-
-  
-
-  
-  
- 
- 
- 
- 
- 
-
   

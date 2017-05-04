@@ -91,6 +91,7 @@ command /ban <player> <text>:
  permission: cc.ban
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger:
+  kick %arg 1% due to "&c&l%arg 2% &6by %player%"
   ban "%arg 1%" because "&c&l%arg 2% &6by %player%"
   message "&6&lCamCraft&7>&cBanned user %arg 1% for &f%arg 2%"
   message "&7This ban has been logged."
@@ -470,4 +471,3 @@ command /fakesay <text> <text>:
  trigger:
   broadcast "[Spawn]<%arg 1%> %arg 2%"
   message "&1T&2r&3o&4l&5l&7>&5hehe"
-  

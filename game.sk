@@ -1,0 +1,5 @@
+#GamePlugin
+
+on join:
+ message "&e&l[GameMap] &7Welcome!"
+ 

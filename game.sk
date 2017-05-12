@@ -1,5 +1,63 @@
 #GamePlugin
 
 on join:
- message "&e&l[GameMap] &7Welcome!"
+ message "&e&l[Game] &7Welcome!"
  
+command /game <text> <text>:
+	trigger:
+		if arg 1 is "set":
+			if arg 2 is "SurvivalGames":
+				message "&e&l[Game] &7Use the command /server sg to play SG"
+				stop
+			if arg 2 is "SkyWars":
+				message "&e&l[Game] &c&lSkyWars is still in development."
+				stop
+			if arg 2 is "Lobby":
+				loop all players:
+					wipe loop-player's sidebar
+					set name of sidebar of loop-player to "&a&lLobby"
+					set score "&1 " in sidebar of loop-player to 15
+					set score "&cGame: &a&lLobby" in sidebar of loop-player to 14
+					set score "&1 " in sidebar of loop-player to 13
+					set score "&eWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 12
+					set score "&7Map: &6spawn" in sidebar of loop-player to 11
+					broadcast "&e&l[Game] &7Loaded game &a&lLobby&7&l!"
+					broadcast "&e&l[Game] &7You may need to re-join the server for scoreboard to fix itself &c- Client Only"
+					broadcast "&e&l[Game] &7Loaded map &6spawn&7&l!"
+					stop
+			if arg 2 is "Event":
+				loop all players:
+					wipe loop-player's sidebar
+					set name of sidebar of loop-player to "&a&lLobby"
+					set score "&1 " in sidebar of loop-player to 15
+					set score "&cGame: &6&lEvent" in sidebar of loop-player to 14
+					set score "&1 " in sidebar of loop-player to 13
+					set score "&bGet hyped!" in sidebar of loop-player to 11
+					set score "&1 " in sidebar of loop-player to 10
+					set score "&7Map: &6spawn" in sidebar of loop-player to 9
+					set score "&1 " in sidebar of loop-player to 8
+					set score "&b----" in sidebar of loop-player to 7
+					broadcast "&e&l[Game] &7Loaded game &6&lEvent&7&l!"
+					broadcast "&e&l[Game] &7You may need to re-join the server for scoreboard to fix itself &c- Client Only"
+					broadcast "&e&l[Game] &7Loaded map &6spawn&7&l!"
+		if arg 1 is "Start":
+			message "&e&l[Game] &6&l10"
+			wait 1 second
+			message "&e&l[Game] &6&l9"
+			wait 1 second
+			message "&e&l[Game] &6&l8"
+			wait 1 second
+			message "&e&l[Game] &6&l7"
+			wait 1 second
+			message "&e&l[Game] &6&l6"
+			wait 1 second
+			message "&e&l[Game] &6&l5"
+			wait 1 second
+			message "&e&l[Game] &6&l4"
+			wait 1 second
+			message "&e&l[Game] &6&l3"
+			wait 1 second
+			message "&e&l[Game] &6&l2"
+			wait 1 second 
+			message "&e&l[Game] &6&l1"
+			message "&6HEHEYEYEYE"

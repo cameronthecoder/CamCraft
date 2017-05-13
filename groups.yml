@@ -10,11 +10,12 @@
 
 groups:
   Moderator:
-    default: true
+    default: false
     permissions:
     - cc.ban
     - cc.clear
     - cc.fly
+    - cc.unban
     - cc.heal
     - cc.kick
     - cc.rain
@@ -33,10 +34,12 @@ groups:
     permissions:
     - cc.ban
     - cc.clear
+    - cc.unban
     - cc.fly
     - cc.gamemode
     - cc.heal
     - cc.kick
+    - cc.feed
     - cc.rain
     - cc.rank
     - cc.speed
@@ -54,7 +57,7 @@ groups:
       prefix: ' '
       suffix: ''
   Player:
-    default: false
+    default: true
     permissions:
     - rank.player
     inheritance: []
@@ -72,6 +75,7 @@ groups:
     - cc.heal
     - cc.kick
     - cc.rain
+    - cc.unban
     - cc.rank
     - cc.staffmode
     - cc.teleport
@@ -97,6 +101,7 @@ groups:
     - cc.kick
     - cc.Mod
     - cc.rain
+    - cc.unban
     - cc.rank
     - cc.staffmode
     - cc.teleport

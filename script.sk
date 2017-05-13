@@ -7,6 +7,8 @@ options:
 	DEV: &b&lDev
 	HB: &a&lH&1&lB
 	BUILDER: &3&lBuilder
+	version: 1.0
+	report: ddddd
 
 
 command /corever:
@@ -21,31 +23,33 @@ command /social:
   message "&6&lSocial Media"
   message "&9&lTwitter: &7@Camnation407"
   message "&c&lYoutube: &7camnooten110"
-   
+
+function configPopulate(n: number) :: number:
+	create file "plugins/Hypixel/config.yml"
+	set "version" to "{@version}" in yaml file "plugins/CamCraftCore/config.yml"
+	
+function configRefresh(n: number) :: number:
+	set {hypixel.config.version} to value "version" get of "plugins/CamCraftCore/config.yml"
+
+	
 on load:
-  broadcast "&6MySQL &eConnecting.."
-  set mysql host to "localhost"
-  set mysql username to "root"
-  set mysql password to "whateverpasswordyouwant"
-  set mysql database to "Test"
-  connect to mysql
-  set {_user} to mysql result of query "User * idk"
-  set {_final} to mysql string "User" in {_user}
-  broadcast "&cMYSQL Failed"
-  broadcast "&c..."
-  wait 2 seconds
-  broadcast "&6&lCoreModules"
-  broadcast "&6Ban&7> &dLoading..."
-  broadcast "&6Kick&7> &dLoading..."
-  broadcast "&6Gamemode&7> &dLoading..."
-  broadcast "&6Report&7> &dLoading..."
-  broadcast "&6Heal&7> &dLoading..."
-  broadcast "&6Teleport&7> &dLoading..."
-  broadcast "&6Vanish&7> &dLoading..."
-  broadcast "&6Staffmode&7> &dLoading..."
-  broadcast "&6PvPToggle&7> &dLoading..."
-  broadcast "&6Scoreboard&7> &dLoading..."
-  broadcast "&9&lLoaded Core Modules"
+        create folder "plugins/CamCraftCore/"
+        create file "plugins/CamCraftCore/config.yml"
+	configRefresh(1)
+	configPopulate(1)
+	wait 1 second	
+        broadcast "&6&lCoreModules"
+        broadcast "&6Ban&7> &dLoading..."
+        broadcast "&6Kick&7> &dLoading..."
+        broadcast "&6Gamemode&7> &dLoading..."
+        broadcast "&6Report&7> &dLoading..."
+        broadcast "&6Heal&7> &dLoading..."
+        broadcast "&6Teleport&7> &dLoading..."
+        broadcast "&6Vanish&7> &dLoading..."
+        broadcast "&6Staffmode&7> &dLoading..."
+        broadcast "&6PvPToggle&7> &dLoading..."
+        broadcast "&6Scoreboard&7> &dLoading..."
+        broadcast "&9&lLoaded Core Modules"
   
 command /nick <text>:
  permission: cc.nick
@@ -84,14 +88,28 @@ command /vanish <text>:
 			message "&6Vanish Help"
 			message "&d/vanish enable &b- &7Enable vanish."
 			message "&d/vanish disable &b &7Disable vanish."
+command /godmode <text>:
+	trigger: 
+		if arg 1 is "enable":
+			set {godmode.%player%} to true
+			message "&6Enabled"
+		if arg 1 is "disable":
+			set {godmode.%player%} to false
+			message "&6Disabled"
+			
+on damage:
+	if {godmode.%player%} is true:
+		victim is a player
+		cancel event
 
-  
+		
+
 
 command /ban <player> <text>:
  permission: cc.ban
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger:
-  kick %arg 1% due to "&c&l%arg 2% &6by %player%"
+  kick argument 1 due to "&c&l%arg% 2% &6by %player%"
   ban "%arg 1%" because "&c&l%arg 2% &6by %player%"
   message "&6&lCamCraft&7>&cBanned user %arg 1% for &f%arg 2%"
   message "&7This ban has been logged."
@@ -150,7 +168,7 @@ on chat:
    if player has permission "rank.player":
       broadcast "&2&lPlayer&f: &7%player%&f: &d%message%"
    if player has permission "rank.mod":
-      broadcast "{@MOD} &7%player%&f: &d%message%"
+      broadcast "{@MODERATOR} &7%player%&f: &d%message%"
    if player has permission "rank.dev":
       broadcast "{@DEV} &7%player%&f: &d%message%"
    if player has permission "rank.hb":
@@ -216,7 +234,7 @@ command /rank-reload:
   make player execute command "/manload"
   message "&6&lCamCraft&7>&9All ranks reloaded."
   
- command /rank-check <offline player>: 
+command /rank-check <player>: 
   permission: cc.rank
   permission message: &6&lCamCraft&7>&c&lInvalid permission.
   trigger:
@@ -313,18 +331,13 @@ command /unbrb:
   message "&6&lCamCraft&7> %player% is now in &aactive &7mode."
   
   
-command /heal <player>:
+command /heal:
 	permission: cc.heal
 	permission message: &6&lCamCraft&7>&c&lInvalid permission.
 	trigger:
-		if arg 1 is not set:
-			heal player
-			broadcast "&6&lCamCraft&7>%player% healed themself."
-			stop
-		else:
-			broadcast "&6&lCamCraft&7>%player% healed %arg 2%"
-			message "&9Health updated."
-			heal player %arg 1%
+		heal player
+		broadcast "&6&lCamCraft&7>%player% healed themself."
+		stop
 
   
 command /tp <text>:
@@ -471,3 +484,37 @@ command /fakesay <text> <text>:
  trigger:
   broadcast "[Spawn]<%arg 1%> %arg 2%"
   message "&1T&2r&3o&4l&5l&7>&5hehe"
+  
+
+		
+		
+  
+
+  
+#NEW AND NOT IMPORTED TO DEV SCRIPT
+  
+  
+  
+  
+  
+
+  
+
+ 
+
+ 
+  
+
+  
+
+  
+
+  
+  
+ 
+ 
+ 
+ 
+ 
+
+  

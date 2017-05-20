@@ -29,6 +29,33 @@ groups:
       build: false
       prefix: ' '
       suffix: ''
+  Developer:
+    default: false
+    permissions:
+    - cc.ban
+    - cc.clear
+    - cc.unban
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.feed
+    - cc.rain
+    - cc.rank
+    - cc.speed
+    - cc.staffmode
+    - cc.teleport
+    - cc.vanish
+    - cc.vanishsee
+    - groupmanager.*
+    - minecraft.*
+    - rank.dev
+    - skript.*
+    inheritance: []
+    info:
+      build: true
+      prefix: ' '
+      suffix: ''
   Owner:
     default: false
     permissions:
@@ -63,6 +90,30 @@ groups:
     inheritance: []
     info:
       build: false
+      prefix: ' '
+      suffix: ''
+  HB:
+    default: false
+    permissions:
+    - cc.ban
+    - cc.clear
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.rain
+    - cc.unban
+    - cc.rank
+    - cc.staffmode
+    - cc.teleport
+    - cc.vanish
+    - cc.vanishsee
+    - groupmanager.*
+    - rank.hb
+    - skript.*
+    inheritance: []
+    info:
+      build: true
       prefix: ' '
       suffix: ''
   Builder:

@@ -255,6 +255,9 @@ command /rank-check <player>:
    message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
    make player execute command "/manwhois %arg 1%"
    
+command /rank-list:
+ message "&6&lCamCraft&7 Ranks: Developer, HB, Moderator, Owner, Admin, YouTube (Coming Soon)"
+   
    
   
  

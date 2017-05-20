@@ -29,7 +29,7 @@ function configPopulate(n: number) :: number:
 	set "version" to "{@version}" in yaml file "plugins/CamCraftCore/config.yml"
 	
 function configRefresh(n: number) :: number:
-	set {cc.config.version} to value "version" get of "plugins/CamCraftCore/config.yml"
+	set {hypixel.config.version} to value "version" get of "plugins/CamCraftCore/config.yml"
 
 	
 on load:
@@ -109,10 +109,11 @@ command /ban <player> <text>:
  permission: cc.ban
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger:
-  kick arg 1 due to "&c&l%arg 2% &6by %player%"
+  kick argument 1 due to "&c&l%arg% 2% &6by %player%"
   ban "%arg 1%" because "&c&l%arg 2% &6by %player%"
   message "&6&lCamCraft&7>&cBanned user %arg 1% for &f%arg 2%"
   message "&7This ban has been logged."
+  log "%player% has banned %arg 1% for %arg 2%" to "bans/ban"
   broadcast "&6&lCamCraft&7>&c%player% banned %arg 1% for %arg 2%"
   
 command /bant <text> <text> <text>:
@@ -121,13 +122,11 @@ command /bant <text> <text> <text>:
  trigger:
   message "Not working, we need to finish this command."
   
-  
-  
 command /unban <offline player>:
  permission: cc.unban
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger:
-  execute console command "/minecraft:pardon %arg 1%"
+  execute console command "/pardon %arg 1%"
   broadcast "&6&lCamCraft&7>%player% unbanned %arg 1%."
   message "&7This unban has been logged."
   log "%player% unbanned %arg 1%." to "unbans/unbans"
@@ -162,8 +161,6 @@ on quit:
 #Chat
 on chat: 
    cancel event
-   else:
-   message "&6&lCamCraft&7>&cYou have been muted."
    if player has permission "rank.owner":
       broadcast "{@OWNER} &7%player%&f: &d%message%"
    if player has permission "rank.admin":
@@ -178,16 +175,7 @@ on chat:
       broadcast "{@HB} &7%player%&f: &d%message%"
    if player has permission "rank.builder":
       broadcast "{@BUILDER} &7%player%&f: &d%message%"
-
-	  
-	  
-command /stats <player>: 
- trigger: 
-  message "&7=========&bPlayer Stats for %arg 1%&7========="
-  if {gamemode.c.%player%} is true:
-  message "&7&lGamemode&1: &a&lCreative"
-  if {gamemode.s.%player%} is true:
-  message "&7&lGamemode&1: &a&lSurvival"
+ 
  
  
 command /gmc:
@@ -200,7 +188,6 @@ command /gmc:
   set the player's gamemode to creative
   broadcast "&6&lCamCraft&7>%player% changed their gamemode to creative."
   message "&9Gamemode updated."
-  set {gamemode.c.%player%} to true
   
 command /gms:
  aliases: /gamemode s, /gamemode survival
@@ -210,8 +197,7 @@ command /gms:
   set the player's gamemode to survival
   broadcast "&6&lCamCraft&7>%player% changed their gamemode to survival."
   message "&9Gamemode updated."
-  set {gamemode.s.%player%} to true
-  
+ 
 command /saddle:
  trigger:
   message "&6&lCamCraft&7>&7Loading..."
@@ -226,6 +212,7 @@ command /now:
 #Ranks 
 command /rank-update <offline player> <text>:
  permission: cc.rank
+ aliases: /rank-set 
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger: 
   make player execute command "/manuadd %arg 1% %arg 2%"
@@ -255,12 +242,6 @@ command /rank-check <player>:
    message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
    make player execute command "/manwhois %arg 1%"
    
-command /rank-list:
- message "&6&lCamCraft&7 Ranks: Developer, HB, Moderator, Owner, Admin, YouTube (Coming Soon)"
-   
-   
-  
- 
 	  
 	  
 command /global <text>:
@@ -463,7 +444,12 @@ every 2 seconds:
 			wipe loop-player's sidebar
 				set name of sidebar of loop-player to "&6&lCamCraft"
 				set score "&1 " in sidebar of loop-player to 15
-				set score "&cRank&f: &7Null" in sidebar of loop-player to 14
+				if loop-player has permission "rank.owner":
+				set score "&cRank&f: &6Owner" in sidebar of loop-player to 14
+				if loop-player has permission "rank.admin":
+				set score "&cRank&f: &cAdmin" in sidebar of loop-player to 14
+				if loop-player has permission "rank.hb":
+				set score "&cRank&f: &e&lH&1&lB" in sidebar of loop-player to 14
 				set score "&1 " in sidebar of loop-player to 13
 				set score "&aWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 12
 				set score "this isnt all working
@@ -501,36 +487,5 @@ command /fakesay <text> <text>:
  trigger:
   broadcast "[Spawn]<%arg 1%> %arg 2%"
   message "&1T&2r&3o&4l&5l&7>&5hehe"
-  
 
-	
-  
-
-  
 #NEW AND NOT IMPORTED TO DEV SCRIPT
-  
-  
-  
-  
-  
-
-  
-
- 
-
- 
-  
-
-  
-
-  
-
-  
-  
- 
- 
- 
- 
- 
-
-  

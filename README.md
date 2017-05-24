@@ -8,6 +8,7 @@ Social Media:
  YouTube: www.youtube.com/c/camnooten110
  --------------------------------------------------------
  My TOS: 
+ 
  (1) If you fail to give creidit when using my meterial, I will be contacting you. 
  
  (2) Do NOT claim this is yours, result doing so I will be contacting you.

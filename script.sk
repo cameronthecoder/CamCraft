@@ -289,8 +289,7 @@ command /pl:
  permission: cc.plugins
  permission message: &6&lCamCraft&7>&fAre you a plugin stealer?
  trigger: 
-  execute player command "/pl"
-  message "&6There ya go!"
+  execute player command "/bukkit:plugins"
    
 command /ci:
  permission: cc.clear

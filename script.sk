@@ -16,7 +16,18 @@ command /corever:
   message "&6&lVersion"
   message "&7Running CamCraft &aPUBLIC &7version &a1.0 &7by Cam"
   
-  
+command /setwarp <text>:
+	permission: cc.setwarp
+	description: Create an Location to warp to
+	trigger:
+		set {essentials.%argument 1%.warp} to location of player
+		message "&e&lWarp set"
+command /warp <text>:
+	permission: cc.warp
+	description: Warp to an Warppoint
+	trigger:
+		teleport player to {essentials.%argument 1%.warp}
+		message "&e&lWarped you to %argument 1%"  
 
 command /social:
  trigger:

@@ -405,7 +405,7 @@ command /feed:
  permission: cc.feed
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger: 
-  feed the player
+  set hunger bar to 10
   broadcast "&6&lCamCraft&7>%player% fed themself."
   
 
@@ -420,7 +420,7 @@ command /kill <player>:
   kill player argument 1
   broadcast "&6&lCamCraft&7>%player% &ckilled &7%arg 1%."
   
-on hunger meeter change:
+on hunger meter change:
  cancel event
   
 command /suicide:

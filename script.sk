@@ -222,12 +222,41 @@ command /now:
  
 #Ranks 
 command /rank-update <offline player> <text>:
- permission: cc.rank
- aliases: /rank-set 
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- trigger: 
-  make player execute command "/manuadd %arg 1% %arg 2%"
-  send "&6&lCamCraft&7>&9Your rank has been updated to %arg 2%!" to arg 1
+	permission: cc.rank
+	aliases: /rank-set 
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	trigger:
+			if arg 2 is "Owner":
+				make player execute command "/manuadd %arg 1% Owner"
+				send "&6&lCamCraft&7>&9Your rank has been updated to Owner" to arg 1
+				stop
+			if arg 2 is "Admin":
+				make player execute command "/manuadd %arg 1% Admin"
+				send "&6&lCamCraft&7>&9Your rank has been updated to Admin!" to arg 1
+				stop
+			if arg 2 is "Player":
+				make player execute command "/manuadd %arg 1% Player"
+				send "&6&lCamCraft&7>&9Your rank has been updated to Player!" to arg 1
+				stop
+			if arg 2 is "Moderator":
+				make player execute command "/manuadd %arg 1% Moderator"
+				send "&6&lCamCraft&7>&9Your rank has been updated to Moderator!" to arg 1
+				stop
+			if arg 2 is "Developer":
+				make player execute command "/manuadd %arg 1% Developer"
+				send "&6&lCamCraft&7>&9Your rank has been updated to Developer!" to arg 1
+				stop
+			if arg 2 is "HB":
+				make player execute command "/manuadd %arg 1% HB"
+				send "&6&lCamCraft&7>&9Your rank has been updated to HB!" to arg 1
+				stop
+			if arg 2 is "Builder":
+				make player execute command "/manuadd %arg 1% Builder"
+				send "&6&lCamCraft&7>&9Your rank has been updated to Builder!" to arg 1
+				stop
+			else: 
+				message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER)"
+				stop
   
 command /rank: 
  permission: cc.rank

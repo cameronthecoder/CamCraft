@@ -193,7 +193,6 @@ command /gmc:
  aliases: /gamemode c, /gamemode creative
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  permission: cc.gamemode
- aliases: /gamemode c
  trigger:
   player's gamemode is survival
   set the player's gamemode to creative
@@ -201,14 +200,26 @@ command /gmc:
   message "&9Gamemode updated."
   
 command /gms:
- aliases: /gamemode s, /gamemode survival
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission: cc.gamemode
  trigger:
   player's gamemode is creative
   set the player's gamemode to survival
   broadcast "&6&lCamCraft&7>%player% changed their gamemode to survival."
   message "&9Gamemode updated."
  
+command /gamemode c: 
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission: cc.gamemode
+ trigger: 
+  make player execute command "/gmc"
+
+command /gamemode s: 
+ permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission: cc.gamemode
+ trigger: 
+  make player execute command "/gms"
+
 command /saddle:
  trigger:
   message "&6&lCamCraft&7>&7Loading..."

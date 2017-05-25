@@ -3,12 +3,12 @@ CamCraft server core 1.0. There are some plugins required, and without dependenc
 
 Feel free to use this, it's a open project i'm working on, but please, give credit.
 Plugins Required: SkRayFall, WildSkript
+--------------------------------------------------
 Social Media: 
  Twitter: www.twiter.com/Camnation407
  YouTube: www.youtube.com/c/camnooten110
- --------------------------------------------------------
  My TOS: 
- 
+ -------------------------------------------------
  (1) If you fail to give creidit when using my meterial, I will be contacting you. 
  
  (2) Do NOT claim this is yours, result doing so I will be contacting you.

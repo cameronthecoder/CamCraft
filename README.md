@@ -8,8 +8,9 @@ Plugins Required: SkRayFall, WildSkript. GroupManager
 Social Media: 
  Twitter: www.twiter.com/Camnation407
  YouTube: www.youtube.com/c/camnooten110
- My TOS: 
- -------------------------------------------------
+---------------------------------------------------
+My TOS: 
+
  (1) If you fail to give creidit when using my meterial, I will be contacting you. 
  
  (2) Do NOT claim this is yours, result doing so I will be contacting you.
@@ -17,3 +18,4 @@ Social Media:
  (3) You may edit this skript to your liking, but that does not mean you can claim it is all yours. 
  
  (4) You can use my code for your project, because I did do it with other skripts.
+------------------------------------------------------

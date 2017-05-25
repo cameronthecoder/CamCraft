@@ -18,4 +18,4 @@ My TOS:
  (3) You may edit this skript to your liking, but that does not mean you can claim it is all yours. 
  
  (4) You can use my code for your project, because I did do it with other skripts.
-------------------------------------------------------
+

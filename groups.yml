@@ -19,6 +19,11 @@ groups:
     - cc.heal
     - cc.kick
     - cc.rain
+    - cc.warp
+    - cc.suicide
+    - cc.setwarp
+    - cc.setwarp
+    - cc.pvptoggle
     - cc.staffmode
     - cc.teleport
     - cc.vanish
@@ -34,8 +39,11 @@ groups:
     permissions:
     - cc.ban
     - cc.clear
+    - cc.pvptoggle
     - cc.unban
     - cc.fly
+    - cc.warp
+    - cc.setwarp
     - cc.gamemode
     - cc.heal
     - cc.kick
@@ -43,6 +51,7 @@ groups:
     - cc.rain
     - cc.rank
     - cc.speed
+    - cc.suicide
     - cc.staffmode
     - cc.teleport
     - cc.vanish
@@ -61,6 +70,9 @@ groups:
     permissions:
     - cc.ban
     - cc.clear
+    - cc.warp
+    - cc.setwarp
+    - cc.pvptoggle
     - cc.unban
     - cc.fly
     - cc.gamemode
@@ -70,6 +82,7 @@ groups:
     - cc.rain
     - cc.rank
     - cc.speed
+    - cc.suicide
     - cc.staffmode
     - cc.teleport
     - cc.vanish
@@ -87,6 +100,7 @@ groups:
     default: true
     permissions:
     - rank.player
+    - cc.warp
     inheritance: []
     info:
       build: false
@@ -100,6 +114,9 @@ groups:
     - cc.fly
     - cc.gamemode
     - cc.heal
+    - cc.warp
+    - cc.setwarp
+    - cc.suicide
     - cc.kick
     - cc.rain
     - cc.unban
@@ -123,6 +140,10 @@ groups:
     - cc.clear
     - cc.fly
     - cc.gamemode
+    - cc.warp
+    - cc.setwarp
+    - cc.pvptoggle
+    - cc.suicide
     - cc.heal
     - cc.kick
     - cc.rain

@@ -287,13 +287,30 @@ command /rank-reload:
   message "&6&lCamCraft&7>&9All ranks reloaded."
   
 command /rank-check <player>: 
-  permission: cc.rank
-  permission message: &6&lCamCraft&7>&c&lInvalid permission.
-  trigger:
-   message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
-   make player execute command "/manwhois %arg 1%"
-   
-	  
+	permission: cc.ranl
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ 	trigger:
+   		message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
+   		if argument 1 has permission "rank.owner":
+   			message "&6&lCamCraft&7>%arg 1%'s rank is Owner"
+   			stop
+		if argument 1 has permission "rank.admin":
+			message "&6&lCamCraft&7>%arg 1%'s rank is Admin"
+			stop
+		if argument 1 has permission "rank.moderator":
+			message "&6&lCamCraft&7>%arg 1%'s rank is Moderator"
+			stop
+		if argument 1 has permission "rank.hb":
+			message "&6&lCamCraft&7>%arg 1%'s rank is HB"
+			stop
+		if argument 1 has permission "rank.builder":
+			message "&6&lCamCraft&7>%arg 1%'s rank is Developer"
+			stop
+		if argument 1 has permission "rank.player":
+			message "&6&lCamCraft&7>%arg 1%'s rank is Player"
+			stop
+		else: 
+		messgae "&cSomething is wrong."
 	  
 command /global <text>:
  trigger:

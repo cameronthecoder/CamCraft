@@ -479,11 +479,15 @@ command /feed:
 
 
 command /tphere <player>:
+ permission: cc.tphere
+ permission message: &6&lCamCraft&7&c&lInvalid permission.
  trigger: 
   teleport argument 1 to player
   broadcast "&6&lCamCraft&7>%player% teleported %arg 1% to them."
   
 command /kill <player>:
+ permission: cc.kill
+ permission message: &6&lCamCraft&7&c&lInvalid permission.
  trigger: 
   kill player argument 1
   broadcast "&6&lCamCraft&7>%player% &ckilled &7%arg 1%."
@@ -492,16 +496,22 @@ on hunger meter change:
  cancel event
   
 command /suicide:
+ permission: cc.suicide
+ permission message: &6&lCamCraft&7&c&lInvalid permission.
  trigger:
   kill the player
   broadcast "&6&lCamCraft&7>%player% suicided."
   
 command /pvp-enable:
+ permission: cc.pvptoggle
+ permission message: &6&lCamCraft&7&c&lInvalid permission.
  trigger: 
   enable pvp in all worlds
   broadcast "&6&lCamCraft&7>%player% &aenabled &7PvP."
  
 command /pvp-disable:
+ permission: cc.pvptoggle
+ permission message: &6&lCamCraft&7&c&lInvalid permission.
  trigger:
   disable pvp in all worlds
   broadcast "&6&lCamCraft&7>%player% &cdisabled &7PvP."
@@ -544,6 +554,8 @@ command /reply <text>:
 		
 		
 command /cc-reload:
+ permission: cc.reload
+ permission message: &6&lCamCraft&7&c&lInvalid permission.
  trigger:
   make player execute command "/sk reload script"
   wait 3 seconds

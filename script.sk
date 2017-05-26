@@ -310,7 +310,7 @@ command /rank-check <player>:
 			message "&6&lCamCraft&7>%arg 1%'s rank is Player"
 			stop
 		else: 
-		messgae "&cSomething is wrong."
+		message "&cSomething is wrong."
 	  
 command /global <text>:
  trigger:

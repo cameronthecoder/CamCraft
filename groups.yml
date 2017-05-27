@@ -15,54 +15,22 @@ groups:
     - cc.ban
     - cc.clear
     - cc.fly
-    - cc.unban
     - cc.heal
     - cc.kick
-    - cc.rain
-    - cc.warp
-    - cc.suicide
-    - cc.setwarp
-    - cc.setwarp
     - cc.pvptoggle
+    - cc.rain
+    - cc.setwarp
     - cc.staffmode
+    - cc.suicide
     - cc.teleport
+    - cc.unban
     - cc.vanish
     - cc.vanishsee
+    - cc.warp
     - rank.mod
     inheritance: []
     info:
       build: false
-      prefix: ' '
-      suffix: ''
-  Developer:
-    default: false
-    permissions:
-    - cc.ban
-    - cc.clear
-    - cc.pvptoggle
-    - cc.unban
-    - cc.fly
-    - cc.warp
-    - cc.setwarp
-    - cc.gamemode
-    - cc.heal
-    - cc.kick
-    - cc.feed
-    - cc.rain
-    - cc.rank
-    - cc.speed
-    - cc.suicide
-    - cc.staffmode
-    - cc.teleport
-    - cc.vanish
-    - cc.vanishsee
-    - groupmanager.*
-    - minecraft.*
-    - rank.dev
-    - skript.*
-    inheritance: []
-    info:
-      build: true
       prefix: ' '
       suffix: ''
   Owner:
@@ -70,23 +38,23 @@ groups:
     permissions:
     - cc.ban
     - cc.clear
-    - cc.warp
-    - cc.setwarp
-    - cc.pvptoggle
-    - cc.unban
+    - cc.feed
     - cc.fly
     - cc.gamemode
     - cc.heal
     - cc.kick
-    - cc.feed
+    - cc.pvptoggle
     - cc.rain
     - cc.rank
+    - cc.setwarp
     - cc.speed
-    - cc.suicide
     - cc.staffmode
+    - cc.suicide
     - cc.teleport
+    - cc.unban
     - cc.vanish
     - cc.vanishsee
+    - cc.warp
     - groupmanager.*
     - minecraft.*
     - rank.owner
@@ -99,11 +67,80 @@ groups:
   Player:
     default: true
     permissions:
-    - rank.player
     - cc.warp
+    - rank.player
     inheritance: []
     info:
       build: false
+      prefix: ' '
+      suffix: ''
+  Builder:
+    default: false
+    permissions:
+    - cc.ban
+    - cc.clear
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.pvptoggle
+    - cc.rain
+    - cc.rank
+    - cc.setwarp
+    - cc.staffmode
+    - cc.suicide
+    - cc.teleport
+    - cc.unban
+    - cc.vanish
+    - cc.vanishsee
+    - cc.warp
+    - groupmanager.*
+    - rank.builder
+    - skript.*
+    inheritance: []
+    info:
+      build: true
+      prefix: ' '
+      suffix: ''
+  Wonderful:
+    default: false
+    permissions:
+    - rank.wonderful
+    inheritance: []
+    info:
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
+  Developer:
+    default: false
+    permissions:
+    - cc.ban
+    - cc.clear
+    - cc.feed
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.pvptoggle
+    - cc.rain
+    - cc.rank
+    - cc.setwarp
+    - cc.speed
+    - cc.staffmode
+    - cc.suicide
+    - cc.teleport
+    - cc.unban
+    - cc.vanish
+    - cc.vanishsee
+    - cc.warp
+    - groupmanager.*
+    - minecraft.*
+    - rank.dev
+    - skript.*
+    inheritance: []
+    info:
+      build: true
       prefix: ' '
       suffix: ''
   HB:
@@ -114,17 +151,17 @@ groups:
     - cc.fly
     - cc.gamemode
     - cc.heal
-    - cc.warp
-    - cc.setwarp
-    - cc.suicide
     - cc.kick
     - cc.rain
-    - cc.unban
     - cc.rank
+    - cc.setwarp
     - cc.staffmode
+    - cc.suicide
     - cc.teleport
+    - cc.unban
     - cc.vanish
     - cc.vanishsee
+    - cc.warp
     - groupmanager.*
     - rank.hb
     - skript.*
@@ -133,38 +170,24 @@ groups:
       build: true
       prefix: ' '
       suffix: ''
-  Builder:
+  YT:
     default: false
     permissions:
-    - cc.ban
-    - cc.clear
+    - rank.yt
     - cc.fly
-    - cc.gamemode
-    - cc.warp
-    - cc.setwarp
-    - cc.pvptoggle
-    - cc.suicide
-    - cc.heal
-    - cc.kick
-    - cc.rain
-    - cc.unban
-    - cc.rank
-    - cc.staffmode
-    - cc.teleport
     - cc.vanish
-    - cc.vanishsee
-    - groupmanager.*
-    - rank.builder
-    - skript.*
+    - cc.nick
+    - cc.gamemode
+    - cc.teleport
     inheritance: []
     info:
-      build: true
-      prefix: ' '
+      build: false
+      prefix: ''
       suffix: ''
+      .: prefix
   Admin:
     default: false
     permissions:
-    - rank.admin
     - cc.ban
     - cc.clear
     - cc.fly
@@ -173,13 +196,14 @@ groups:
     - cc.kick
     - cc.Mod
     - cc.rain
-    - cc.unban
     - cc.rank
     - cc.staffmode
     - cc.teleport
+    - cc.unban
     - cc.vanish
     - cc.vanishsee
     - groupmanager.*
+    - rank.admin
     - skript.*
     inheritance: []
     info:

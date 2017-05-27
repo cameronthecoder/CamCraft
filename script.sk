@@ -336,7 +336,7 @@ command /rank-toggleautosave:
 		message "&6&lCamCraft&7> Toggled autosave"
 		make player execute command "/mantogglesave"
 		
-command /rank-addperm <text> <text>
+command /rank-addperm <text> <text>:
 	permission: cc.rank
 	permission message: &6&lCamCraft&7>&c&lInvalid permission.
 	trigger:

@@ -311,6 +311,17 @@ command /rank-check <player>:
 		else: 
 			message "&cSomething is wrong."
 	  		stop
+			
+command /rank-create <text>:
+	permission: cc.rank
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	trigger:
+		message "&6&lCamCraft&7> Creating rank %arg 1% via &bGroupManager &7in &a3 &8seconds..."
+		message "&6%arg 1%: &9No perms, and no prefix when created"
+		wait 3 seconds
+		execute console command "mangadd %arg 1%"
+		
+		
 #^ Thanks Evho <3		
 
 command /global <text>:

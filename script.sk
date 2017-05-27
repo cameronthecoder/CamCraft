@@ -7,6 +7,7 @@ options:
 	DEV: &b&lDev
 	HB: &a&lH&1&lB
 	BUILDER: &3&lBuilder
+	YT: &6&lYT
 	version: 1.0
 	report: ddddd
 
@@ -186,6 +187,8 @@ on chat:
       broadcast "{@HB} &7%player%&f: &d%message%"
    if player has permission "rank.builder":
       broadcast "{@BUILDER} &7%player%&f: &d%message%"
+   if player has permission "rank.yt":
+      broadcast "{@YT} &7%player%&f: &d%message%"
  
  
  
@@ -264,6 +267,11 @@ command /rank-update <offline player> <text>:
 		if arg 2 is "Builder":
 			execute console command "manuadd %arg 1% Builder"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Builder!" to arg 1
+			stop
+		if arg 2 is "YT":
+			execute console command "manuadd %arg 1% YT"
+			send "&6&lCamCraft&7>&9Your rank has been update to YT!" to arg 1
+			send "&6We hope you enjoy recording and streaming on our server, congratulations!"
 			stop
 		else: 
 		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER)"

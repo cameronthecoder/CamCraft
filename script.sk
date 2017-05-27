@@ -329,6 +329,21 @@ command /ranks:
 	trigger:
 		make player execute command "/listgroups"
 		
+command /rank-toggleautosave:
+	permission: cc.rank
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	trigger:
+		message "&6&lCamCraft&7> Toggled autosave"
+		make player execute command "/mantogglesave"
+		
+command /rank-addperm <text> <text>
+	permission: cc.rank
+	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	trigger:
+		make player execute command "/mangaddp %arg 1% %arg 2%"
+		message "&6&lCamCraft&7> Added permission %arg 2% to %arg 1%"
+		
+		
 		
 #^ Thanks Evho <3		
 

@@ -290,10 +290,10 @@ command /rank-check <player>:
 	permission: cc.rank
 	permission message: &6&lCamCraft&7>&c&lInvalid permission.
 	trigger:  
-   		if arg 1 has permission "rank.owner":
+   		if argument 1 has permission "rank.owner":
    			message "&6&lCamCraft&7>%arg 1%'s rank is Owner"
    			stop
-		if arg 1 has permission "rank.admin":
+		if argument 1 has permission "rank.admin":
 			message "&6&lCamCraft&7>%arg 1%'s rank is Admin"
 			stop
 		if arg 1 has permission "rank.moderator":
@@ -309,8 +309,8 @@ command /rank-check <player>:
 			message "&6&lCamCraft&7>%arg 1%'s rank is Player"
 			stop
 		else: 
-		message "&cSomething is wrong."
-	  	stop
+			message "&cSomething is wrong."
+	  		stop
 		
 command /global <text>:
  trigger:

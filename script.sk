@@ -292,26 +292,27 @@ command /rank-check <player>:
 	trigger:
    		message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
    		if arg 1 has permission "rank.owner":
-   		message "&6&lCamCraft&7>%arg 1%'s rank is Owner"
-   		stop
+   			message "&6&lCamCraft&7>%arg 1%'s rank is Owner"
+   			stop
 		if arg 1 has permission "rank.admin":
-		message "&6&lCamCraft&7>%arg 1%'s rank is Admin"
-		stop
+			message "&6&lCamCraft&7>%arg 1%'s rank is Admin"
+			stop
 		if arg 1 has permission "rank.moderator":
-		message "&6&lCamCraft&7>%arg 1%'s rank is Moderator"
-		stop
+			message "&6&lCamCraft&7>%arg 1%'s rank is Moderator"
+			stop
 		if arg 1 has permission "rank.hb":
-		message "&6&lCamCraft&7>%arg 1%'s rank is HB"
-		stop
+			message "&6&lCamCraft&7>%arg 1%'s rank is HB"
+			stop
 		if arg 1 has permission "rank.builder":
-		message "&6&lCamCraft&7>%arg 1%'s rank is Developer"
-		stop
+			message "&6&lCamCraft&7>%arg 1%'s rank is Developer"
+			stop
 		if arg 1 has permission "rank.player":
-		message "&6&lCamCraft&7>%arg 1%'s rank is Player"
-		stop
-	else: 
+			message "&6&lCamCraft&7>%arg 1%'s rank is Player"
+			stop
+		else: 
 		message "&cSomething is wrong."
-	  
+	  	stop
+		
 command /global <text>:
  trigger:
   broadcast "&6&lCamCraft&7> &e%arg 1%"

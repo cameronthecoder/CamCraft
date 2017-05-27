@@ -289,8 +289,7 @@ command /rank-reload:
 command /rank-check <player>: 
 	permission: cc.rank
 	permission message: &6&lCamCraft&7>&c&lInvalid permission.
-	trigger:
-   		message "&6&lCamCtaft&7>&9Information about player &e%arg 1%&9:"  
+	trigger:  
    		if arg 1 has permission "rank.owner":
    			message "&6&lCamCraft&7>%arg 1%'s rank is Owner"
    			stop

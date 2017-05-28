@@ -12,7 +12,7 @@ options:
 	report: ddddd
 
 on join: 
- set header to 
+ set header to to "&6&lCamCraft Server Network" and footer to "&d---------"
 command /corever:
  trigger:
   message "&6&lVersion"
@@ -20,7 +20,7 @@ command /corever:
   
 command /setwarp <text>:
 	permission: cc.setwarp
-	description: Create an Location to warp to "&6&lCamCraft Server Network" and footer to "&d---------"
+	description: Create an Location 
 	trigger:
 		set {essentials.%argument 1%.warp} to location of player
 		message "&e&lWarp set"

@@ -11,7 +11,8 @@ options:
 	version: 1.0
 	report: ddddd
 
-
+on join: 
+ set header to 
 command /corever:
  trigger:
   message "&6&lVersion"
@@ -19,7 +20,7 @@ command /corever:
   
 command /setwarp <text>:
 	permission: cc.setwarp
-	description: Create an Location to warp to
+	description: Create an Location to warp to "&6&lCamCraft Server Network" and footer to "&d---------"
 	trigger:
 		set {essentials.%argument 1%.warp} to location of player
 		message "&e&lWarp set"
@@ -100,6 +101,7 @@ command /vanish <text>:
 			message "&6Vanish Help"
 			message "&d/vanish enable &b- &7Enable vanish."
 			message "&d/vanish disable &b &7Disable vanish."
+			
 command /godmode <text>:
 	trigger: 
 		if arg 1 is "enable":

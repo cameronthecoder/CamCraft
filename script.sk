@@ -250,43 +250,43 @@ command /rank-update <offline player> <text>:
 		if arg 2 is "Owner":
 			execute console command "manuadd %arg 1% Owner"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Owner" to arg 1
-			set {_p} tab name to "{@OWNER} &7%player%"
+			set {_p} tab name to "{@OWNER} &7{_p}"
 			stop
 		if arg 2 is "Admin":
 			execute console command "manuadd %arg 1% Admin"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Admin!" to arg 1
-			set {_p} tab name to "{@ADMIN} &7%player%"
+			set {_p} tab name to "{@ADMIN} &7{_p}"
 			stop
 		if arg 2 is "Player":
 			execute console command "manuadd %arg 1% Player"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Player!" to arg 1
-			set {_p} tab name to "&2&lPlayer &7%player%"
+			set {_p} tab name to "&2&lPlayer &7{_p}"
 			stop
 		if arg 2 is "Moderator":
 			execute console command "manuadd %arg 1% Moderator"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Moderator!" to arg 1
-			set {_p} tab name to "{@MODERATOR} &7%player%"
+			set {_p} tab name to "{@MODERATOR} &7{_p}"
 			stop
 		if arg 2 is "Developer":
 			execute console command "manuadd %arg 1% Developer"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Developer!" to arg 1
-			set {_p} tab name to "{@DEV} &7%player%"
+			set {_p} tab name to "{@DEV} &7{_p}"
 			stop
 		if arg 2 is "HB":
 			execute console command "manuadd %arg 1% HB"
 			send "&6&lCamCraft&7>&9Your rank has been updated to HB!" to arg 1
-			set {_p} tab name to "{@HB} &7%player%"
+			set {_p} tab name to "{@HB} &7{_p}"
 			stop
 		if arg 2 is "Builder":
 			execute console command "manuadd %arg 1% Builder"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Builder!" to arg 1
-			set {_p} tab name to "{BUILDER} &7%player%"
+			set {_p} tab name to "{BUILDER} &7{_p}"
 			stop
 		if arg 2 is "YT":
 			execute console command "manuadd %arg 1% YT"
 			send "&6&lCamCraft&7>&9Your rank has been update to YT!" to arg 1
 			send "&6We hope you enjoy recording and streaming on our server, congratulations!" to arg 1
-			set {_p} tab name to "{@YT} &7%player%"
+			set {_p} tab name to "{@YT} &7{_p}"
 			stop
 		else: 
 		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER)"

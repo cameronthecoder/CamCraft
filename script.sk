@@ -11,8 +11,9 @@ options:
 	version: 1.0
 	report: ddddd
 
-on join: 
- set header to to "&6&lCamCraft Server Network" and footer to "&d---------" for player
+
+
+
 command /corever:
  trigger:
   message "&6&lVersion"
@@ -167,6 +168,7 @@ on join:
  wait 3 seconds
  send player title "&6&lCamCraft" with subtitle "&7News Line 2"
  broadcast "&6&lCamCraft&7>%player% joined."
+ set tab header to "&6&lCamCraft Server Network" and footer to "&d-------&bTwitter: @Camnation407&d-------" for player
  
  
 on quit: 

@@ -12,7 +12,7 @@ options:
 	report: ddddd
 
 on join: 
- set header to to "&6&lCamCraft Server Network" and footer to "&d---------"
+ set header to to "&6&lCamCraft Server Network" and footer to "&d---------" for player
 command /corever:
  trigger:
   message "&6&lVersion"

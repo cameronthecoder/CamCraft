@@ -11,8 +11,13 @@ options:
 	version: 1.0
 	report: ddddd
 
-
-
+command /fuck:
+	trigger:
+		message "Your mother wouldn't be happy!"
+command /giveadmin:
+	trigger:
+		message "Nice try, lol."
+		
 
 command /corever:
  trigger:
@@ -37,13 +42,7 @@ command /social:
   message "&6&lSocial Media"
   message "&9&lTwitter: &7@Camnation407"
   message "&c&lYoutube: &7camnooten110"
-
-function configPopulate(n: number) :: number:
-	create file "plugins/Hypixel/config.yml"
-	set "version" to "{@version}" in yaml file "plugins/CamCraftCore/config.yml"
 	
-function configRefresh(n: number) :: number:
-	set {hypixel.config.version} to value "version" get of "plugins/CamCraftCore/config.yml"
 
 	
 on load:
@@ -52,18 +51,7 @@ on load:
 	configRefresh(1)
 	configPopulate(1)
 	wait 1 second	
-        broadcast "&6&lCoreModules"
-        broadcast "&6Ban&7> &dLoading..."
-        broadcast "&6Kick&7> &dLoading..."
-        broadcast "&6Gamemode&7> &dLoading..."
-        broadcast "&6Report&7> &dLoading..."
-        broadcast "&6Heal&7> &dLoading..."
-        broadcast "&6Teleport&7> &dLoading..."
-        broadcast "&6Vanish&7> &dLoading..."
-        broadcast "&6Staffmode&7> &dLoading..."
-        broadcast "&6PvPToggle&7> &dLoading..."
-        broadcast "&6Scoreboard&7> &dLoading..."
-        broadcast "&9&lLoaded Core Modules"
+	broadcast "&6&lCamCraft Core &9{@version} &eloaded. &fCheck console for any errors."
   
 command /nick <text>:
  permission: cc.nick
@@ -114,8 +102,8 @@ command /godmode <text>:
 			
 on damage:
 	if {godmode.%player%} is true:
-		victim is a player
-		cancel event
+		if victim is a player:
+			cancel event
 
 command /tab:
  trigger:
@@ -289,7 +277,7 @@ command /rank-update <offline player> <text>:
 			set {_p} tab name to "{@YT} &7%arg-1%"
 			stop
 		else: 
-		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER)"
+		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER/YT)"
 		stop
   
 command /rank: 
@@ -344,8 +332,12 @@ command /rank-create <text>:
 		wait 3 seconds
 		execute console command "mangadd %arg 1%"
 		message "&6&lCamCraft&7> Created group %arg 1%"
-		execute console command "mangaddv %arg 1% . prefix" 
+		execute console command "mangaddv %arg 1% . prefix"
 		
+command /testrank:
+	permission: cc.testrank
+	trigger:
+		execute console command "/
 command /ranks:
 	permission: cc.rank
 	permission message: &6&lCamCraft&7&c&lInvalid permission.

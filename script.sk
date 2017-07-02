@@ -10,6 +10,8 @@ options:
 	YT: &6&lYT
 	version: 1.0
 	report: ddddd
+command /coins:
+
 
 command /fuck:
 	trigger:

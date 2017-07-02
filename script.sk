@@ -10,9 +10,29 @@ options:
 	YT: &6&lYT
 	version: 1.0
 	report: ddddd
-command /coins:
-
-
+	
+on join:
+	if {coins.%player%} is not set:
+		set {coins.$player%} to 1000
+command /coins [<text>] [<text>] [<offline player>]:
+	permission: cc.coins
+	trigger:
+		if arg 1 is "reset":
+			set {coins.%arg 3} to 1000
+			send "&6&lCamCraft &e&lCoins&7> &eYour coins has been &creset to 1000." to arg 3
+		if arg 1 is "add":
+			add %arg 2% to {coins.%arg 3%}
+			send "&6&lCamCraft &e&lCoins&7> &e%player% has added %arg 2% coins to your account."
+		if arg 1 is "bal" or "balance":
+			message "&b&l======================"
+			message "&9&l========={coins.%player%}=========
+		if arg 1 is "see" or "check":
+			message "&b&l======================"
+			message "&9&l========={coins.%arg 2%}=========
+		
+			
+			
+		
 command /fuck:
 	trigger:
 		message "Your mother wouldn't be happy!"

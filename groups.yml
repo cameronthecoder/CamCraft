@@ -38,6 +38,7 @@ groups:
     permissions:
     - cc.ban
     - cc.clear
+    - cc.coins
     - cc.feed
     - cc.fly
     - cc.gamemode
@@ -51,10 +52,12 @@ groups:
     - cc.staffmode
     - cc.suicide
     - cc.teleport
+    - cc.time
     - cc.unban
     - cc.vanish
     - cc.vanishsee
     - cc.warp
+    - coins.admin
     - groupmanager.*
     - minecraft.*
     - rank.owner
@@ -74,11 +77,21 @@ groups:
       build: false
       prefix: ' '
       suffix: ''
+  Thistetete:
+    default: false
+    permissions: []
+    inheritance: []
+    info:
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
   Builder:
     default: false
     permissions:
     - cc.ban
     - cc.clear
+    - cc.coins
     - cc.fly
     - cc.gamemode
     - cc.heal
@@ -94,6 +107,7 @@ groups:
     - cc.vanish
     - cc.vanishsee
     - cc.warp
+    - coins.admin
     - groupmanager.*
     - rank.builder
     - skript.*
@@ -173,12 +187,12 @@ groups:
   YT:
     default: false
     permissions:
-    - rank.yt
     - cc.fly
-    - cc.vanish
-    - cc.nick
     - cc.gamemode
+    - cc.nick
     - cc.teleport
+    - cc.vanish
+    - rank.yt
     inheritance: []
     info:
       build: false

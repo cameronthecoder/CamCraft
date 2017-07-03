@@ -273,8 +273,8 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.owner.%player%} to false
 			set {tabname.rank.builder.%player%} to false
 			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to true
-			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.moderator.%player%} to true
 			set {tabname.rank.dev.%player%} to false
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.yt.%player%} to false
@@ -575,7 +575,14 @@ command /pvp-disable:
  trigger:
   disable pvp in all worlds
   broadcast "&6&lCamCraft&7>%player% &cdisabled &7PvP."
-  
+on join:
+	if {players.online} is not set:
+		set {players.online} to 1
+	else:
+		add 1 to {players.online}
+
+on quit:		
+	subtract 1 from {players.online}
 every 2 seconds:
 		loop all players:
 				wipe loop-player's sidebar
@@ -601,7 +608,17 @@ every 2 seconds:
 				if loop-player has permission "rank.player":
 						set score "&2&lPlayer" in sidebar of loop-player to 11
 				set score "&6 " in sidebar of loop-player to 10
-				set score "&aWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 9
+				set score "&7Player&f: " in sidebar of loop-player to 9
+				set score "&d%loop-player%" in sidebar of loop-player to 8
+				set score "&d " in sidebar of loop-player to 7
+				set score "&aOnline:" in sidebar of loop-player to 6
+				set score "%{players.online}%/20" in sidebar of loop-player to 5
+				set score "&7 " in sidebar of loop-player to 4
+				set score "&eWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 3
+				
+command /list:
+	trigger:
+		add 
 				
 				
 command /msg <player> <text>:

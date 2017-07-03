@@ -12,36 +12,54 @@ options:
 	report: ddddd
 	
 on join:
+	set {_p} to player
 	if {coins.%player%} is not set:
-		set {coins.$player%} to 1000
-command /coins [<text>] [<text>] [<offline player>]:
-	permission: cc.coins
+		set {coins.%player%} to 1000
+	if {tabname.rank.player.%player%} is true:
+		set {_p} tab name to "&2&lPlayer &7%player%"
+	if {tabname.rank.owner.%player%} is true:
+		set {_p} tab name to "{@OWNER} &7%player%"
+	if {tabname.rank.admin.%player%} is true:
+		set {_p} tab name to "{@ADMIN} &7%player%"
+	if {tabname.rank.moderator.%player%} is true:
+		set {_p} tab name to "{@MODERATOR} &7%player%"
+	if {tabname.rank.dev.%player%} is true:
+		set {_p} tab name to "{@DEV} &7%player%"
+	if {tabname.rank.hb.%player%} is true:
+		set {_p} tab name to "{@HB} &7%player%"
+	if {tabname.rank.yt.%player%} is true:
+		set {_p} tab name to "{@YT} &7%player%"
+	if {tabname.rank.builder.%player%} is true:
+		set {_p} tab name to "{@BUILDER} &7%player%"
+command /coins <text> [<text>] [<offline player>]:
+	permission: cc.coins 
 	trigger:
 		if arg 1 is "reset":
 			if player has permission "coins.admin":
-				set {coins.%arg 3} to 1000
+				set {coins.%arg 3%} to 1000
 				send "&6&lCamCraft &e&lCoins&7> &eYour coins has been &creset to 1000." to arg 3
 			else:
 				message "You don't have permission to use this command."
 		if arg 1 is "add":
 			if player has permission "coins.admin":
-				add %arg 2% to {coins.%arg 3%}
-				send "&6&lCamCraft &e&lCoins&7> &e%player% has added %arg 2% coins to your account."
+				add arg-2 to {coins.%arg-3%}
+				send "&6&lCamCraft &e&lCoins&7> &e%player% has added %arg 2% coins to your account." to arg 3
 			else:
 				message "You don't have permission to use this command."
 		if arg 1 is "bal" or "balance":
 			message "&b&l======================"
-			message "&9&l========={coins.%player%}=========
+			message "&9&l=========%{coins.%player%}%========="
 		if arg 1 is "see" or "check":
 			if player has permission "coins.admin":
 				message "&b&l======================"
-				message "&9&l========={coins.%arg 2%}=========
+				message "&9&l=========%{coins.%arg 2%}%========="
 			else:
 				message "You don't have permission to use this command."
-command /*:
-	trigger:
-		if {commands.disabled} is true:
-			message "Commands are disabled."
+		if arg 1 is "test":
+			if player has permission "coins.admin":
+				add 15 to {coins.%player%}
+				send "&6&lCamCraft &e&lCoins&7> &e%player% has added 15 coins to your account."
+				send "You now have %{coins.%player%}%"
 command /bal:
 	trigger:
 		make player execute command "/coins bal"
@@ -81,14 +99,7 @@ command /social:
   message "&c&lYoutube: &7camnooten110"
 	
 
-	
-on load:
-        create folder "plugins/CamCraftCore/"
-        create file "plugins/CamCraftCore/config.yml"
-	configRefresh(1)
-	configPopulate(1)
-	wait 1 second	
-	broadcast "&6&lCamCraft Core &9{@version} &eloaded. &fCheck console for any errors."
+
   
 command /nick <text>:
  permission: cc.nick
@@ -126,8 +137,7 @@ command /vanish <text>:
 		if arg 1 is not set:
 			message "&6Vanish Help"
 			message "&d/vanish enable &b- &7Enable vanish."
-			message "&d/vanish disable &b &7Disable vanish."
-			
+			message "&d/vanish disable &b &7Disable vanish."			
 command /godmode <text>:
 	trigger: 
 		if arg 1 is "enable":
@@ -142,52 +152,12 @@ on damage:
 		if victim is a player:
 			cancel event
 
-command /tab:
- trigger:
-  change the player's display name to "Owner"
 
-
-command /ban <player> <text>:
- permission: cc.ban
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- trigger:
-  kick argument 1 due to "&c&l%arg% 2% &6by %player%"
-  ban "%arg 1%" because "&c&l%arg 2% &6by %player%"
-  message "&6&lCamCraft&7>&cBanned user %arg 1% for &f%arg 2%"
-  message "&7This ban has been logged."
-  log "%player% has banned %arg 1% for %arg 2%" to "bans/ban"
-  broadcast "&6&lCamCraft&7>&c%player% banned %arg 1% for %arg 2%"
   
-command /bant <text> <text> <text>:
- permission: cc.bantime
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- trigger:
-  message "Not working, we need to finish this command."
-  
-command /unban <offline player>:
- permission: cc.unban
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- trigger:
-  execute console command "/pardon %arg 1%"
-  broadcast "&6&lCamCraft&7>%player% unbanned %arg 1%."
-  message "&7This unban has been logged."
-  log "%player% unbanned %arg 1%." to "unbans/unbans"
-  
-command /kick <player> <text>:
- permission: cc.kick
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- trigger:
-  message "&6&lCamCraft&7> &cKicked user %arg 1% for &f%arg 2%"
-  message "&7This kick has been logged."
-  kick "%arg 1%" due to "%arg 2% by %player%"
-  log "%player% kicked %arg 1% because %arg 2%" to "kicks/kick"
-  broadcast "&6&lCamCraft&7>&c%player% kicked %arg 1% because of %arg 2%"
  
 #Broadcast 
 on script load:
- broadcast "&c------------------------------------------"
- broadcast "&6CamCraft version &a1.0 &6has been &areloaded/loaded."
- broadcast "&c------------------------------------------"
+ broadcast "&6&lCamCraft Core &9{@version} &eloaded. &fCheck console for any errors."
 #JOIN
 on join:
  execute console command "/minecraft:tp %player% 173 184 -178"
@@ -195,11 +165,11 @@ on join:
  wait 3 seconds
  send player title "&6&lCamCraft" with subtitle "&7News Line 2"
  broadcast "&6&lCamCraft&7>%player% joined."
- set tab header to "&6&lCamCraft Server Network" and footer to "&d-------&bTwitter: @Camnation407&d-------" for player
+ set tab header to "&6&lCamCraft Server Network" and footer to "camnooten.ml" for player
  
  
 on quit: 
- broadcast "&6&lCamCraft&7>%player% left."
+ broadcast "&6&lCamCraft&7> %player% left."
  
 #Chat
 on chat: 
@@ -223,47 +193,32 @@ on chat:
  
  
  
-command /gmc:
- aliases: /gamemode c, /gamemode creative
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- permission: cc.gamemode
- trigger:
-  player's gamemode is survival
-  set the player's gamemode to creative
-  broadcast "&6&lCamCraft&7>%player% changed their gamemode to creative."
-  message "&9Gamemode updated."
-  
-command /gms:
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- permission: cc.gamemode
- trigger:
-  player's gamemode is creative
-  set the player's gamemode to survival
-  broadcast "&6&lCamCraft&7>%player% changed their gamemode to survival."
-  message "&9Gamemode updated."
- 
-command /gamemode c: 
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- permission: cc.gamemode
- trigger: 
-  make player execute command "/gmc"
+command /gamemode <text>:
+	permission: cc.gamemode
+	permission message: &6&lCamCraft&7&c&lInvalid Permission.
+	trigger:
+		if arg 1 is "c" or "creative":
+			set the player's gamemode to creative
+			message "&6&lCamCraft&7> Your gamemode has been updated to Creative."
+		if arg 1 is "s" or "survival":
+			set the player's gamemode to survival
+			message "&6&lCamCraft&7> Your gamemode has been updated to Survival."
+command /gm<text>:
+	permission: cc.gamemode
+	permission message: &6&lCamCraft&7&c&lInvalid Permission.
+	trigger:
+		if arg 1 is "c" or "creative":
+			set the player's gamemode to creative
+			message "&6&lCamCraft&7> Your gamemode has been updated to Creative."
+		if arg 1 is "s" or "survival":
+			set the player's gamemode to survival
+			message "&6&lCamCraft&7> Your gamemode has been updated to Survival."
 
-command /gamemode s: 
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- permission: cc.gamemode
- trigger: 
-  make player execute command "/gms"
-
-command /saddle:
- trigger:
-  message "&6&lCamCraft&7>&7Loading..."
-  wait 2 seconds
-  give saddle to player
-  message "&edone."
+			
   
 command /now:
  trigger:
-  broadcast "Current server time: %now%"
+  broadcast "Current server time: %{rank.%player%}%"
  
 #Ranks 
 command /rank-update <offline player> <text>:
@@ -274,44 +229,108 @@ command /rank-update <offline player> <text>:
 		set {_p} to arg 1
 		if arg 2 is "Owner":
 			execute console command "manuadd %arg 1% Owner"
-			send "&6&lCamCraft&7>&9Your rank has been updated to Owner" to arg 1
+			send "&6&lCamCraft&7>&9Your rank has been updated to Owner!" to arg 1
 			set {_p} tab name to "{@OWNER} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to true
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "Admin":
 			execute console command "manuadd %arg 1% Admin"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Admin!" to arg 1
 			set {_p} tab name to "{@ADMIN} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.admin.%player%} to true
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "Player":
 			execute console command "manuadd %arg 1% Player"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Player!" to arg 1
 			set {_p} tab name to "&2&lPlayer &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to true
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "Moderator":
 			execute console command "manuadd %arg 1% Moderator"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Moderator!" to arg 1
 			set {_p} tab name to "{@MODERATOR} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to true
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "Developer":
 			execute console command "manuadd %arg 1% Developer"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Developer!" to arg 1
 			set {_p} tab name to "{@DEV} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.dev.%player%} to true
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "HB":
 			execute console command "manuadd %arg 1% HB"
 			send "&6&lCamCraft&7>&9Your rank has been updated to HB!" to arg 1
 			set {_p} tab name to "{@HB} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to true
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "Builder":
 			execute console command "manuadd %arg 1% Builder"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Builder!" to arg 1
-			set {_p} tab name to "{BUILDER} &7%arg-1%"
+			set {_p} tab name to "{@BUILDER} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.builder.%player%} to true
+			set {tabname.rank.yt.%player%} to false
 			stop
 		if arg 2 is "YT":
 			execute console command "manuadd %arg 1% YT"
-			send "&6&lCamCraft&7>&9Your rank has been update to YT!" to arg 1
+			send "&6&lCamCraft&7>&9Your rank has been updated to YT!" to arg 1
 			send "&6We hope you enjoy recording and streaming on our server, congratulations!" to arg 1
 			set {_p} tab name to "{@YT} &7%arg-1%"
+			set {tabname.rank.owner.%player%} to false
+			set {tabname.rank.admin.%player%} to false
+			set {tabname.rank.player.%player%} to false
+			set {tabname.rank.moderator.%player%} to false
+			set {tabname.rank.dev.%player%} to false
+			set {tabname.rank.hb.%player%} to false
+			set {tabname.rank.builder.%player%} to false
+			set {tabname.rank.yt.%player%} to true
 			stop
 		else: 
 		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER/YT)"
@@ -334,31 +353,7 @@ command /rank-reload:
   make player execute command "/manload"
   message "&6&lCamCraft&7>&9All ranks reloaded."
   
-command /rank-check <player>: 
-	permission: cc.rank
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
-	trigger:  
-   		if %arg 1% has permission "rank.owner":
-   			message "&6&lCamCraft&7>%arg 1%'s rank is Owner"
-   			stop
-		if %arg 1% has permission "rank.admin":
-			message "&6&lCamCraft&7>%arg 1%'s rank is Admin"
-			stop
-		if %arg 1% has permission "rank.moderator":
-			message "&6&lCamCraft&7>%arg 1%'s rank is Moderator"
-			stop
-		if %arg 1% has permission "rank.hb":
-			message "&6&lCamCraft&7>%arg 1%'s rank is HB"
-			stop
-		if %arg 1% has permission "rank.builder":
-			message "&6&lCamCraft&7>%arg 1%'s rank is Developer"
-			stop
-		if %arg 1% has permission "rank.player":
-			message "&6&lCamCraft&7>%arg 1%'s rank is Player"
-			stop
-		else: 
-			message "&cSomething is wrong."
-	  		stop
+
 			
 command /rank-create <text>:
 	permission: cc.rank
@@ -370,11 +365,6 @@ command /rank-create <text>:
 		execute console command "mangadd %arg 1%"
 		message "&6&lCamCraft&7> Created group %arg 1%"
 		execute console command "mangaddv %arg 1% . prefix"
-		
-command /testrank:
-	permission: cc.testrank
-	trigger:
-		execute console command "/
 command /ranks:
 	permission: cc.rank
 	permission message: &6&lCamCraft&7&c&lInvalid permission.
@@ -415,17 +405,6 @@ command /core:
   message "&5/corever"
   message "&6/corehelp"
   
-command /rep <player> <texts>:
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- permission: cc.report
- trigger:
-  message "&cReports&f&l>&c&lYou reported player %arg 1% for &f%arg 2%"
-  log "%player% reported %arg 1% for %arg 2%" to "reports/reports"
-  message "Staff will handle this report."
-  broadcast "&cReports&f&l> &6&l%player% reported %arg 1% for %arg 2%"
-loop all players:
-				if loop-player has permission "cc.reportsee":
-					send "&cReports&f&l>&e%player% has reported %arg 1% for %arg 2%" to loop-player
 
   
    
@@ -453,12 +432,6 @@ command /ci:
  trigger:
   execute console command "/clear %player%"
   message "&6&lCamCraft&7>Cleared inventory."
-  
-command /gm:
- permission: cc.gmhelp
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
- trigger:
-  message "&f&lTry /gmc or /gms &6&l(Gamemode)"
     
 on script unload: 
  broadcast "&c------------------------------------------"
@@ -471,7 +444,7 @@ command /rain:
  permission: cc.rain
  permission message: &6&lCamCraft&7>&c&lInvalid permission.
  trigger:
-  execute console command "/toggledownfall"
+  execute console command "toggledownfall"
   broadcast "&6&lCamCraft&7>Toggled downfall.. Is that better?"
   
 command /brb:
@@ -605,18 +578,30 @@ command /pvp-disable:
   
 every 2 seconds:
 		loop all players:
-			wipe loop-player's sidebar
+				wipe loop-player's sidebar
 				set name of sidebar of loop-player to "&6&lCamCraft"
-				set score "&1 " in sidebar of loop-player to 15
-				if loop-player has permission "rank.owner":
-				set score "&cRank&f: &6Owner" in sidebar of loop-player to 14
-				if loop-player has permission "rank.admin":
-				set score "&cRank&f: &cAdmin" in sidebar of loop-player to 14
-				if loop-player has permission "rank.hb":
-				set score "&cRank&f: &e&lH&1&lB" in sidebar of loop-player to 14
+				set score "&e&lCoins:" in sidebar of loop-player to 15
+				set score "&6%{coins.%loop-player%}%" in sidebar of loop-player to 14
 				set score "&1 " in sidebar of loop-player to 13
-				set score "&aWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 12
-				set score "this isnt all working
+				set score "&cRank&f: " in sidebar of loop-player to 12
+				if loop-player has permission "rank.owner":
+						set score "&6&lOwner" in sidebar of loop-player to 11
+				if loop-player has permission "rank.admin":
+						set score "&c&lAdmin" in sidebar of loop-player to 11
+				if loop-player has permission "rank.mod":
+						set score "&9&lMod" in sidebar of loop-player to 11
+				if loop-player has permission "rank.dev":
+						set score "&b&lDev" in sidebar of loop-player to 11
+				if loop-player has permission "rank.hb":
+						set score "&a&lH&1&lB" in sidebar of loop-player to 11
+				if loop-player has permission "rank.builder":
+						set score "&3&lBuilder" in sidebar of loop-player to 11
+				if loop-player has permission "rank.yt":
+						set score "&6&lYT" in sidebar of loop-player to 11
+				if loop-player has permission "rank.player":
+						set score "&2&lPlayer" in sidebar of loop-player to 11
+				set score "&6 " in sidebar of loop-player to 10
+				set score "&aWebsite&f: goo.gl/jpm2B2" in sidebar of loop-player to 9
 				
 				
 command /msg <player> <text>:
@@ -628,6 +613,15 @@ command /msg <player> <text>:
 		set {chat.private.reply.%arg 1%} to player
 		send "&c[MSG] &aTO: %arg 1% &e->&c %arg 2%" to player
 		send "&c[MSG] &eFROM: %player% &e->&c %arg 2%" to arg 1
+command /time <text>:
+	permission: cc.time
+	trigger:
+		if arg 1 is "day":
+			execute console command "minecraft:time set day"
+			message "&6Set time to day"
+		if arg 1 is "night":
+			execute console command "minecraft:time set night"
+			message "&6Set time to night"
 		
 		
 		
@@ -654,4 +648,4 @@ command /fakesay <text> <text>:
   broadcast "[Spawn]<%arg 1%> %arg 2%"
   message "&1T&2r&3o&4l&5l&7>&5hehe"
 
-#NEW AND NOT IMPORTED TO DEV SCRIPT
+

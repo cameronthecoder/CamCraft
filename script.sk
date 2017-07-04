@@ -35,7 +35,19 @@ on join:
 		set {_p} tab name to "{@YT} &7%player%"
 	if {tabname.rank.builder.%player%} is true:
 		set {_p} tab name to "{@BUILDER} &7%player%"
-		
+on shoot:
+	if projectile is an arrow:
+		if difference between {shoot.%shooter%} and now is less than 2 ticks:
+			add 1 to {fastbow.%shooter%}
+			if {fastbow.%shooter%} is greater than 5:
+				kick shooter due to "&c&lCamCraftAnticheat&7> &cYou have been kicked due to fastbow!"
+			set {shoot.%shooter%} to now
+			wait 5 seconds
+			clear {fastbow.%shooter%}
+			stop
+		set {shoot.%shooter%} to now
+on join:
+	clear {fastbow.%player%}	
 on join:
 	if {abovehead.rank.owner.%player%} is true:
 		set player's tag to "{@OWNER} &7%player%"
@@ -251,9 +263,14 @@ on leftclick:
 		add 1 to {warnings.%player%}
 	else if {warnings.%player%} is 3:
 		ban the player due to "&c&lCamCraft Anticheat&7> &cYou have been banned due to suspected of hacks too much!"
+		kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been banned due to suspected of hacks too much!"
 on join:
 	if {warnings.%player%} is not set:
 		set {warnings.%player%} to 0
+on join:
+	if {warnings.%player%} is 3:
+		ban the player due to "&c&lCamCraft Anticheat&7> &cYou have been banned due to suspected of hacks too much!"
+		kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been banned due to suspected of hacks too much!"
 every 1 seconds:
 	loop all players:
 		clear {click.%loop-player%}

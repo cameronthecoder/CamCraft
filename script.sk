@@ -10,7 +10,11 @@ options:
 	YT: &6&lYT
 	version: 1.0
 	report: ddddd
-	
+command /buy <text>:
+	trigger:
+		open chest with 6 rows named "&6&lCosmetics" to player
+		wait 1 tick
+		format slot 1 of player with string named "&b&lTest Item" with lore "&cRecieve" to close then run "/give srting"
 on join:
 	set {_p} to player
 	if {coins.%player%} is not set:
@@ -37,15 +41,11 @@ command /coins <text> [<text>] [<offline player>]:
 		if arg 1 is "reset":
 			if player has permission "coins.admin":
 				set {coins.%arg 3%} to 1000
-				send "&6&lCamCraft &e&lCoins&7> &eYour coins has been &creset to 1000." to arg 3
+				send "&6&lCamCraft &e&lCoins&7> &eYour coins has been &creset &eto &61000&e." to arg 3
 			else:
 				message "You don't have permission to use this command."
 		if arg 1 is "add":
-			if player has permission "coins.admin":
-				add arg-2 to {coins.%arg-3%}
-				send "&6&lCamCraft &e&lCoins&7> &e%player% has added %arg 2% coins to your account." to arg 3
-			else:
-				message "You don't have permission to use this command."
+			message "Use /coinsadd to add coins to a user."
 		if arg 1 is "bal" or "balance":
 			message "&b&l======================"
 			message "&9&l=========%{coins.%player%}%========="
@@ -55,11 +55,6 @@ command /coins <text> [<text>] [<offline player>]:
 				message "&9&l=========%{coins.%arg 2%}%========="
 			else:
 				message "You don't have permission to use this command."
-		if arg 1 is "test":
-			if player has permission "coins.admin":
-				add 15 to {coins.%player%}
-				send "&6&lCamCraft &e&lCoins&7> &e%player% has added 15 coins to your account."
-				send "You now have %{coins.%player%}%"
 command /bal:
 	trigger:
 		make player execute command "/coins bal"
@@ -69,11 +64,19 @@ command /balance:
 command /fuck:
 	trigger:
 		message "Your mother wouldn't be happy!"
+command /resetcount:
+	trigger:
+		set {players.online} to 1
 command /giveadmin:
 	trigger:
 		message "Nice try, lol."
 		
-
+command /cadd <offline player> <integer>:
+	permission: coins.admin
+	usage: /coins 
+	trigger:
+		add argument 2 to {coins.%arg 1%}
+		send "&6&lCamCraft &e&lCoins&7> &e%player% has added &6%arg 2% coins to your account." to arg 1
 command /corever:
  trigger:
   message "&6&lVersion"
@@ -214,12 +217,49 @@ command /gm<text>:
 			set the player's gamemode to survival
 			message "&6&lCamCraft&7> Your gamemode has been updated to Survival."
 
-			
+on server list ping:
+	set motd to "&6&lCamCraft &7&lTest &9&lServer &c--> &b&lDeveloping"
   
 command /now:
  trigger:
   broadcast "Current server time: %{rank.%player%}%"
- 
+
+on leftclick:
+	add 1 to {click.%player%}
+	if {click.%player%} is above 15:
+		kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been kicked due to high clicking speeds!"
+		add 1 to {warnings.%player%}
+	else if {warnings.%player%} is 3:
+		ban the player due to "&c&lCamCraft Anticheat&7> &cYou have been banned due to suspected of hacks too much!"
+on join:
+	if {warnings.%player%} is not set:
+		set {warnings.%player%} to 0
+every 1 seconds:
+	loop all players:
+		clear {click.%loop-player%}
+on damage:
+	if attacker is a player:
+		if attacker gamemode is not creative:
+			if distance between attacker and victim is greater than 5:
+				cancel event
+				add 1 to {warnings.%player%}
+				kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been kicked for KillAura!"
+command /warnings:
+	trigger:
+		message "%{warnings.%player%}%"
+on chat:
+	if player is sneaking:
+		kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been kicked for autosneak!"
+		add 1 to {warnings.%player%}
+on inventory open:
+	if player is sneaking:
+		kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been kicked for autosneak!"
+		add 1 to {warnings.%player%}
+on sign change:
+	if player is sneaking:
+		kick the player due to "&c&lCamCraft Anticheat&7> &cYou have been kicked for autosneak!"
+		add 1 to {warnings.%player%}
+			
 #Ranks 
 command /rank-update <offline player> <text>:
 	permission: cc.rank

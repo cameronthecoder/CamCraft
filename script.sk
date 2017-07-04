@@ -41,11 +41,20 @@ on join:
 		set player's tag to "{@OWNER} &7%player%"
 	if {abovehead.rank.admin.%player%} is true:
 		set player's tag to "{@ADMIN} &7%player%"
-	if {abovehead.rank.mod.%player%} is true:
+	if {abovehead.rank.moderator.%player%} is true:
 		set player's tag to "{@MODERATOR} &7%player%"
-	if {abovehead.rank.owner.%player%} is true:
+	if {abovehead.rank.player.%player%} is true:
+		set player's tag to "&2&lPlayer &7%player%"
+	if {abovehead.rank.dev.%player%} is true:
+		set player's tag to "{@DEV} &7%player%"
+	if {abovehead.rank.hb.%player%} is true:
+		set player's tag to "{@HB} &7%player%"
+	if {abovehead.rank.yt.%player%} is true:
 		set player's tag to "{@OWNER} &7%player%"
-###############FINISH
+	if {abovehead.rank.builder.%player%} is true:
+		set player's tag to "{@BUILDER} &7%player%"
+	if {abovehead.rank.yt.%player%} is true:
+		set player's tag to "{@YT} &7%player%"
 command /coins <text> [<text>] [<offline player>]:
 	permission: cc.coins 
 	trigger:
@@ -290,6 +299,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.builder.%player%} to false
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to true
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to false
 			stop
 		if arg 2 is "Admin":
 			execute console command "manuadd %arg 1% Admin"
@@ -303,6 +320,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.dev.%player%} to false
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to true
 			stop
 		if arg 2 is "Player":
 			execute console command "manuadd %arg 1% Player"
@@ -316,6 +341,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.dev.%player%} to false
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
+			set {abovehead.rank.player.%player%} to true
+			set {abovehead.rank.admin.%player%} to false
 			stop
 		if arg 2 is "Moderator":
 			execute console command "manuadd %arg 1% Moderator"
@@ -329,6 +362,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.dev.%player%} to false
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
+			set {abovehead.rank.moderator.%player%} to true
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to false
 			stop
 		if arg 2 is "Developer":
 			execute console command "manuadd %arg 1% Developer"
@@ -342,6 +383,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.dev.%player%} to true
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
+			set {abovehead.rank.dev.%player%} to true
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to false
 			stop
 		if arg 2 is "HB":
 			execute console command "manuadd %arg 1% HB"
@@ -355,6 +404,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.dev.%player%} to false
 			set {tabname.rank.hb.%player%} to true
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
+			set {abovehead.rank.hb.%player%} to true
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to false
 			stop
 		if arg 2 is "Builder":
 			execute console command "manuadd %arg 1% Builder"
@@ -368,6 +425,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.builder.%player%} to true
 			set {tabname.rank.yt.%player%} to false
+			set {abovehead.rank.builder.%player%} to true
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to false
+			set {abovehead.yt.admin.%player%} to false
 			stop
 		if arg 2 is "YT":
 			execute console command "manuadd %arg 1% YT"
@@ -382,6 +447,14 @@ command /rank-update <offline player> <text>:
 			set {tabname.rank.hb.%player%} to false
 			set {tabname.rank.builder.%player%} to false
 			set {tabname.rank.yt.%player%} to true
+			set {abovehead.rank.builder.%player%} to false
+			set {abovehead.rank.owner.%player%} to false
+			set {abovehead.rank.moderator.%player%} to false
+			set {abovehead.rank.dev.%player%} to false
+			set {abovehead.rank.hb.%player%} to false
+			set {abovehead.rank.player.%player%} to false
+			set {abovehead.rank.admin.%player%} to false
+			set {abovehead.yt.admin.%player%} to true
 			stop
 		else: 
 		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER/YT)"

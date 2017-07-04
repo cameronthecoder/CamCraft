@@ -35,6 +35,17 @@ on join:
 		set {_p} tab name to "{@YT} &7%player%"
 	if {tabname.rank.builder.%player%} is true:
 		set {_p} tab name to "{@BUILDER} &7%player%"
+		
+on join:
+	if {abovehead.rank.owner.%player%} is true:
+		set player's tag to "{@OWNER} &7%player%"
+	if {abovehead.rank.admin.%player%} is true:
+		set player's tag to "{@ADMIN} &7%player%"
+	if {abovehead.rank.mod.%player%} is true:
+		set player's tag to "{@MODERATOR} &7%player%"
+	if {abovehead.rank.owner.%player%} is true:
+		set player's tag to "{@OWNER} &7%player%"
+###############FINISH
 command /coins <text> [<text>] [<offline player>]:
 	permission: cc.coins 
 	trigger:

@@ -1,15 +1,19 @@
 #Developer Server Code - CamCraft Core 1.0 by Cam - LOBBY SCRIPT
-#permission message: &6&lCamCraft&7>&c&lInvalid permission.
+#permission message: {@denied}
 options:
 	ADMIN: &c&lAdmin
 	OWNER: &6&lOwner
 	MODERATOR: &9&lMod
 	DEV: &b&lDev
 	HB: &a&lH&1&lB
-	BUILDER: &3&lBuilder
+	BUILDER: &3&lBT
 	YT: &6&lYT
 	version: 1.0
 	report: ddddd
+	TA: &c&lTrialAdmin
+	TM: &9&lTrialMod
+	denied: &6&lCamCraft&7> &lInvalid Permission, contact an admin if this is wrong.
+	OPERATOR: &d&lOperator
 command /buy <text>:
 	trigger:
 		open chest with 6 rows named "&6&lCosmetics" to player
@@ -35,6 +39,13 @@ on join:
 		set {_p} tab name to "{@YT} &7%player%"
 	if {tabname.rank.builder.%player%} is true:
 		set {_p} tab name to "{@BUILDER} &7%player%"
+	if {tabname.rank.ta.%player%} is true:
+		set {_p} tab name to "{@TA} &7%player%"
+	if {tabname.rank.tm.%player%} is true:
+		set {_p} tab name to "{@TM} &7%player%"
+	if {tabname.rank.operator.%player%} is true:
+		set {_p} tab name to "{@OPERATOR} &7%player%"
+
 on shoot:
 	if projectile is an arrow:
 		if difference between {shoot.%shooter%} and now is less than 2 ticks:
@@ -48,25 +59,6 @@ on shoot:
 		set {shoot.%shooter%} to now
 on join:
 	clear {fastbow.%player%}	
-on join:
-	if {abovehead.rank.owner.%player%} is true:
-		set player's tag to "{@OWNER} &7%player%"
-	if {abovehead.rank.admin.%player%} is true:
-		set player's tag to "{@ADMIN} &7%player%"
-	if {abovehead.rank.moderator.%player%} is true:
-		set player's tag to "{@MODERATOR} &7%player%"
-	if {abovehead.rank.player.%player%} is true:
-		set player's tag to "&2&lPlayer &7%player%"
-	if {abovehead.rank.dev.%player%} is true:
-		set player's tag to "{@DEV} &7%player%"
-	if {abovehead.rank.hb.%player%} is true:
-		set player's tag to "{@HB} &7%player%"
-	if {abovehead.rank.yt.%player%} is true:
-		set player's tag to "{@OWNER} &7%player%"
-	if {abovehead.rank.builder.%player%} is true:
-		set player's tag to "{@BUILDER} &7%player%"
-	if {abovehead.rank.yt.%player%} is true:
-		set player's tag to "{@YT} &7%player%"
 command /coins <text> [<text>] [<offline player>]:
 	permission: cc.coins 
 	trigger:
@@ -96,9 +88,9 @@ command /balance:
 command /fuck:
 	trigger:
 		message "Your mother wouldn't be happy!"
-command /resetcount:
+command /resetcount <text>:
 	trigger:
-		set {players.online} to 1
+		set {players.online} to %arg-1%
 command /giveadmin:
 	trigger:
 		message "Nice try, lol."
@@ -132,13 +124,10 @@ command /social:
   message "&6&lSocial Media"
   message "&9&lTwitter: &7@Camnation407"
   message "&c&lYoutube: &7camnooten110"
-	
-
-
   
 command /nick <text>:
  permission: cc.nick
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  trigger: 
   message "&8Please wait..."
   wait 2 seconds
@@ -172,20 +161,7 @@ command /vanish <text>:
 		if arg 1 is not set:
 			message "&6Vanish Help"
 			message "&d/vanish enable &b- &7Enable vanish."
-			message "&d/vanish disable &b &7Disable vanish."			
-command /godmode <text>:
-	trigger: 
-		if arg 1 is "enable":
-			set {godmode.%player%} to true
-			message "&6Enabled"
-		if arg 1 is "disable":
-			set {godmode.%player%} to false
-			message "&6Disabled"
-			
-on damage:
-	if {godmode.%player%} is true:
-		if victim is a player:
-			cancel event
+			message "&d/vanish disable &b &7Disable vanish."
 
 
   
@@ -195,7 +171,7 @@ on script load:
  broadcast "&6&lCamCraft Core &9{@version} &eloaded. &fCheck console for any errors."
 #JOIN
 on join:
- execute console command "/minecraft:tp %player% 173 184 -178"
+ execute console command "/minecraft:tp %player% -1523 111 683"
  send player title "&6&lCamCraft" with subtitle "&7New Core!" for 3.5 seconds
  wait 3 seconds
  send player title "&6&lCamCraft" with subtitle "&7News Line 2"
@@ -225,8 +201,19 @@ on chat:
       broadcast "{@BUILDER} &7%player%&f: &d%message%"
    if player has permission "rank.yt":
       broadcast "{@YT} &7%player%&f: &d%message%"
- 
- 
+   if player has permission "rank.ta":
+      broadcast "{@TA} &7%player%&f: &d%message%"
+   if player has permission "rank.tm":
+      broadcast "{@TM} &7%player%&f: &d%message%"
+   if player has permission "rank.operator":
+      broadcast "{@OPERATOR} &7%player%&f: &d%message%"
+
+command /unban <offline player>:
+	trigger:
+		set {warnings.%arg 1%} to 0
+		message "&6&lCamCraft&7> You have unbanned %arg 1%."
+		execute console command "pardon %arg 1%"
+
  
 command /gamemode <text>:
 	permission: cc.gamemode
@@ -238,16 +225,16 @@ command /gamemode <text>:
 		if arg 1 is "s" or "survival":
 			set the player's gamemode to survival
 			message "&6&lCamCraft&7> Your gamemode has been updated to Survival."
-command /gm<text>:
+command /gmc:
 	permission: cc.gamemode
 	permission message: &6&lCamCraft&7&c&lInvalid Permission.
 	trigger:
-		if arg 1 is "c" or "creative":
-			set the player's gamemode to creative
-			message "&6&lCamCraft&7> Your gamemode has been updated to Creative."
-		if arg 1 is "s" or "survival":
-			set the player's gamemode to survival
-			message "&6&lCamCraft&7> Your gamemode has been updated to Survival."
+		make player execute command "/gamemode c"
+command /gms:
+	permission: cc.gamemode
+	permission message: ddddd
+	trigger:
+		make player execute command "/gamemode s"
 
 on server list ping:
 	set motd to "&6&lCamCraft &7&lTest &9&lServer &c--> &b&lDeveloping"
@@ -301,185 +288,282 @@ on sign change:
 command /rank-update <offline player> <text>:
 	permission: cc.rank
 	aliases: /rank-set 
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	permission message: {@denied}
 	trigger:
 		set {_p} to arg 1
 		if arg 2 is "Owner":
 			execute console command "manuadd %arg 1% Owner"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Owner!" to arg 1
 			set {_p} tab name to "{@OWNER} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to true
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to true
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to false
+			set {tabname.rank.owner.%arg 1%} to true
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to true
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
 			stop
 		if arg 2 is "Admin":
 			execute console command "manuadd %arg 1% Admin"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Admin!" to arg 1
 			set {_p} tab name to "{@ADMIN} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.admin.%player%} to true
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to true
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to true
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to true
 			stop
 		if arg 2 is "Player":
 			execute console command "manuadd %arg 1% Player"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Player!" to arg 1
 			set {_p} tab name to "&2&lPlayer &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to true
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
-			set {abovehead.rank.player.%player%} to true
-			set {abovehead.rank.admin.%player%} to false
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to true
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to true
+			set {abovehead.rank.admin.%arg 1%} to false
 			stop
 		if arg 2 is "Moderator":
 			execute console command "manuadd %arg 1% Moderator"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Moderator!" to arg 1
 			set {_p} tab name to "{@MODERATOR} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.moderator.%player%} to true
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
-			set {abovehead.rank.moderator.%player%} to true
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to false
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to true
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to true
+			set {tabname.rank.operator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
 			stop
 		if arg 2 is "Developer":
 			execute console command "manuadd %arg 1% Developer"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Developer!" to arg 1
 			set {_p} tab name to "{@DEV} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.dev.%player%} to true
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
-			set {abovehead.rank.dev.%player%} to true
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to false
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to true
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to true
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
 			stop
 		if arg 2 is "HB":
 			execute console command "manuadd %arg 1% HB"
 			send "&6&lCamCraft&7>&9Your rank has been updated to HB!" to arg 1
 			set {_p} tab name to "{@HB} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to true
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
-			set {abovehead.rank.hb.%player%} to true
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to false
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to true
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to true
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
 			stop
 		if arg 2 is "Builder":
 			execute console command "manuadd %arg 1% Builder"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Builder!" to arg 1
 			set {_p} tab name to "{@BUILDER} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.builder.%player%} to true
-			set {tabname.rank.yt.%player%} to false
-			set {abovehead.rank.builder.%player%} to true
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to false
-			set {abovehead.yt.admin.%player%} to false
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to true
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to true
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
 			stop
 		if arg 2 is "YT":
 			execute console command "manuadd %arg 1% YT"
 			send "&6&lCamCraft&7>&9Your rank has been updated to YT!" to arg 1
 			send "&6We hope you enjoy recording and streaming on our server, congratulations!" to arg 1
 			set {_p} tab name to "{@YT} &7%arg-1%"
-			set {tabname.rank.owner.%player%} to false
-			set {tabname.rank.admin.%player%} to false
-			set {tabname.rank.player.%player%} to false
-			set {tabname.rank.moderator.%player%} to false
-			set {tabname.rank.dev.%player%} to false
-			set {tabname.rank.hb.%player%} to false
-			set {tabname.rank.builder.%player%} to false
-			set {tabname.rank.yt.%player%} to true
-			set {abovehead.rank.builder.%player%} to false
-			set {abovehead.rank.owner.%player%} to false
-			set {abovehead.rank.moderator.%player%} to false
-			set {abovehead.rank.dev.%player%} to false
-			set {abovehead.rank.hb.%player%} to false
-			set {abovehead.rank.player.%player%} to false
-			set {abovehead.rank.admin.%player%} to false
-			set {abovehead.yt.admin.%player%} to true
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to true
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
+			set {abovehead.yt.%arg 1%} to true
+			stop
+		if arg 2 is "TrialAdmin":
+			execute console command "manuadd %arg 1% TrialAdmin"
+			send "&6&lCamCraft&7>&9Your rank has been updated to TrialAdmin!" to arg 1
+			set {_p} tab name to "{@TA} &7%arg-1%"
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to true
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			stop
+		if arg 2 is "TrialMod":
+			execute console command "manuadd %arg 1% TrialMod"
+			set {_p} tab name to "{@TM} &7%arg-1%"
+			send "&6&lCamCraft&7>&9Your rank has been updated to TrialMod!" to arg 1
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to false
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to true
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
+			stop
+		if arg 2 is "Operator":
+			execute console command "manuadd %arg 1% Operator"
+			set {_p} tab name to "{@OPERATOR} &7%arg-1%"
+			send "&6&lCamCraft&7>&9Your rank has been updated to Operator!" to arg 1
+			set {tabname.rank.owner.%arg 1%} to false
+			set {tabname.rank.admin.%arg 1%} to false
+			set {tabname.rank.player.%arg 1%} to false
+			set {tabname.rank.moderator.%arg 1%} to false
+			set {tabname.rank.dev.%arg 1%} to false
+			set {tabname.rank.hb.%arg 1%} to false
+			set {tabname.rank.operator.%arg 1%} to true
+			set {tabname.rank.builder.%arg 1%} to false
+			set {tabname.rank.ta.%arg 1%} to false
+			set {tabname.rank.tm.%arg 1%} to false
+			set {tabname.rank.yt.%arg 1%} to false
+			set {abovehead.rank.builder.%arg 1%} to false
+			set {abovehead.rank.owner.%arg 1%} to false
+			set {abovehead.rank.moderator.%arg 1%} to false
+			set {abovehead.rank.dev.%arg 1%} to false
+			set {abovehead.rank.hb.%arg 1%} to false
+			set {abovehead.rank.player.%arg 1%} to false
+			set {abovehead.rank.admin.%arg 1%} to false
+			set {abovehead.yt.admin.%arg 1%} to false
 			stop
 		else: 
-		message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER/YT)"
-		stop
+			message "&6&lCamCraft&7> Invalid rank (OWNER/ADMIN/PLAYER/MODERATOR/DEVELOPER/HB/BUILDER/YT/TRIALADMIN/TRIALMOD/OPERATOR)"
+			stop
   
 command /rank: 
  permission: cc.rank
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  aliases: /rank-help, /rankhelp, /rankshelp
  trigger: 
   message "&6Rank Sub-Commands:"
@@ -489,7 +573,7 @@ command /rank:
   
 command /rank-reload:
  permission: cc.rank
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  trigger:
   make player execute command "/manload"
   message "&6&lCamCraft&7>&9All ranks reloaded."
@@ -498,7 +582,7 @@ command /rank-reload:
 			
 command /rank-create <text>:
 	permission: cc.rank
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	permission message: {@denied}
 	trigger:
 		message "&6&lCamCraft&7> Creating rank %arg 1% via &bGroupManager &7in &a3 &8seconds..."
 		message "&6%arg 1%: &9No permsissions when created."
@@ -514,14 +598,14 @@ command /ranks:
 		
 command /rank-toggleautosave:
 	permission: cc.rank
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	permission message: {@denied}
 	trigger:
 		message "&6&lCamCraft&7> Toggled autosave"
 		make player execute command "/mantogglesave"
 		
 command /rank-addperm <text> <text>:
 	permission: cc.rank
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	permission message: {@denied}
 	trigger:
 		make player execute command "/mangaddp %arg 1% %arg 2%"
 		message "&6&lCamCraft&7> Added permission %arg 2% to %arg 1%"
@@ -551,7 +635,7 @@ command /core:
    
 command /staffmode:
  permission: cc.staffmode
- permission message: &6&lCamCraft&7>&c&lInvalid permission. 
+ permission message: {@denied} 
  trigger: 
   open chest with 5 rows named "&c&lCamCraft Staffmode GUI" to player
   format slot 3 of player with red glass pane named "&c&lVanish" with lore "&6&lEnable vanish || When you enable this, players Mod+ || will not be able to see you." to close then run [do [execute player command "/vanish enable"]->[message "%player% is now in vanish." to console]]
@@ -568,7 +652,7 @@ command /pl:
    
 command /ci:
  permission: cc.clear
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  aliases: /clear
  trigger:
   execute console command "/clear %player%"
@@ -583,7 +667,7 @@ on script unload:
   
 command /rain:
  permission: cc.rain
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  trigger:
   execute console command "toggledownfall"
   broadcast "&6&lCamCraft&7>Toggled downfall.. Is that better?"
@@ -599,7 +683,7 @@ command /unbrb:
   
 command /heal:
 	permission: cc.heal
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	permission message: {@denied}
 	trigger:
 		heal player
 		broadcast "&6&lCamCraft&7>%player% healed themself."
@@ -608,7 +692,7 @@ command /heal:
   
 command /tp <text>:
  permission: cc.teleport
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  trigger: 
   teleport player to arg-1 parsed as player's location
   message "&6&lCamCraft&7>Teleported to %arg 1%"
@@ -620,7 +704,7 @@ on death of player:
  
 command /speed:
  permission: cc.speed
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  trigger: 
   apply swiftness 3 to the player for 999 minutes
   message "&6&lCamCraft&7>Applied speed."
@@ -628,7 +712,7 @@ command /speed:
   
 command /fly <text>: 
 	permission: cc.fly
-	permission message: &6&lCamCraft&7>&c&lInvalid permission.
+	permission message: {@denied}
 	trigger: 
 		if arg 1 is "enable":
 			set player's flight mode to true
@@ -664,7 +748,7 @@ command /deop <player>:
 
 command /give <items>:
  permission: cc.give
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  aliases: /g, /item, /i
  trigger:
   give argument to the player
@@ -672,7 +756,7 @@ command /give <items>:
  
 command /feed:
  permission: cc.feed
- permission message: &6&lCamCraft&7>&c&lInvalid permission.
+ permission message: {@denied}
  trigger: 
   set hunger bar to 10
   broadcast "&6&lCamCraft&7>%player% fed themself."
@@ -748,6 +832,12 @@ every 2 seconds:
 						set score "&6&lYT" in sidebar of loop-player to 11
 				if loop-player has permission "rank.player":
 						set score "&2&lPlayer" in sidebar of loop-player to 11
+				if loop-player has permission "rank.tm":
+						set score "&9&lTrialMod" in sidebar of loop-player to 11
+				if loop-player has permission "rank.ta":
+						set score "&c&lTrialAdmin" in sidebar of loop-player to 11
+				if loop-player has permission "rank.operator":
+						set score "&d&lOperator" in sidebar of loop-player to 11
 				set score "&6 " in sidebar of loop-player to 10
 				set score "&7Player&f: " in sidebar of loop-player to 9
 				set score "&d%loop-player%" in sidebar of loop-player to 8

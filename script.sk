@@ -510,8 +510,69 @@ command /nick [<text>] [<text>]:
 						set {nicked.rank.%player%} to "&6&lYT"
 						set {_p} tab name to "&6&lYT &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+					if arg 2 is "-dev":
+						set {_p} to player
+						set {nicked.%player%} to true
+						set {nicked.name.%player%} to "%arg 1%"
+						set {temprank.nicked.%player%} to "%{rank.%player%}%"
+						make player execute command "/dis player %arg 1%"
+						set {rank.%player%} to "&b&lDev"
+						set {nicked.rank.%player%} to "&b&lDev"
+						set {_p} tab name to "&b&lDev &7%arg 1%"
+						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+					if arg 2 is "-owner":
+						set {_p} to player
+						set {nicked.%player%} to true
+						set {nicked.name.%player%} to "%arg 1%"
+						set {temprank.nicked.%player%} to "%{rank.%player%}%"
+						make player execute command "/dis player %arg 1%"
+						set {rank.%player%} to "&6&lOwner"
+						set {nicked.rank.%player%} to "&6&lOwner"
+						set {_p} tab name to "&6&lOwner &7%arg 1%"
+						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+					if arg 2 is "-hb":
+						set {_p} to player
+						set {nicked.%player%} to true
+						set {nicked.name.%player%} to "%arg 1%"
+						set {temprank.nicked.%player%} to "%{rank.%player%}%"
+						make player execute command "/dis player %arg 1%"
+						set {rank.%player%} to "&a&lH&1&lB"
+						set {nicked.rank.%player%} to "&a&lH&1&lB"
+						set {_p} tab name to "&a&lH&1&lB &7%arg 1%"
+						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
 
 
+command /marry <player>:
+	trigger:
+		if {married.%arg 1%} is false:
+			set {requestedmarrige.%player%} to true
+			message "&c&lMarrige &7>> &aYou sent a mariage request to %arg 1%."
+			send "c&lMarrige &7>> &6%player% &asent your a marrige request. Type /acceptm %player% to accept it." to arg 1
+		else:
+			if {married.%arg 1%} is not set:
+				set {requestedmarrige.%player%} to true
+				message "&c&lMarrige &7>> &aYou sent a mariage request to %arg 1%."
+				send "c&lMarrige &7>> &6%player% &asent your a marrige request. Type /acceptm %player% to accept it." to arg 1
+command /acceptm <player>:
+	trigger:
+		if {requestmarrige.%arg 1%} is true:
+			set {requestedmarrige.%player%} to false
+			set {married.%player%} to true
+			set {married.%arg 1%} to true
+			set {marriedtgr.%arg 1%.%player%} to true
+			send "c&lMarrige &7>> &a%arg 1% accepted your marrige request!" to arg 1
+			broadcast "c&lMarrige &7>> &6%player% and %arg 1% are now married! &c<3"
+command /devorce <player>:
+	trigger:
+		if {marriedtgr.%arg 1%.%player%} is true:
+			broadcast "c&lMarrige &7>> &6%player% and %arg 1% have broke up! &c</3"
+			set {married.%player%} to false
+			set {married.%arg 1%} to false
+			set {marriedtgr.%arg 1%.%player%} to false
+		else:
+			message "&cYou and %arg 1% aren't together!"
+		
+			
     
 			
 command /reset <offline player>:

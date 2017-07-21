@@ -1,0 +1,125 @@
+command /mute <offline player> [<text>]:
+	permission: cc.p.ban
+	usage: /ban <player> <reason>
+	trigger:
+		set {muted.%arg-1%} to true
+		set {muted.time.%arg 1%} to now
+		set {muted.reason.%arg-1%} to argument 2
+		loop all players:
+			if loop-player has permission "cc.p.alert":
+				send "&c[CC] &6%player% &chas muted &e%arg-1% &cdue to &a%arg-2%" to loop-player 
+
+command /fuckunipban <offline player>:
+	trigger:
+		unban ip of arg 1
+command /unmute <text>:
+	trigger:
+		set {muted.%arg-1%} to false
+command /unban <offline player>:
+	trigger:
+		set {banned.%arg-1%} to false
+		execute console command "pardon %arg-1%"
+		unban ip of arg-1
+		loop all players:
+			if loop-player has permission "cc.p.alert":
+				send "&c[CC] &6%player% &aunbanned &e%arg 1%" to loop-player
+
+command /ban <offline player> [<text>]:
+	permission: cc.p.ban
+	usage: /ban <player> <reason>
+	trigger:
+		if arg 2 is set:
+			set {banned.%arg-1%} to true
+			set {ban.time.%arg 1%} to now
+			set {ban.reason.%arg-1%} to argument 2
+			set {ban.expire.%arg 1%} to "Never"
+			set {ban.bannedby.%arg-1%} to player
+			set {ban.IP.%arg-1%} to "False"
+			kick arg 1 due to "&cYou have been banned! Time: %{ban.time.%arg 1%}% %newline% Reason: %{ban.reason.%arg 1%}% %newline% Expires: %{ban.expire.%arg 1%}% %newline% By: %{banned.bannedby.%arg 1%}%"
+			ban arg 1 due to "&cYou have been banned! Time: %{ban.time.%arg 1%}% %newline% Reason: %{ban.reason.%arg 1%}% %newline% Expires: %{ban.expire.%arg 1%}% %newline% By: %{banned.bannedby.%arg 1%}%"
+			loop all players:
+				if loop-player has permission "cc.p.alert":
+					send "&c[CC] &6%player% &chas banned &e%arg-1% &cdue to &a%arg-2%" to loop-player 
+		else:
+			set {banned.%arg-1%} to true
+			set {ban.time.%arg 1%} to now
+			set {ban.reason.%arg-1%} to "Breaking rules."
+			set {ban.expire.%arg 1%} to "Never"
+			set {ban.bannedby.%arg-1%} to player
+			set {ban.IP.%arg-1%} to "False"
+			kick argument-1 due to "&cYou have been banned! Time: %{ban.time.%arg 1%}% %newline% Reason: %{ban.reason.%arg 1%}% %newline% Expires: %{ban.expire.%arg 1%}% %newline% By: %{banned.bannedby.%player%}%"
+			ban argument-1 due to "&cYou have been banned! Time: %{ban.time.%arg 1%}% %newline% Reason: %{ban.reason.%arg 1%}% %newline% Expires: %{ban.expire.%arg 1%}% %newline% By: %{banned.bannedby.%player%}%"
+			loop all players:
+				if loop-player has permission "cc.p.alert":
+					send "&c[CC] &6%player% &chas banned &e%arg-1% &cdue to &a%{ban.reason.%arg-1%}%" to loop-player
+				else:
+					if {banned.%arg 1%} is true:
+						message "&c[CC] &7%arg-1% is already banned."
+on join:
+	if {banned.%player%} is true:
+		kick the player due to "&cYou have been banned! Time: %{ban.time.%player%}% %newline% Reason: %{ban.reason.%player%}% %newline% Expires: %{ban.expire.%player%}% %newline% By: %{banned.bannedby.%player%}% %newline% IPBanned: %{ban.IP.%player%}%"
+		loop all players:
+			if loop-player has permission "cc.p.alert":
+				send "&c[CC] &7%player% tried to join, but is banned!" to loop-player
+command /kick <player> [<text>]:
+	permission: cc.p.kick
+	usage: /kick <player>
+	trigger:
+		if arg 2 is not set:
+			kick arg 1 due to "&cYou have been kicked! %newline% Reason: Breaking rules. %newline% By: %player%"
+			loop all players:
+				if loop-player has permission "cc.p.alert":
+					send "&c[CC] &6%player% &chas kicked &e%arg-1% &cdue to &aBreaking rules." to loop-player
+		else:
+			if arg 2 is set:
+				kick arg 1 due to "&cYou have been kicked! %newline% Reason: %arg 2% %newline% By: %player%"
+				loop all players:
+					if loop-player has permission "cc.p.alert":
+						send "&c[CC] &6%player% &chas kicked &e%arg-1% &cdue to %arg 2%" to loop-player
+command /banip <offline player> <text>:
+	permission: cc.p.kickip
+	usage: /banip <player> <reason>
+	trigger:
+		if {banned.%player%} is false:
+			set {banned.%arg-1%} to true
+			set {ban.time.%arg 1%} to now
+			set {ban.reason.%arg-1%} to argument 2
+			set {ban.expire.%arg 1%} to "Never"
+			set {ban.bannedby.%arg-1%} to player
+			set {ban.IP.%arg-1%} to "True"
+			kick arg 1 due to "&cYou have been banned! Time: %{ban.time.%arg 1%}% %newline% Reason: %{ban.reason.%arg 2%}% %newline% Expires: %{ban.expire.%arg 1%}% %newline% By: %{banned.bannedby.%arg 1%}% %newline% IPBanned: %{ban.IP.%arg-1%}%"
+			IP-Ban argument 1 due to "&cYou have been banned! Time: %{ban.time.%arg 1%}% %newline% Reason: %{ban.reason.%arg 1%}% %newline% Expires: %{ban.expire.%arg 1%}% %newline% By: %{banned.bannedby.%arg 1%}% %newline% IPBanned: %{ban.IP.%arg-1%}%"
+			loop all players:
+				if loop-player has permission "cc.p.alert":
+					send "&c[CC] &6%player% &chas banned the IP of &e%arg-1% &cdue to &a%{ban.reason.%arg-1%}%" to loop-player
+		else:
+			if {banned.%arg 1%} is true:
+				message "&c[CC] &7%arg-1% is already banned."
+on join:
+	if {banned.%player%} is not set:
+		set {banned.%player%} to false
+command /checkip <player>:
+	permission: cc.p.checkip
+	trigger:
+		message "%ip address of arg 1%"
+command /checkmute <text>:
+	permission: cc.p.checkmute
+	trigger:
+		if {muted.%player%} is true:
+			message "%arg-1% Info of Is Muted:"
+			message "Muted: %{muted.%player%}%"
+command /checkban <offline player>:
+	permission: cc.p.checkban
+	usage: /checkban <player>
+	trigger:
+		if {banned.%arg 1%} is true:
+			message "%arg-1% is banned."
+			message "Time: %{ban.time.%arg-1%}%"
+			message "Reason: %{ban.reason.%arg-1%}%"
+			message "Expires: %{ban.expire.%arg-1%}%"
+			message "By: %{ban.bannedby.%arg-1%}%"
+			message "IPBanned: %{ban.IP.%arg-1%}%"
+			message "Muted: %{muted.%player%}%"
+		else:
+			message "&c[CC] &7%arg-1% is not banned."
+			

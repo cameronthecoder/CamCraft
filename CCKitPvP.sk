@@ -1,0 +1,275 @@
+
+
+on join:
+	set {kitpvp.%player%} to false
+	if {kitpvpdeaths.%player%} is not set:
+		set {kitpvpdeaths.%player%} to 0
+		set {kitpvpkills.%player%} to 0
+		set {killst.%player%} to 0
+on load:
+	if folder "plugins/CamCraftCore/" doesn't exists:
+		create folder "plugins/CamCraftCore/"
+	if folder "plugins/CamCraftCore/KitPvP" doesn't exists:
+		create folder "plugins/CamCraftCore/KitPvP/"
+	if file "plugins/CamCraftCore/KitPvP/config.yml" doesn't exists:
+		create file "plugins/CamCraftCore/KitPvP/config.yml"
+		set {Prefix} to value "Prefix" get of "plugins/CamCraftCore/KitPvP/config.yml"
+	else:
+		set {Prefix} to value "Prefix" get of "plugins/CamCraftCore/KitPvP/config.yml" 
+command /kpprefixtest:
+	trigger:
+		message "&0[&6&l%{prefix}%&0]"
+command /kitpvp [<text>] [<player>] [<text>]:
+	trigger:
+		if arg 1 is not set:
+			message "/kitpvp join - joins kitpvp"
+			message "&6Developed by IntelCoreEye7"
+		if arg 1 is "join":
+			if {kitpvp.%player%} is false:
+				clear player's inventory
+				set {kitpvp.%player%} to true
+				teleport player to {kitpvp.spawn}
+				broadcast "&0[&6&l%{prefix}%&0] &7%player% has joined the game."
+				set slot 0 of player's inventory to nether star named "&6&lKit Selection"
+				set slot 8 of player's inventory to redstone named "&c&lOptions"
+				play raw sound "block.note.pling" at player with pitch 1 volume 10
+			else:
+				if {kitpvp.%player%} is true:
+					message "&0[&6&l%{prefix}%&0] &cYou are already in KitPvP"
+					stop
+				else:
+					if {kitpvp.spawn} is not set:
+						message "&0[&6&l%{prefix}%&0] &cThe spawn is not set!"
+						stop
+		if arg 1 is "setspawn":
+			if player has permission "kitpvp.admin":
+				set {kitpvp.spawn} to location of player
+				message "&0[&6&l%{prefix}%&0] &aSpawn set to %location of player%"
+				stop
+		if arg 1 is "quit" or "leave":
+			if {kitpvp.%player%} is true:
+				clear player's inventory
+				set {kitpvp.%player%} to false
+				broadcast "&0[&6&l%{prefix}%&0] &7%player% left the game."
+				make player execute command "/spawn"
+				set slot 8 of player's inventory to nether star named "&6&lEmotes"
+				set slot 7 of player's inventory to redstone named "&c&lParticles"
+				stop
+			else:
+				message "&0[&6&l%{prefix}%&0] &cYou are not in KitPvP, silly!"
+		if arg 1 is "reload":
+			if player has permission "kitpvp.admin":
+				make player execute command "/sk reload KPVP"
+				stop
+		if arg 1 is "spawn" or "lobby":
+			teleport player to {kitpvp.spawn}
+			message "%{prefix}% &aTeleported back to the KitPvP spawn."
+		if arg 1 is "stats" or "rating":
+			if arg 2 is not set:
+				message "&6&lStats:"
+				message "&dKills&f: &9%{kitpvpkills.%player%}%"
+				message "&aDeaths&f: &6%{kitpvpdeaths.%player%}%"
+				stop
+			else:
+				message "&6&lStats of %arg 2%:"
+				message "&dKills&f: &9%{kitpvpkills.%arg 2%}%"
+				message "&aDeaths&f: &6%{kitpvpdeaths.%arg 2%}%"
+				stop
+		if arg 1 is "resetstats":
+			if arg 2 is not set:
+				if arg 3 is "deaths":
+					set {kitpvpkills.%player%} to 0
+				if arg 3 is "kills":
+					set {kitpvpdeaths.%player%} to 0
+			else:
+				if arg 3 is "kills":
+					set {kitpvpkills.%arg 2%} to 0
+					message "&0[&6&l%{prefix}%&0] &a%player% has reset your kill statistics." to arg 2
+				if arg 3 is "deaths":
+					set {kitpvpdeaths.%arg 2%} to 0
+					message "&0[&6&l%{prefix}%&0] &a%player% has reset your death statistics." to arg 2
+		if arg 1 is "ci" or "clearinventory":
+			if {kitpvp.%player%} is true:
+				clear player's inventory
+				message "&0[&6&l%{prefix}%&0] &aCleared your inventory"
+				set slot 0 of player's inventory to nether star named "&6&lKit Selection"
+				set slot 8 of player's inventory to redstone named "&c&lOptions"
+		if arg 1 is "kits":
+			if {kitpvp.%player%} is true:
+				open chest with 1 rows named "&6&lKit Selection" to player
+				wait 1 tick
+				format slot 0 of player with stone sword named "&7&lBrute Kit" with lore "ur a brute" to close then run [make player execute command "/kit Brute"]
+				format slot 1 of player with stick named "&d&lTroll Kit" with lore "TROLOLOLOLOLO" to close then run [make player execute command "/kit Troll"]
+				format slot 2 of player with diamond named "&bDiamond Kit" with lore "oooo, shiny" to close then run [make player execute command "/kit Diamond"]
+				format slot 3 of player with diamond chestplate named "&bTank Kit" with lore "be a real tank" to close then run [make player execute command "/kit Tank"]
+            else:
+                message "&0[&6&l%{prefix}%&0] &cYou're not in KitPvP, silly!"
+		if arg 1 is "reloadconfig":
+			set {Prefix} to value "Prefix" get of "plugins/CamCraftCore/KitPvP/config.yml" 
+			message "&0[&6&l%{prefix}%&0] &aConfig Reloaded."
+				
+on rightclick holding a nether star:
+	if {kitpvp.%player%} is true:
+		open chest with 1 rows named "&6&lKit Selection" to player
+		wait 1 tick
+		format slot 0 of player with stone sword named "&7&lBrute Kit" with lore "ur a brute" to close then run [make player execute command "/kit Brute"]
+		format slot 1 of player with stick named "&d&lTroll Kit" with lore "TROLOLOLOLOLO" to close then run [make player execute command "/kit Troll"]
+		format slot 2 of player with diamond named "&bDiamond Kit" with lore "oooo, shiny" to close then run [make player execute command "/kit Diamond"]
+		format slot 3 of player with diamond chestplate named "&bTank Kit" with lore "be a real tank" to close then run [make player execute command "/kit Tank"]
+on rightclick holding redstone:
+	if {kitpvp.%player%} is true:
+		open chest with 1 rows named "&c&lOptions" to player
+		wait 1 tick
+		format slot 3 of player with stone sword named "&9Stats" with lore "&dKills&f: &9%{kitpvpkills.%player%}%||&aDeaths&f: &6%{kitpvpdeaths.%player%}%||&fOr, check your stats with /kitpvp stats." to be unstealable
+		format slot 5 of player with stick named "&cLeave KitPvP" with lore "&6Click this to leave KitPvP." to close then run [make player execute command "/kitpvp leave"]
+		format slot 4 of player with chest named "&7Clear inventory." with lore "&6Click this to leave clear your inventory.||You can also do this with /kitpvp ci." to close then run [make player execute command "/kitpvp ci"]
+		if player has permission "cc.staff":
+			format slot 8 of player with emerald named "&aEnter staff mode." with lore "||&aFeatures:|| ||Vanish||See player's inv||Freeze||Follow||Random TP" to close then run [make player execute command "/staff"]
+		if player has permission "rank.owner":
+			format slot 0 of player with redstone block named "&c&lRELOAD KITPVP SKRIPT" with lore "&cOWNERS ONLY || || &fDO NOT DO THIS UNLESS NEEDED!" to close then run [make player execute command "/sk reload KPVP"]
+on respawn:
+	if {kitpvp.%player%} is true:
+		set slot 0 of player's inventory to nether star named "&6&lKit Selection"
+		set slot 8 of player's inventory to redstone named "&c&lOptions"
+on quit:
+	if {kitpvp.%player%} is true:
+		set {kitpvp.%player%} to false
+		broadcast "&0[&6&l%{prefix}%&0] &7%player% left the game."
+on death:
+	if {kitpvp.%player%} is true:
+		add 1 to {kitpvpdeaths.%player%}
+		add 100 to {coins.%player%}
+		clear player's inventory
+		set {killst.%player%} to 0
+	if {kitpvp.%attacker%} is true:
+		add 1 to {kitpvpkills.%attacker%}
+		add 200 to {coins.%attacker%}
+		add 1 to {killst.%attacker%}
+		if {killst.%attacker%} is 3:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% has a killstreak for 3 kills!"
+		if {killst.%attacker%} is 10:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% has a killstreak for 10 kills!"
+		if {killst.%attacker%} is 15:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% has a killstreak for 15 kills!"
+		if {killst.%attacker%} is 20:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% has a killstreak for 20 kills!"
+		if {killst.%attacker%} is 30:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% has a killstreak for 30 kills!"
+		if {killst.%attacker%} is 50:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% IS HACKER! (killstreak for 50 kills!)"
+		if {killst.%attacker%} is 70:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% is GOD! (killstreak for &470 &ekills!)"
+		if {killst.%attacker%} is 90:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% is GOD-HACKER! (has a killstreak for &490 &ekills)!"
+		if {killst.%attacker%} is 100:
+			broadcast "&0[&6&l%{prefix}%&0] &b%attacker% is EXTRA-HACKER-GOD (killstreak for &4100 kills!)"
+			send "&cYou rechased the max killstreak (100 kills!)!" to attacker
+on rightclick on sign:
+	If line 2 contains "&3Join":
+		make player execute command "/kitpvp join"
+on rightclick on sign:
+	If line 2 contains "&3Leave":
+		make player execute command "/kitpvp leave"
+on rightclick on sign:
+	If line 2 contains "&3Kits":
+		make player execute command "/kitpvp kits"
+command /kit [<text>]:
+	trigger:
+		if arg 1 is not set:
+			message "%{prefix}% &aKits: &fBrute"
+		if arg 1 is "Diamond":
+			if player has permission "kit.diamond":
+				if {kitpvp.%player%} is true:
+					clear player's inventory
+					give player diamond sword
+					give player diamond helmet
+					give player diamond chestplate
+					give player diamond leggings
+					give player diamond boots
+					give player fishing rod
+					give player 10 golden apple
+					play raw sound "block.note.pling" at player with pitch 1 volume 10
+					stop
+			else:
+				message "&0[&6&l%{prefix}%&0] &cYou don't have permission to use this kit!"
+		if arg 1 is "Brute":
+			if {kitpvp.%player%} is true:
+				clear player's inventory
+				equip player with all iron armour
+				give player diamond sword
+				give player fishing rod
+				give player bow of infinity named "&6Bow"
+				give player arrow
+				give player 1 golden apple
+				give player 32 cooked chicken
+				play raw sound "block.note.pling" at player with pitch 1 volume 10
+				stop
+		if arg 1 is "NoDebuff":
+			if {kitpvp.%player%} is true:
+				execute console command "give %player% splash_potion 1 0 {Potion:long_regeneration}"
+				execute console command "/give %player% 373:16385 1"
+				stop
+		if arg 1 is "Troll":
+			if player has permission "kit.troll":
+				if {kitpvp.%player%} is true:
+					clear player's inventory
+					give player 64 cobweb
+					give player stick of knockback 50 named "&6TROOLOLOL"
+					play raw sound "block.note.pling" at player with pitch 1 volume 10
+					stop
+		if arg 1 is "Tank":
+			if player has permission "kit.tank":
+				if {kitpvp.%player%} is true:
+					clear player's inventory
+					give player diamond sword of sharpness 3
+					give player diamond helmet of thorns 2
+					give player diamond chestplate of protection 2
+					give player diamond leggings of unbreaking 2
+					give player diamond boots of feather falling 3
+					give player fishing rod
+					play raw sound "block.note.pling" at player with pitch 1 volume 10
+					give player 3 golden apple
+					stop
+		if arg 1 is "Archer":
+			if player has permission "kit.archer":
+				if {kitpvp.%player%} is true:
+					clear player's inventory
+					give player bow of power 3 and infinity 1
+					give player arrow
+					give player iron sword of sharpness 1
+					give player chainmail helmet of protection 2
+					give player chainmail chestplate of protection 2
+					give player chainmail leggings of protection 2
+					give player chainmail boots of protection 2
+					play raw sound "block.note.pling" at player with pitch 1 volume 10
+					give player fishing rod
+					stop
+		if arg 1 is "Bet":
+			if player has permission "kit.bet":
+				if {kitpvp.%player%} is true:
+					clear player's inventory
+					give player arrow
+					give player diamond helmet of protection 3 and thorns 2
+					give player diamond chestplate of protection 3 and thorns 2
+					give player diamond leggings of projectile protection 3 and thorns 2
+					give player diamond boots of protection 3 and thorns 2
+					give player diamond sword of sharpness 5, knockback 5, fire aspect 2 and thorns 2
+					give player bow of power 5, flame 1 and infinity 1
+					give player arrow 
+					give player 32 steak
+					give player 32 golden apple
+					give player 10 enchanted golen apple
+					give player 24 ender pearl
+					stop
+		if arg 1 is "Prisioner":
+			if player has permission "kit.prisioner":
+				if {kitpvp.%player%} is true:
+					clear player's inventory
+					give player feather named "&aComing Soon"
+					stop
+			else:
+				message "&0[&6&l%{prefix}%&0] &cYou don't have permission to use this kit!"
+				
+on hunger meter change:
+    if {kitpvp.%player%} is true:
+	    cancel the event

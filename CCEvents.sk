@@ -1,0 +1,144 @@
+#CC Events by: VojaTheCoder
+
+on load:
+	if folder "plugins/CamCraftCore/" doesn't exists:
+		create folder "plugins/CamCraftCore/"
+	if folder "plugins/CamCraftCore/CCEvents" doesn't exists:
+		create folder "plugins/CamCraftCore/CCEvents/"
+	if file "plugins/CamCraftCore/CCEvents/config.yml" doesn't exists:
+		create file "plugins/CamCraftCore/CCEvents/config.yml"
+	wait 1 second
+	if file "plugins/CamCraftCore/CCEvents/config.yml" doesn't exists:
+		create file "plugins/CamCraftCore/CCEvents/config.yml"
+		wf "##=======================================================" to "plugins/CamCraftCore/CCEvents/config.yml"
+		wf "##                  CamCraft | Events                   =" to "plugins/CamCraftCore/CCEvents/config.yml"
+		wf "##                      by VojaTheCoder                 =" to "plugins/CamCraftCore/CCEvents/config.yml"
+		wf "##=======================================================" to "plugins/CamCraftCore/CCEvents/config.yml"
+		wf "##    " to "plugins/CamCraftCore/CCEvents/config.yml"
+		set "Config Version" to "1.0" in yaml file "plugins/CamCraftCore/CCEvents/config.yml"
+		set "Prefix" to "Event Manager" in yaml file "plugins/CamCraftCore/CCEvents/config.yml"
+	wait 1 second
+	if file "plugins/CamCraftCore/CCEvents/messages.yml" doesn't exists:
+		create file "plugins/CamCraftCore/CCEvents/messages.yml"
+		wf "##Messages coming soon" to "plugins/CamCraftCore/CCEvents/messages.yml"
+		set {ePrefix} to value "Prefix" get of "plugins/CamCraftCore/CCEvents/config.yml"
+	else:
+		set {ePrefix} to value "Prefix" get of "plugins/CamCraftCore/CCEvents/config.yml"
+		set {confver} to value "Config Version" get of "plugins/CamCraftCore/CCEvents/config.yml"
+		
+command /hostevent:
+	permission: cc.command.hostevent
+	permission message: &cInvalid permission, sorry.
+	trigger:
+		if {cc.event.%player%} is not set:
+			send "&0[&3&l%{ePrefix}%&0] &3%player%'s Event-1 successfully created. You will be sent to it shortly."
+			send "&0[&3&l%{ePrefix}%&0] &3If you haven't been send in 20 seconds, type /mv tp %player%'s Event-1"
+			copy dir "plugins/CamCraftCore/CCEvents/eventmap/map1" to "plugins/CamCraftCore/CCEvents/%player%'s Event-1/"
+			wait 10 ticks
+			load world "plugins/CamCraftCore/CCEvents/%player%'s Event-1"
+			wait 20 seconds
+			skellett teleport player to world "plugins/CamCraftCore/CCEvnts/%player%'s Event-1" spawn
+			add player to {hosterlist::*}
+		else:
+			send "&0[&3&l%{ePrefix}%&0] &3Your event is still being created or already exists. If you haven't been send in 20 seconds, type /mv tp %player%'s Event-1."
+			
+command /eventconfirm:
+	permission: cc.command.eventconfirm
+	permission message: &cInvalid permission, sorry.
+	trigger:
+		if {cc.event.%player%} is not set:
+			send "&0[&3&l%{ePrefix}%&0] &3%player%'s Event-1 successfully created. You will be sent to it shortly."
+			send "&0[&3&l%{ePrefix}%&0] &3If you haven't been send in 20 seconds, type /mv tp %player%'s Event-1."
+			copy dir "plugins/CamCraftCore/CCEvents/eventmap/map1" to "plugins/CamCraftCore/CCEvents/%player%'s Event-1/"
+			load world "plugins/CamCraftCore/CCEvents/%player%'s Event-1"
+			set {event.%player%'s Event-1} to "true"
+			wait 20 seconds
+		else:
+			send "%{Prefix}% &3Your event is still being created or already exists. If you haven't been send in 20 seconds, type /mv tp %player%'s Event-1."
+
+command /closeevent:
+	permission: cc.command.eventclose
+	permission message: &cInvalid permission, sorry.
+	trigger:
+		loop all players:
+			loop-player's world is "plugins/CamCraftCore/CCEvents/%player%'s Event-1"
+			    if player is in list {playerlist::*}
+				if player is in list {hosterlist::*}
+                   skellett teleport players to world "world" spawn				
+		unload world "plugins/CamCraftCore/CCEvents/%player%'s Event-1"
+		wait 2 seconds
+		delete folder "plugins/CamCraftCore/CCEvents/%player%'s Event-1/data/"
+		delete folder "plugins/CamCraftCore/CCEvents/%player%'s Event-1/region/"
+		delete folder "plugins/CamCraftCore/CCEvents/%player%'s Event-1/playerdata"
+		wait 2 ticks
+		delete file "plugins/CamCraftCore/CCEvents/%player%'s Event-1/level.dat"
+		delete file "plugins/CamCraftCore/CCEvents/%player%'s Event-1/uid.dat"
+		delete file "plugins/CamCraftCore/CCEvents/%player%'s Event-1/level.dat_old"
+		wait 3 ticks
+		delete file "plugins/CamCraftCore/CCEvents/%player%'s Event-1/session.lock"
+		delete folder "plugins/CamCraftCore/CCEvents/%player%'s Event-1"
+		wait 2 ticks
+		message "&0[&3&l%{eprefix}%&0] &3Successfully removed your event."
+		delete {cc.event.%player%}
+		clear {playerlist::*}
+		clear {hosterlist::*}
+		
+		
+#command /server [<text>]:
+#    permission: cc.command.server
+#	 permission message: &cInvalid permission, sorry.
+#    trigger:
+#        if arg-1 is set:
+#			 skellet teleport player to world "plugins/CamCraftCore/CCEvents/%arg-1%'s Event-1" spawn
+#            add player to {playerlist::*}
+		
+on rightclick on sign:
+	If line 2 contains "&cManage":
+		make player execute command "/eventmanage"
+
+on rightclick on sign:
+	If line 2 contains "&cEvents":
+		make player execute command "/eventslist"
+
+command /eventmanage:
+    trigger:
+        wait 2 ticks
+        open chest with 1 rows named "&cEvents Manager" to player
+        wait 1 tick
+        format slot 0 of player with emerald block named "&aCreate Event" with lore "&7Create your event" to close then run [make player execute command "/hostevent"]
+        format slot 8 of player with redstone block named "&cRemove Event" with lore "&7Remove your event" to close then run [make player execute command "/closeevent"]
+
+command /eventslist:
+    trigger:
+        wait 2 ticks
+        open chest with 1 rows named "&cCurrently hosted events" to player
+        wait 1 tick
+        format slot 0 of player with 166 named "&7&lEvent list coming soon" with lore "&7Soon" to close then run [make player execute command "/read"]
+
+command /setgame [<text>] [<text>]:
+    permission: cc.command.setgame
+    permission message: &cInvalid permission, sorry.
+    trigger:
+        if arg-1 is set:
+            message "&0[&3&l%{eprefix}%&0] &cSoon."
+        if arg-1 is set:
+            if arg-2 is set:
+                message "&0[&3&l%{eprefix}%&0] &cSoon."
+
+command /reseteventvariable:
+    permission: cc.command.resetvariable
+    permission message: &cInvalid permission, sorry.
+    trigger:
+        if {cc.event.%player%} is set:
+            delete {cc.event.%player%}
+            message "&0[&3&l%{eprefix}%&0] &3Variable reset"
+
+#command /e <text> <item>:
+#    permission: cc.command.eventsettings
+#	permission message: &cInvalid permission, sorry.
+#	trigger: 
+#		if arg 1 is "giveall":
+#			give arg 3 to all players
+#			broadcast "&6&lCamCraft&7> You have recieved %arg 2% from %player%"
+
+#json("%player%", "&7&oHello, this is a &bsample json&7.||cmd:/ping||ttp:&6&o&lCLICK&f for /ping")

@@ -1,4 +1,4 @@
-# CamCraft-Core
+# CamCraft
 
 CamCraft server core 1.0. Please read the https://github.com/Camnooten/CamCraft/blob/add-license-1/LICENSE for your rights about the source code. 
 

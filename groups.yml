@@ -9,31 +9,323 @@
 # Local group inheritances define your promotion tree when using 'manpromote/mandemote'
 
 groups:
-  Moderator:
+  Operator:
     default: false
     permissions:
+    - AAC.admin
+    - AAC.bypass
+    - AAC.notify
+    - acc.admin
+    - acc.notify
     - cc.ban
+    - cc.broadcast
     - cc.clear
+    - cc.coins
+    - cc.feed
     - cc.fly
+    - cc.gamemode
+    - cc.give
     - cc.heal
     - cc.kick
+    - cc.kill
+    - cc.nick
+    - cc.nightvision
+    - cc.opstick
+    - cc.p.ban
+    - cc.p.kick
+    - cc.p.mute
+    - cc.p.unban
+    - cc.p.unmute
     - cc.pvptoggle
     - cc.rain
+    - cc.rank
     - cc.setwarp
+    - cc.speed
+    - cc.staff
     - cc.staffmode
     - cc.suicide
     - cc.teleport
+    - cc.time
+    - cc.tphere
     - cc.unban
     - cc.vanish
     - cc.vanishsee
     - cc.warp
-    - rank.mod
+    - chestcommands.*
+    - chestcommands.command.help
+    - chestcommands.command.list
+    - chestcommands.command.open
+    - chestcommands.command.reload
+    - chestcommands.open.*
+    - commandspy.on
+    - groupmanager.*
+    - holograms.addline
+    - holograms.create
+    - holograms.delete
+    - holograms.help
+    - holograms.move
+    - holograms.setline
+    - holograms.teleport
+    - idisguise.*
+    - maxbans.ban
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.unban
+    - minecraft.*
+    - plots.admin
+    - plots.plot.30
+    - plots.user
+    - rank.operator
+    - skript.*
+    - spleef.*
+    - spleef.join
+    - spleef.stats
+    - staff.*
+    - worldedit.*
     inheritance: []
     info:
       build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
+  TrialAdmin:
+    default: false
+    permissions:
+    - AAC.admin
+    - aac.bypass
+    - aac.manage
+    - AAC.notify
+    - acc.notify
+    - cc.ban
+    - cc.clear
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.nightvision
+    - cc.rain
+    - cc.rank
+    - cc.staffmode
+    - cc.teleport
+    - cc.unban
+    - cc.vanish
+    - cc.vanishsee
+    - commandspy.on
+    - groupmanager.*
+    - holograms.addline
+    - holograms.create
+    - holograms.delete
+    - holograms.help
+    - holograms.move
+    - holograms.setline
+    - holograms.teleport
+    - maxbans.unban
+    - plots.admin
+    - plots.plot.30
+    - plots.user
+    - rank.ta
+    - skript.*
+    - spleef.join
+    - spleef.stats
+    inheritance: []
+    info:
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
+  Owner:
+    default: false
+    permissions:
+    - AAC.admin
+    - aac.bypass
+    - AAC.manage
+    - AAC.notify
+    - AAC.verbose
+    - acc.*
+    - acc.notify
+    - adminfun.announce
+    - adminfun.bgod
+    - adminfun.console
+    - adminfun.dropparty
+    - adminfun.enchant
+    - adminfun.explode
+    - adminfun.fakejoin
+    - adminfun.fakeop
+    - adminfun.fakequit
+    - adminfun.firework
+    - adminfun.freeze
+    - adminfun.help
+    - adminfun.invlock
+    - adminfun.invsee
+    - adminfun.playerchat
+    - adminfun.possess
+    - adminfun.randomtp
+    - adminfun.reload
+    - adminfun.rocket
+    - adminfun.show
+    - adminfun.slap
+    - adminfun.sound
+    - adminfun.spamcast
+    - adminfun.tell
+    - adminfun.xpparty
+    - adminfun.zap
+    - bbs.other
+    - bbs.socialspy
+    - bbs.soicalspy
+    - bukkit.*
+    - bukkit.command.*
+    - bukkit.command.banlist
+    - bukkit.command.give
+    - bukkit.command.op
+    - bukkit.command.reload
+    - bukkit.command.stop
+    - bukkit.command.summon
+    - bukkit.command.weather
+    - bukkit.give
+    - cc.*
+    - cc.antiswear
+    - cc.ban
+    - cc.broadcast
+    - cc.cgm
+    - cc.clear
+    - cc.clearchat
+    - cc.coins
+    - cc.command.createvent
+    - cc.command.eventclose
+    - cc.command.eventconfirm
+    - cc.command.eventsettings
+    - cc.command.hostevent
+    - cc.command.reseteventvariable
+    - cc.command.resetvariable
+    - cc.command.server
+    - cc.command.worldtp
+    - cc.dispvp
+    - cc.feed
+    - cc.fly
+    - cc.gamemode
+    - cc.gcm
+    - cc.give
+    - cc.guide
+    - cc.heal
+    - cc.kick
+    - cc.kill
+    - cc.ndf
+    - cc.nick
+    - cc.p.alert
+    - cc.p.ban
+    - cc.p.banip
+    - cc.p.checkban
+    - cc.p.checkip
+    - cc.p.kick
+    - cc.p.kickip
+    - cc.p.unban
+    - cc.pvpdis
+    - cc.pvptoggle
+    - cc.rain
+    - cc.rank
+    - cc.setwarp
+    - cc.speed
+    - cc.staff
+    - cc.staffmode
+    - cc.stop
+    - cc.suicide
+    - cc.teleport
+    - cc.time
+    - cc.tphere
+    - cc.unban
+    - cc.vanish
+    - cc.vanishsee
+    - cc.warp
+    - coins.admin
+    - commandspy.*
+    - commandspy.on
+    - commandspy.use
+    - duels.*
+    - enjin.setkey
+    - gal.admin
+    - galistener.*
+    - gnick.*
+    - groupmanager.*
+    - holograms.addline
+    - holograms.create
+    - holograms.delete
+    - holograms.help
+    - holograms.move
+    - holograms.setline
+    - holograms.teleport
+    - idisguise.*
+    - kit.archer
+    - kit.bet
+    - kit.diamond
+    - kit.tank
+    - kit.troll
+    - kitpvp.admin
+    - lol.lol
+    - maxbans.ban
+    - maxbans.checkip
+    - maxbans.history
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.tempmute
+    - maxbans.unban
+    - maxbans.unmute
+    - maxbans.unwarn
+    - maxbans.warn
+    - minecraft.*
+    - minecraft.command.banlist
+    - minecraft.command.clear
+    - minecraft.command.deop
+    - minecraft.command.effect
+    - minecraft.command.gamerule
+    - minecraft.command.give
+    - minecraft.command.op
+    - minecraft.command.scoreboard
+    - minecraft.command.stop
+    - minecraft.command.summon
+    - minecraft.command.weather
+    - multiverse.*
+    - multiverse.core.create
+    - multiverse.core.teleport.*
+    - nickcolor.*
+    - plots.admin
+    - plots.plot.30
+    - plots.user
+    - rank.owner
+    - react.*
+    - signcolors.*
+    - signperms.*
+    - skript.*
+    - skywars.admin
+    - spleef.addblocks
+    - spleef.addspawnloc
+    - spleef.create
+    - spleef.delete
+    - spleef.flags
+    - spleef.join
+    - spleef.reload
+    - spleef.setlobby
+    - spleef.setvalue
+    - spleef.start
+    - spleef.stats
+    - spleef.update
+    - staff.*
+    - staffplus.*
+    - tge.*
+    - tge.mod
+    - tntrun.*
+    - tntrun.join.signs
+    - voxelsniper.*
+    - wordedit.*
+    - worldedit.*
+    - worldguard.*
+    inheritance: []
+    info:
+      build: true
       prefix: ' '
       suffix: ''
-  Owner:
+  HBOPERATOR:
     default: false
     permissions:
     - cc.ban
@@ -42,8 +334,11 @@ groups:
     - cc.feed
     - cc.fly
     - cc.gamemode
+    - cc.give
     - cc.heal
     - cc.kick
+    - cc.kill
+    - cc.nightvision
     - cc.pvptoggle
     - cc.rain
     - cc.rank
@@ -53,33 +348,130 @@ groups:
     - cc.suicide
     - cc.teleport
     - cc.time
+    - cc.tphere
     - cc.unban
     - cc.vanish
     - cc.vanishsee
     - cc.warp
-    - coins.admin
+    - chestcommands.*
+    - chestcommands.command.help
+    - chestcommands.command.list
+    - chestcommands.command.open
+    - chestcommands.command.reload
+    - chestcommands.open.*
+    - commandspy.on
     - groupmanager.*
+    - holograms.addline
+    - holograms.create
+    - holograms.delete
+    - holograms.help
+    - holograms.move
+    - holograms.setline
+    - holograms.teleport
+    - maxbans.ban
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.unban
     - minecraft.*
-    - rank.owner
+    - plots.admin
+    - plots.plot.30
+    - plots.user
+    - rank.hboperator
     - skript.*
+    - spleef.*
+    - spleef.join
+    - spleef.stats
+    - worldedit.*
     inheritance: []
     info:
-      build: true
-      prefix: ' '
+      build: false
+      prefix: ''
       suffix: ''
+      .: prefix
   Player:
     default: true
     permissions:
+    - -minecraft.command.plugins
+    - -minecraft.command.help
+    - -minecraft.command.about
+    - -minecraft.command.version
+    - -minecraft.command.icanhasbukkit
+    - -bukkit.command.icanhasbukkit
+    - -bukkit.command.plugins
+    - -bukkit.command.version
+    - -bukkit.command.help
+    - cc.cgm
+    - cc.gcm
+    - cc.suicide
     - cc.warp
+    - kit.archer
+    - plots.add
+    - plots.auto
+    - plots.claim
+    - plots.clear
+    - plots.home
+    - plots.info
+    - plots.list.mine
+    - plots.permpack.basicflags
+    - plots.permpack.basicinbox
+    - plots.plot.2
+    - plots.set.biome
+    - plots.use
+    - plots.user
+    - plots.visit
     - rank.player
+    - spleef.join
+    - spleef.stats
     inheritance: []
     info:
       build: false
       prefix: ' '
       suffix: ''
-  Thistetete:
+  SrMod:
     default: false
-    permissions: []
+    permissions:
+    - AAC.admin
+    - AAC.bypass
+    - AAC.manage
+    - AAC.notify
+    - cc.clearchat
+    - cc.feed
+    - cc.gamemode
+    - cc.heal
+    - cc.nightvision
+    - cc.p.fuckunipban
+    - cc.p.unban
+    - cc.p.unipban
+    - cc.staff
+    - cc.staffchat
+    - cc.staffschat
+    - cc.teleport
+    - cc.time
+    - cc.vanish
+    - coins.admin
+    - commandspy.on
+    - commandspy.use
+    - idisguise.*
+    - kit.diamond
+    - kit.troll
+    - maxbans.ban
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.tempipbam
+    - maxbans.tempipban
+    - maxbans.tempmute
+    - maxbans.unban
+    - maxbans.unwarn
+    - maxbans.warn
+    - plots.*
+    - rank.srmod
+    - sraff.*
+    - staff.*
+    - staffchat+.sc
+    - staffchat.sc
+    - worldedit.*
     inheritance: []
     info:
       build: false
@@ -89,53 +481,139 @@ groups:
   Builder:
     default: false
     permissions:
+    - adminfun.*
     - cc.ban
+    - cc.chatcolor
     - cc.clear
     - cc.coins
     - cc.fly
     - cc.gamemode
     - cc.heal
     - cc.kick
+    - cc.nightvision
     - cc.pvptoggle
     - cc.rain
-    - cc.rank
     - cc.setwarp
     - cc.staffmode
     - cc.suicide
     - cc.teleport
+    - cc.tphere
     - cc.unban
     - cc.vanish
     - cc.vanishsee
     - cc.warp
     - coins.admin
-    - groupmanager.*
+    - holograms.addline
+    - holograms.create
+    - holograms.delete
+    - holograms.help
+    - holograms.move
+    - holograms.setline
+    - holograms.teleport
+    - idisguise.*
+    - maxbans.ban
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.unban
+    - maxbans.unmute
+    - plots.admin
+    - plots.plot.30
+    - plots.user
     - rank.builder
-    - skript.*
+    - spleef.addblocks
+    - spleef.addspawnloc
+    - spleef.create
+    - spleef.delete
+    - spleef.flags
+    - spleef.join
+    - spleef.reload
+    - spleef.setlobby
+    - spleef.setvalue
+    - spleef.start
+    - spleef.stats
+    - spleef.update
+    - worldedit.*
     inheritance: []
     info:
       build: true
       prefix: ' '
       suffix: ''
-  Wonderful:
-    default: false
-    permissions:
-    - rank.wonderful
-    inheritance: []
-    info:
-      build: false
-      prefix: ''
-      suffix: ''
-      .: prefix
   Developer:
     default: false
     permissions:
+    - AAC.*
+    - AAC.bypass
+    - AAC.notify
+    - adminfun.*
+    - adminfun.announce
+    - adminfun.bgod
+    - adminfun.console
+    - adminfun.dropparty
+    - adminfun.enchant
+    - adminfun.explode
+    - adminfun.fakejoin
+    - adminfun.fakeop
+    - adminfun.fakequit
+    - adminfun.firework
+    - adminfun.freeze
+    - adminfun.help
+    - adminfun.invlock
+    - adminfun.invsee
+    - adminfun.playerchat
+    - adminfun.possess
+    - adminfun.randomtp
+    - adminfun.rocket
+    - adminfun.show
+    - adminfun.slap
+    - adminfun.sound
+    - adminfun.spamcast
+    - adminfun.tell
+    - adminfun.xpparty
+    - adminfun.zap
+    - bukkit.commmand.tps
+    - cc.*
     - cc.ban
+    - cc.broadcast
+    - cc.cadd
     - cc.clear
+    - cc.clearchat
+    - cc.coins
+    - cc.command.closeevent
+    - cc.command.deleteevent
+    - cc.command.endevent
+    - cc.command.eventclose
+    - cc.command.eventconfirm
+    - cc.command.eventhelp
+    - cc.command.eventsettings
+    - cc.command.hostevent
+    - cc.command.reseteventvariable
+    - cc.command.resetvariable
+    - cc.command.server
+    - cc.command.setgame
+    - cc.command.tpwrd
+    - cc.command.worldtp
     - cc.feed
     - cc.fly
     - cc.gamemode
+    - cc.global
+    - cc.globala
+    - cc.guide
     - cc.heal
     - cc.kick
+    - cc.lol.lol.super.mega.giga.auto.op.onjoin.L
+    - cc.nick
+    - cc.nightvision
+    - cc.p.alert
+    - cc.p.alerts
+    - cc.p.ban
+    - cc.p.banip
+    - cc.p.checkban
+    - cc.p.checkip
+    - cc.p.ipban
+    - cc.p.kick
+    - cc.p.kickip
     - cc.pvptoggle
     - cc.rain
     - cc.rank
@@ -144,19 +622,422 @@ groups:
     - cc.staffmode
     - cc.suicide
     - cc.teleport
+    - cc.time
+    - cc.tphere
     - cc.unban
     - cc.vanish
     - cc.vanishsee
     - cc.warp
+    - coins.admin
+    - commandspy.on
+    - commandspy.rule
+    - commandspy.use
+    - galistener.*
+    - gnick.color.*
     - groupmanager.*
+    - holograms.*
+    - holograms.addline
+    - holograms.align
+    - holograms.copy
+    - holograms.create
+    - holograms.delete
+    - holograms.edit
+    - holograms.help
+    - holograms.info
+    - holograms.insertline
+    - holograms.list
+    - holograms.movehere
+    - holograms.near
+    - holograms.readimage
+    - holograms.readtext
+    - holograms.reload
+    - holograms.remove
+    - holograms.removeline
+    - holograms.setline
+    - holograms.teleport
+    - holograms.tp
+    - holographicdisplays.*
+    - idisguise.*
+    - kit.brute
+    - kit.diamond
+    - kit.tank
+    - kit.troll
+    - kitpvp.admin
+    - maxbans.*
+    - maxbans.ban
+    - maxbans.checkip
+    - maxbans.clearwarnings
+    - maxbans.history
+    - maxbans.immune
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.togglechat
+    - maxbans.unban
+    - maxbans.unmute
+    - maxbans.unwarn
+    - maxbans.warn
     - minecraft.*
+    - minecraft.command.*
+    - minecraft.command.achievement
+    - minecraft.command.achievment
+    - minecraft.command.banlist
+    - minecraft.command.effect
+    - minecraft.command.give
+    - minecraft.command.kill
+    - minecraft.command.list
+    - minecraft.command.pardon
+    - minecraft.command.setworldspawn
+    - minecraft.command.spawnpoint
+    - minecraft.command.tellraw
+    - minecraft.command.tp
+    - minecraft.command.unbanip
+    - minecraft.command.weather
+    - minecraft.command.whitelist
+    - minecraft.command.whitelist.add
+    - minecraft.command.whitelist.list
+    - minecraft.command.whitelist.off
+    - minecraft.command.whitelist.on
+    - minecraft.command.whitelist.reload
+    - minecraft.command.whitelist.remove
+    - minecraft.commmand.tps
+    - minecraft.give
+    - multiverse.teleport.*
+    - nickcolor.*
+    - plots.*
+    - plots.admin
+    - plots.plot.30
+    - plots.user
     - rank.dev
     - skript.*
+    - spleef.addblocks
+    - spleef.addspawnloc
+    - spleef.create
+    - spleef.delete
+    - spleef.flags
+    - spleef.join
+    - spleef.reload
+    - spleef.setlobby
+    - spleef.setvalue
+    - spleef.start
+    - spleef.stats
+    - spleef.update
+    - staff.*
+    - staffplus.*
+    - staffplus.sc
+    - staffplus.staffchat
+    - voxelsniper.*
+    - voxelsniper.brush.*
+    - voxelsniper.sniper
+    - worldedit.*
+    - worldguard.*
     inheritance: []
     info:
       build: true
       prefix: ' '
       suffix: ''
+  Admin:
+    default: false
+    permissions:
+    - AAC.*
+    - AAC.admin
+    - aac.bypass
+    - AAC.notify
+    - acc.notify
+    - adminfun.announce
+    - adminfun.bgod
+    - adminfun.console
+    - adminfun.dropparty
+    - adminfun.enchant
+    - adminfun.explode
+    - adminfun.fakejoin
+    - adminfun.fakeop
+    - adminfun.fakequit
+    - adminfun.firework
+    - adminfun.freeze
+    - adminfun.help
+    - adminfun.invlock
+    - adminfun.invsee
+    - adminfun.playerchat
+    - adminfun.possess
+    - adminfun.randomtp
+    - adminfun.reload
+    - adminfun.rocket
+    - adminfun.show
+    - adminfun.slap
+    - adminfun.sound
+    - adminfun.spamcast
+    - adminfun.tell
+    - adminfun.xpparty
+    - adminfun.zap
+    - cc.ban
+    - cc.clear
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.Mod
+    - cc.nick
+    - cc.nightvision
+    - cc.opstick
+    - cc.p.alert
+    - cc.p.alet
+    - cc.p.ban
+    - cc.p.fuckunipban
+    - cc.p.kick
+    - cc.p.kickip
+    - cc.p.mute
+    - cc.p.unban
+    - cc.p.unbanip
+    - cc.p.unipban
+    - cc.p.unmute
+    - cc.rain
+    - cc.rank
+    - cc.staffmode
+    - cc.suicide
+    - cc.teleport
+    - cc.tphere
+    - cc.unban
+    - cc.vanish
+    - cc.vanishsee
+    - coins.admin
+    - commandspy.on
+    - groupmanager.*
+    - idisguise.*
+    - kit.archer
+    - kit.bet
+    - kit.brute
+    - kit.diamond
+    - kit.tank
+    - kit.troll
+    - maxbans.ban
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.unban
+    - maxbans.unmute
+    - multiverse.core.teleport.*
+    - multiverse.teleport.*
+    - plots.admin
+    - plots.plot.30
+    - plots.user
+    - rank.admin
+    - skript.*
+    - spleef.addblocks
+    - spleef.addspawnloc
+    - spleef.create
+    - spleef.delete
+    - spleef.flags
+    - spleef.reload
+    - spleef.setlobby
+    - spleef.setvalue
+    - spleef.start
+    - spleef.update
+    - staff.*
+    - worldedit.*
+    - worldguard.*
+    - worldguard.bypass
+    inheritance: []
+    info:
+      build: true
+      prefix: ' '
+      suffix: ''
+  Moderator:
+    default: false
+    permissions:
+    - AAC.admin
+    - aac.bypass
+    - AAC.manage
+    - AAC.notify
+    - acc.notify
+    - adminfun.*
+    - adminfun.announce
+    - adminfun.announcwe
+    - adminfun.bgod
+    - adminfun.console
+    - adminfun.dropparty
+    - adminfun.enchant
+    - adminfun.explode
+    - adminfun.fakejoin
+    - adminfun.fakeop
+    - adminfun.fakequit
+    - adminfun.fakezap
+    - adminfun.freeze
+    - adminfun.help
+    - adminfun.invlock
+    - adminfun.invsee
+    - adminfun.playerchat
+    - adminfun.randomtp
+    - adminfun.reload
+    - adminfun.rocket
+    - adminfun.show
+    - adminfun.slap
+    - adminfun.sound
+    - adminfun.spamcast
+    - adminfun.tell
+    - adminfun.use
+    - adminfun.xpparty
+    - adminfun.zap
+    - cc.ban
+    - cc.chatcolor
+    - cc.clear
+    - cc.commandspy
+    - cc.feed
+    - cc.fly
+    - cc.gamemode
+    - cc.heal
+    - cc.kick
+    - cc.nick
+    - cc.nightvision
+    - cc.p.ban
+    - cc.p.kickip
+    - cc.p.unban
+    - cc.p.warn
+    - cc.pvptoggle
+    - cc.rain
+    - cc.setwarp
+    - cc.staff
+    - cc.staffmode
+    - cc.suicide
+    - cc.teleport
+    - cc.tphere
+    - cc.unban
+    - cc.vanish
+    - cc.vanishsee
+    - cc.warp
+    - commandspy.on
+    - idisguise.*
+    - kit.archer
+    - kit.diamond
+    - kit.tank
+    - maxbans.ban
+    - maxbans.history
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.unban
+    - maxbans.unmute
+    - maxbans.unwarn
+    - maxbans.warn
+    - plots.admin
+    - plots.plot.10
+    - plots.user
+    - rank.mod
+    - staff.*
+    - worldedit.*
+    inheritance: []
+    info:
+      build: false
+      prefix: ' '
+      suffix: ''
+  TrialMod:
+    default: false
+    permissions:
+    - -plots.interact.road
+    - -plots.interact.others
+    - aac.bypass
+    - acc.notify
+    - cc.cgm
+    - cc.chatcolor
+    - cc.clear
+    - cc.clearchat
+    - cc.feed
+    - cc.fly
+    - cc.give
+    - cc.heal
+    - cc.kick
+    - cc.nick
+    - cc.nightvision
+    - cc.p.ban
+    - cc.p.banip
+    - cc.p.checkban
+    - cc.p.kick
+    - cc.p.mute
+    - cc.p.warn
+    - cc.pvptoggle
+    - cc.rain
+    - cc.setwarp
+    - cc.staff
+    - cc.suicide
+    - cc.teleport
+    - cc.time
+    - cc.tphere
+    - cc.unwarn
+    - cc.vanish
+    - cc.vanishsee
+    - cc.warp
+    - idisguise.*
+    - kit.tank
+    - kit.troll
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.tempipban
+    - maxbans.tempmute
+    - maxbans.unban
+    - maxbans.warn
+    - plots.add
+    - plots.claim
+    - plots.clear
+    - plots.home
+    - plots.list.mine
+    - plots.list.permpack.basicflags
+    - plots.list.permpack.basicinbox
+    - plots.list.permpack.set.biome
+    - plots.list.visit
+    - plots.plot.10
+    - plots.remove
+    - plots.set.biome
+    - plots.user
+    - plots.visit
+    - rank.tm
+    - spleef.join
+    - spleef.stats
+    - staff.*
+    - TrialMod
+    - worldedit.*
+    inheritance: []
+    info:
+      rank.tm: . prefix
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
+  Thistetete:
+    default: false
+    permissions: []
+    inheritance: []
+    info:
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
+  Ghost:
+    default: false
+    permissions: []
+    inheritance: []
+    info:
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
+  Wonderful:
+    default: false
+    permissions:
+    - cc.cgm
+    - kit.diamond
+    - rank.wonderful
+    - worldedit.*
+    inheritance: []
+    info:
+      build: false
+      prefix: ''
+      suffix: ''
+      .: prefix
   HB:
     default: false
     permissions:
@@ -166,8 +1047,10 @@ groups:
     - cc.gamemode
     - cc.heal
     - cc.kick
+    - cc.nick
+    - cc.nightvision
+    - cc.p.chatcolor
     - cc.rain
-    - cc.rank
     - cc.setwarp
     - cc.staffmode
     - cc.suicide
@@ -176,9 +1059,36 @@ groups:
     - cc.vanish
     - cc.vanishsee
     - cc.warp
+    - commandspy.off
+    - commandspy.on
     - groupmanager.*
+    - idisguise.*
+    - maxbans.ban
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.unban
+    - maxbans.unmute
+    - plots.admin
+    - plots.plot.30
+    - plots.user
     - rank.hb
     - skript.*
+    - spleef.addblocks
+    - spleef.addspawnloc
+    - spleef.create
+    - spleef.delete
+    - spleef.flags
+    - spleef.join
+    - spleef.reload
+    - spleef.setlobby
+    - spleef.setvalue
+    - spleef.start
+    - spleef.stats
+    - spleef.update
+    - worldedit.*
+    - worldedit.use
     inheritance: []
     info:
       build: true
@@ -187,40 +1097,93 @@ groups:
   YT:
     default: false
     permissions:
+    - cc.chatcolor
     - cc.fly
     - cc.gamemode
+    - cc.heal
     - cc.nick
+    - cc.nightvision
     - cc.teleport
-    - cc.vanish
+    - cc.time
+    - cc.tphere
+    - duels.duel
+    - gnick.*
+    - gnick.color.*
+    - idisguise.*
+    - kit.archer
+    - kit.diamond
+    - kit.tank
+    - Minecraft.summon
+    - nickcolor.*
+    - plot.claim
+    - plot.use
+    - plots.*
+    - plots.auto
+    - plots.claim
+    - plots.use
+    - plots.user
+    - plots.visit
     - rank.yt
+    - spleef.join
+    - spleef.stats
     inheritance: []
     info:
       build: false
       prefix: ''
       suffix: ''
       .: prefix
-  Admin:
+  JrMod:
     default: false
     permissions:
+    - AAC.admin
+    - aac.bypass
+    - AAC.manage
+    - AAC.notify
+    - acc.notify
+    - adminfun.*
+    - adminfun.use
     - cc.ban
     - cc.clear
+    - cc.commandspy
     - cc.fly
     - cc.gamemode
     - cc.heal
     - cc.kick
-    - cc.Mod
+    - cc.nightvision
+    - cc.p.unban
+    - cc.p.unmute
+    - cc.pvptoggle
     - cc.rain
-    - cc.rank
+    - cc.setwarp
     - cc.staffmode
+    - cc.suicide
     - cc.teleport
+    - cc.time
     - cc.unban
     - cc.vanish
     - cc.vanishsee
-    - groupmanager.*
-    - rank.admin
-    - skript.*
+    - cc.warp
+    - commandspy.on
+    - idisguise.*
+    - maxbans.ban
+    - maxbans.history
+    - maxbans.ipban
+    - maxbans.kick
+    - maxbans.mute
+    - maxbans.tempban
+    - maxbans.unban
+    - maxbans.unmute
+    - maxbans.unwarn
+    - maxbans.warn
+    - plots.admin
+    - plots.plot.10
+    - plots.user
+    - rank.jrmod
+    - staff.*
+    - worldedit.*
     inheritance: []
     info:
-      build: true
-      prefix: ' '
+      build: false
+      prefix: ''
       suffix: ''
+      .: prefix

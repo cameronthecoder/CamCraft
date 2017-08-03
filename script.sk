@@ -27,8 +27,6 @@ command /cos:
 on damage:
 	if victim is player:
 		cancel event
-command /disablerain:
-	execute console command "/toggledownfall"
 on join:
 	set {_p} to player
 	if {coins.%player%} is not set:
@@ -63,6 +61,29 @@ on join:
 		set {_p} tab name to "{@JRMOD} &7%player%"
 	if {tabname.rank.srmod.%player%} is true:
 		set {_p} tab name to "{@SRMOD} &7%player%"
+	else:
+		if {nicked.%player%} is true:
+			set {_p} to player
+			if {nicked.rank.%player%} is "&2&lPlayer":
+				set {_p} tab name to "&2&lPlayer &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@OWNER} &f(Nicked Rank)":
+				set {_p} tab name to "{@OWNER} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@ADMIN} &f(Nicked Rank)":
+				set {_p} tab name to "{@ADMIN} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@TM} &f(Nicked Rank)":
+				set {_p} tab name to "{@TM} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@JRMOD} &f(Nicked Rank)":
+				set {_p} tab name to "{@JRMOD} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@SRMOD} &f(Nicked Rank)":
+				set {_p} tab name to "{@SRMOD} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@HB} &f(Nicked Rank)":
+				set {_p} tab name to "{@HB} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@DEV} &f(Nicked Rank)":
+				set {_p} tab name to "{@DEV} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@YT} &f(Nicked Rank)":
+				set {_p} tab name to "{@YT} &7%{nicked.name.%player%}%"
+			if {nicked.rank.%player%} is "{@MODERATOR} &f(Nicked Rank)":
+				set {_p} tab name to "{@MODERATOR} &7%{nicked.name.%player%}%"
 		
 		
 command /buyt <text>:
@@ -79,18 +100,32 @@ command /buyt <text>:
 			format slot 1 of player with diamond named "&9&lNote Particle" with lore "&cSmile Emote!" to close then run [make player execute command "/part note"]
 command /part <text>:
 	trigger:
-		if arg 1 is "note":
-			if {boughtnote.%player%} is not set:
+		if arg 1 is "nyancat":
+			if {boughtnyan.%player%} is not set:
 				if {coins.%player%} is above 450:
-					drawNote particle %player%
-					set {boughtnote.%player%} to true
+					drawNyanCat center player, id "%player%", visibleRange 30
+					set {boughtnyan.%player%} to true
 					subtract 450 from {coins.%player%}
-					message "&6&lCamCraft&7> You have applied the &9Note Particle"
+					message "&6&lCamCraft&7> You have applied the &9Nyan Cat Particle"
 				else:
 					message "&6&lCamCraft&7> Not enough coins! Ask a admin for more! ;)"
-			if {boughtnote.%player%} is true:
-				message "&6&lCamCraft&7> You have applied the &9Note Particle"
-				drawNote particle %player%
+			if {boughtnyan.%player%} is true:
+				message "&6&lCamCraft&7> You have applied the &9Nyan Cat Particle"
+				drawNyanCat center player, id "%player%", visibleRange 30
+		if arg 1 is "earth":
+			if {boughtearth.%player%} is not set:
+				if {coins.%player%} is above 450:
+					drawPlanet particle1 "redstone", RGB 255, 204, 51, particle2 "redstone", RGB2 255, 255, 0, center location of player, id "%player%", rotation true, plane "xz", rotationSpeed 5, radius .50, density 200, precision 50, bumpHeight .25, visibleRange 30, tps 1, second 2
+					set {boughtearth.%player%} to true
+					subtract 450 from {coins.%player%}
+					message "&6&lCamCraft&7> You have applied the &9Earth Particle"
+				else:
+					message "&6&lCamCraft&7> Not enough coins! Ask a admin for more! ;)"
+			if {boughtearth.%player%} is true:
+				message "&6&lCamCraft&7> You have applied the &9Earth Particle"
+				drawPlanet particle1 "redstone", RGB 255, 204, 51, particle2 "redstone", RGB2 255, 255, 0, center location of player, id "%player%", rotation true, plane "xz", rotationSpeed 5, radius .50, density 200, precision 50, bumpHeight .25, visibleRange 30, tps 1, second 2
+		if arg 1 is "stop":
+			stop all particle effects
 command /guide:
 	permission: cc.guide
 	trigger:
@@ -101,6 +136,21 @@ command /guide:
 on damage:
 	if damage was caused by fall:
 		cancel event
+on right click holding chest:
+	if player is in world "world":
+		open chest with 6 rows named "&6Cosmetics" to player
+		wait 1 tick
+		format slot 11 of player with head named "&9&lParticles" with lore "&aClick here to access particles. Each one ||&ais &e450 CamCraft Coins." to be unstealable
+		if clicked item is a a head:
+			close player's inventory
+			make player execute command "/particles"
+		
+command /particles:
+	trigger:
+		if player is in world "world":
+			open chest with 6 rows named "&6Cosmetics" to player
+			format slot 11 of player with apple named "&9&lNyan Cat" with lore "&eCosts 450 CamCraft Coins ||You have %{coins.%player%}%" to close then run [make player execute command "/part nyancat"]
+			format slot 12 of player with emerald named "&9&lEarth" with lore "&eCosts 450 CamCraft Coins ||You have %{coins.%player%}%" to close then run [make player execute command "/part earth"]
 command /emote <text>:
 	trigger:
 		if arg 1 is "smile":
@@ -269,35 +319,47 @@ on script load:
 #JOIN
 on join:
 	if {nicked.%player%} is false:
-		make player execute command "/spawn"
+		teleport player to {spawn}
 		send player title "&6&lCamCraft" with subtitle "&bWelcome back, %player%!" for 3.5 seconds
 		wait 3 seconds
 		send player title "&6&lCamCraft" with subtitle "&9Have a good time! ;)"
 		set tab header to "&6&lCamCraft Server Network" and footer to "&f&lCheck out cool stuff at http://camcraftchillin.enjin.com/" for player
-		set slot 8 of player's inventory to nether star named "&6&lEmotes"
-		set slot 7 of player's inventory to redstone named "&c&lParticles"
+		set slot 4 of player's inventory to chest named "&6Cosmetics"
+		message "&6✭&f━━━━━━━━━━━━━━━━━━━━&6✭"
+		message "&r "
+		message "&6&l  Welcome back,"
+		message "&6&l  %player%"
+		message "&r "
+		message "&6✭&f━━━━━━━━━━━━━━━━━━━━&6✭"
 	else:
-		make player execute command "/spawn"
+		teleport player to {spawn}
 		send player title "&6&lCamCraft" with subtitle "&bWelcome back, %{nicked.name.%player%}%!" for 3.5 seconds
 		wait 3 seconds
 		send player title "&6&lCamCraft" with subtitle "&9Have a good time! ;)"
 		set tab header to "&6&lCamCraft Server Network" and footer to "&f&lCheck out cool stuff at http://camcraftchillin.enjin.com/" for player
-		set slot 8 of player's inventory to nether star named "&6&lEmotes"
-		set slot 7 of player's inventory to redstone named "&c&lParticles"
+		set slot 4 of player's inventory to chest named "&6Cosmetics"
+		message "&6✭&f━━━━━━━━━━━━━━━━━━━━&6✭"
+		message "&r "
+		message "&6&l  Welcome back,"
+		message "&6&l  %{nicked.name.%player%}%"
+		message "&r "
+		message "&6✭&f━━━━━━━━━━━━━━━━━━━━&6✭"
 on first join:
- make player execute command "/spawn"
+ make console execute command "/spawn %player%"
  broadcast "&6&lCamCraft&7>%player% joined."
  send player title "&6&lCamCraft" with subtitle "&bWelcome, %player%!" for 3.5 seconds
  wait 3 seconds
  send player title "&6&lCamCraft" with subtitle "&9Have a good time! ;)"
  set tab header to "&6&lCamCraft Server Network" and footer to "&f&lCheck out cool stuff at http://camcraftchillin.enjin.com/" for player
- set slot 8 of player's inventory to nether star named "&6&lEmotes"
- set slot 7 of player's inventory to redstone named "&c&lParticles"
+ set slot 4 of player's inventory to chest named "&6Cosmetics"
 on quit:
 	if {nicked.%player%} is false:
 		set quit message to "&6&lCamCraft&7> %player% left."
+		else:
+			set quit message to "&6&lCamCraft&7> %{nicked.name.%player%}% left."
 	else:
-		set quit message to "&6&lCamCraft&7> %{nicked.name.%player%}% left."
+		if {nicked.%player%} is not set:
+			set quit message to "&6&lCamCraft&7> %player% left."
 on join:
 	if {nicked.%player%} is true:
 		set join message to "&6&lCamCraft&7> %{nicked.name.%player%}% joined."
@@ -316,6 +378,40 @@ command /read:
 	trigger:
 		message "Who do you think you are? You're playing Minecraft, you idiot. Here, take this L."
 		give player a paper named "&cL" with lore "This is for you, take it."
+		
+command /setspawn:
+    permission: cc.setspawn
+	permission message: {@denied}
+    trigger:
+        set {spawn} to location of player
+        message "&6&lCamCraft&7> Spawn set for everyone, to go back type /spawn"
+		 
+command /spawn [<player>]:
+	trigger:
+		if {spawn} isn't set:
+			message "&4Error:&c spawn is not set!"
+			stop
+		else:
+			if arg-1 is not set:
+				teleport player to {spawn}
+				message "&3Welcome to spawn."
+			else:
+				if sender has permission "cc.spawn.others":
+					if argument is online:
+						teleport argument to {spawn}
+					if sender is a player:
+						message "&3You have been teleported to spawn by &a%player%&3." to argument 1
+					if sender is not a player:
+						message "&3You have been teleported to spawn by &aConsole&3." to argument 1
+						teleport player to {spawn}
+
+command /delspawn:
+    permission: cc.delspawn
+	permission message: {@denied}
+    trigger:
+        delete {spawn}
+        message "&6&lCamCraft&7> Spawn deleted for everyone, type /setspawn to set it back."
+
 #Chat
 on chat:
 	cancel event
@@ -326,23 +422,51 @@ on chat:
 		message "&cReason: &a%{muted.reason.%player%}%"
 		loop all players:
 			if loop-player has permission "cc.p.alert":
-				send "&c[CC] &6%player% &ctried to chat, but failed!" to loop-player
+				send "&c[CC] &6%player% &ctried to chat, but failed! &8(&b%message%&8)" to loop-player
 	else:
 		if {nicked.%player%} is true:
 			broadcast "%{nicked.rank.%player%}% &7%{nicked.name.%player%}%&f: %{chatcolor.%player%}% %message%"
 		else:
 			broadcast "%{rank.%player%}% &7%player%&f: %{chatcolor.%player%}% %message%"
+		else:
+			if {antiswear} is true:
+				if message contains "bitch", "fuck", "nig", "niga", "asshole", "dumbass", or "cunt":
+					cancel event 
+					message "&cYou may not swear!"
+command /antiswear:
+	permission: cc.antiswear
+	trigger:
+		if {antiswear} is true:
+			set {antiswear} to false
+			broadcast "&9AntiSwear Filter &8>> Disabled"
+			stop
+		if {antiswear} is false:
+			set {antiswear} to true
+			broadcast "&9AntiSwear Filter &8>> Enabled"
+			stop
+		else:
+			if {antiswear} is not set:
+				set {antiswear} to true
+				broadcast "&9AntiSwear Filter &8>> Disabled"
+
 
 on join:
 	if {chatcolor.%player%} is not set:
-		make player execute command "/chatcolor Pink"
+		execute console command "/firstchatcolor %player%"
+command /firstchatcolor <player>:
+	permission: cc.chatcolor
+	trigger:
+		set {chatcolor.%arg 1%} to "&d"
+		
+
 		
 command /chatcolor [<text>]:
+	permission: cc.chatcolor
 	trigger:
 		if arg 1 is not set:
 			message "&d&lChatColor Options:"
 			message "&6Colors &8- &6Orange&8, &dPink&8, &aGreen, &eYellow&8, &7Gray&8, &4Red&8, &cLightRed&8, &1Blue&8, &bLightBlue&8, &0Black&8."
-			message "&eTip: &7Add bold_<color> to make your chatcolor bold!"
+			message "&eTip: &7Add <color>_bold to make your chatcolor bold!"
 		if arg 1 is "Orange":
 			set {chatcolor.%player%} to "&6"
 			message "&d&lChatColor &8>> &7You have changed your chatcolor to &6Orange."
@@ -430,6 +554,34 @@ command /nick [<text>] [<text>]:
 	trigger:
 		if arg 1 is not set: 
 			message "&cYou must specify a name!"
+			stop
+		if arg 1 is "dick":
+			message "&cYou may not nick as this name as it is blacklisted."
+			stop
+		if arg 1 is "fuck":
+			message "&cYou may not nick as this name as it is blacklisted."
+			stop
+		if arg 1 is "cunt":
+			message "&cYou may not nick as this name as it is blacklisted."
+			stop
+		if arg 1 is "penis":
+			message "&cYou may not nick as this name as it is blacklisted."
+			stop
+		if arg 1 is "IntelCoreEye7":
+			message "&cYou may not nick as this name as it is inpersination."
+			stop
+		if arg 1 is "VodikFlare" or "Vodik":
+			message "&cYou may not nick as this name as it is inpersination."
+			stop
+		if arg 1 is "tiger0327":
+			message "&cYou may not nick as this name as it is inpersination."
+			stop
+		if arg 1 is "ChrisHD":
+			message "&cYou may not nick as this name as it is inpersination."
+			stop
+		if arg 1 is "Voja" or "VojaFTW_":
+			message "&cYou may not nick as this name as it is inpersination."
+			stop
 		else:
 			if arg 2 is not set:
 				if {nicked.%player%} is false:
@@ -446,6 +598,17 @@ command /nick [<text>] [<text>]:
 					set {nicked.%player%} to false
 					set {rank.%player%} to "%{temprank.nicked.%player%}%"
 					message "&6Nicknamed Manager &8>> &7Unnicked, simple. Re-log to see your normal rank in tab."
+				else:
+					if {nicked.%player%} is not set:
+						set {_p} to player
+						set {nicked.%player%} to true
+						set {nicked.name.%player%} to "%arg 1%"
+						set {temprank.nicked.%player%} to "%{rank.%player%}%"
+						set {nicked.rank.%player%} to "&2&lPlayer"
+						make player execute command "/dis player %arg 1%"
+						set {rank.%player%} to "&2&lPlayer"
+						set {_p} tab name to "&2&lPlayer &7%arg 1%"
+						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
 			else:
 				if {nicked.%player%} is false:
 					if arg 2 is "-player":
@@ -456,7 +619,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&9&lTrailMod"
+						set {rank.%player%} to "&9&lTrailMod &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&9&lTrialMod"
 						set {_p} tab name to "&9&lTrailMod &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -466,7 +629,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&9&lJrMod"
+						set {rank.%player%} to "&9&lJrMod &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&9&lJrMod"
 						set {_p} tab name to "&9&lJrMod &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -476,7 +639,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&9&lSrMod"
+						set {rank.%player%} to "&9&lSrMod &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&9&lSrMod"
 						set {_p} tab name to "&9&lSrMod &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -486,7 +649,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&9&lMod"
+						set {rank.%player%} to "&9&lMod &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&9&lMod"
 						set {_p} tab name to "&9&lMod &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -496,7 +659,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&c&lAdmin"
+						set {rank.%player%} to "&c&lAdmin &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&c&lAdmin"
 						set {_p} tab name to "&c&lAdmin &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -506,7 +669,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&6&lYT"
+						set {rank.%player%} to "&6&lYT &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&6&lYT"
 						set {_p} tab name to "&6&lYT &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -516,7 +679,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&b&lDev"
+						set {rank.%player%} to "&b&lDev &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&b&lDev"
 						set {_p} tab name to "&b&lDev &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -526,7 +689,7 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&6&lOwner"
+						set {rank.%player%} to "&6&lOwner &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&6&lOwner"
 						set {_p} tab name to "&6&lOwner &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
@@ -536,41 +699,147 @@ command /nick [<text>] [<text>]:
 						set {nicked.name.%player%} to "%arg 1%"
 						set {temprank.nicked.%player%} to "%{rank.%player%}%"
 						make player execute command "/dis player %arg 1%"
-						set {rank.%player%} to "&a&lH&1&lB"
+						set {rank.%player%} to "&a&lH&1&lB &f(Nicked Rank)"
 						set {nicked.rank.%player%} to "&a&lH&1&lB"
 						set {_p} tab name to "&a&lH&1&lB &7%arg 1%"
 						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+					if arg 2 is "-wonderful":
+						set {_p} to player
+						set {nicked.%player%} to true
+						set {nicked.name.%player%} to "%arg 1%"
+						set {temprank.nicked.%player%} to "%{rank.%player%}%"
+						make player execute command "/dis player %arg 1%"
+						set {rank.%player%} to "&d&lWONDERFUL &f(Nicked Rank)"
+						set {nicked.rank.%player%} to "&d&lWONDERFUL"
+						set {_p} tab name to "&d&lWONDERFUL &7%arg 1%"
+						message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+				else:
+					if {nicked.%player%} is not set:
+						if arg 2 is "-player":
+							make player execute command "/nick %arg 2%"
+						if arg 2 is "-trialmod":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&9&lTrailMod &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&9&lTrialMod"
+							set {_p} tab name to "&9&lTrailMod &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-jrmod":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&9&lJrMod &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&9&lJrMod"
+							set {_p} tab name to "&9&lJrMod &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-srmod":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&9&lSrMod &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&9&lSrMod"
+							set {_p} tab name to "&9&lSrMod &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-moderator":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&9&lMod &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&9&lMod"
+							set {_p} tab name to "&9&lMod &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-admin":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&c&lAdmin &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&c&lAdmin"
+							set {_p} tab name to "&c&lAdmin &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-yt":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&6&lYT &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&6&lYT"
+							set {_p} tab name to "&6&lYT &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-dev":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&b&lDev &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&b&lDev"
+							set {_p} tab name to "&b&lDev &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-owner":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&6&lOwner &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&6&lOwner"
+							set {_p} tab name to "&6&lOwner &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-hb":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&a&lH&1&lB &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&a&lH&1&lB"
+							set {_p} tab name to "&a&lH&1&lB &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						if arg 2 is "-wonderful":
+							set {_p} to player
+							set {nicked.%player%} to true
+							set {nicked.name.%player%} to "%arg 1%"
+							set {temprank.nicked.%player%} to "%{rank.%player%}%"
+							make player execute command "/dis player %arg 1%"
+							set {rank.%player%} to "&d&lWONDERFUL &f(Nicked Rank)"
+							set {nicked.rank.%player%} to "&d&lWONDERFUL"
+							set {_p} tab name to "&d&lWONDERFUL &7%arg 1%"
+							message "&6Nickname Manager &8>> &7You are now nicknamed as %arg 1%. Abuse will result in a demotion. Use /unick to unick."
+						
+command /stafflist:
+	trigger:
+		message "==========="
+		message "&r "
+		message "Gavin (VodikFlare, Vodik) - Owner"
+		message "Cameron (IntelCoreEye7) - Owner/Developer"
+		message "Voja (VojaFTW_, Voja) - Developer"
+		message "Braedan (tiger0327, tiger) - Admin"
+		message "vaporbork - BT"
+		message "Lucy (waddleslover2000) - HB"
+		message "Chris (ChrisHD, Chris, Notch) - Moderator"
+		message "ASUS3 (Wolfy) - Moderator"
+		message "OhTheir - Resigned Moderator"
+		message "Hypekyuu - TrialMod"
+		message "Cuber - TrialMod"
+		message "ImLovinq_It - TrialMod"
+		message "PandaBombDotCom - TrialMod"
+		message "&r "
+		message "==========="
+		
 
 
-command /marry <player>:
-	trigger:
-		if {married.%arg 1%} is false:
-			set {requestedmarrige.%player%} to true
-			message "&c&lMarrige &7>> &aYou sent a mariage request to %arg 1%."
-			send "c&lMarrige &7>> &6%player% &asent your a marrige request. Type /acceptm %player% to accept it." to arg 1
-		else:
-			if {married.%arg 1%} is not set:
-				set {requestedmarrige.%player%} to true
-				message "&c&lMarrige &7>> &aYou sent a mariage request to %arg 1%."
-				send "c&lMarrige &7>> &6%player% &asent your a marrige request. Type /acceptm %player% to accept it." to arg 1
-command /acceptm <player>:
-	trigger:
-		if {requestmarrige.%arg 1%} is true:
-			set {requestedmarrige.%player%} to false
-			set {married.%player%} to true
-			set {married.%arg 1%} to true
-			set {marriedtgr.%arg 1%.%player%} to true
-			send "c&lMarrige &7>> &a%arg 1% accepted your marrige request!" to arg 1
-			broadcast "c&lMarrige &7>> &6%player% and %arg 1% are now married! &c<3"
-command /devorce <player>:
-	trigger:
-		if {marriedtgr.%arg 1%.%player%} is true:
-			broadcast "c&lMarrige &7>> &6%player% and %arg 1% have broke up! &c</3"
-			set {married.%player%} to false
-			set {married.%arg 1%} to false
-			set {marriedtgr.%arg 1%.%player%} to false
-		else:
-			message "&cYou and %arg 1% aren't together!"
 		
 			
     
@@ -607,7 +876,7 @@ command /gmc:
 		make player execute command "/gamemode c"
 command /gms:
 	permission: cc.gamemode
-	permission message: ddddd
+	permission message: {@denied}.
 	trigger:
 		make player execute command "/gamemode s"
 
@@ -616,10 +885,6 @@ on weather change:
 on explode:
 	cancel event
 
-every 30 seconds:
-	if player is op:
-		set {_p} to player
-		set {_p} tab name to "&f&lOP &7%player%"
 	
 command /slap-war <text>:
 	trigger:
@@ -669,36 +934,6 @@ command /rank-update <offline player> <text>:
 				stop
 			else:
 				message "{@denied}"
-		if arg 2 is "OwnerHB":
-			execute console command "manuadd %arg 1% OwnerHB"
-			send "&6&lCamCraft&7>&9Your rank has been updated to Owner!" to arg 1
-			set {_p} tab name to "{@OWNERHB} &7%arg-1%"
-			set {tabname.rank.owner.%arg 1%} to false
-			set {tabname.rank.ownerhb.%arg 1%} to true
-			set {tabname.rank.admin.%arg 1%} to false
-			set {tabname.rank.player.%arg 1%} to false
-			set {tabname.rank.moderator.%arg 1%} to false
-			set {tabname.rank.dev.%arg 1%} to false
-			set {tabname.rank.hb.%arg 1%} to false
-			set {tabname.rank.jrmod.%arg 1%} to false
-			set {tabname.rank.srmod.%arg 1%} to false
-			set {tabname.rank.builder.%arg 1%} to false
-			set {tabname.rank.ta.%arg 1%} to false
-			set {tabname.rank.tm.%arg 1%} to false
-			set {tabname.rank.operator.%arg 1%} to false
-			set {tabname.rank.wonderful.%arg 1%} to false
-			set {tabname.rank.yt.%arg 1%} to false
-			set {tabname.rank.hbop.%arg 1%} to false
-			set {abovehead.rank.builder.%arg 1%} to false
-			set {abovehead.rank.owner.%arg 1%} to true
-			set {abovehead.rank.moderator.%arg 1%} to false
-			set {abovehead.rank.dev.%arg 1%} to false
-			set {abovehead.rank.hb.%arg 1%} to false
-			set {abovehead.yt.admin.%arg 1%} to false
-			set {abovehead.rank.player.%arg 1%} to false
-			set {abovehead.rank.admin.%arg 1%} to false
-			set {rank.%arg 1%} to "&6&lOwner&a&lH&1&lB"
-			stop
 		if arg 2 is "Wonderful":
 			execute console command "manuadd %arg 1% Wonderful"
 			send "&6&lCamCraft&7>&9Your rank has been updated to Wonderful!" to arg 1
@@ -1175,10 +1410,6 @@ command /rank-addperm <text> <text>:
 		make player execute command "/mangaddp %arg 1% %arg 2%"
 		message "&6&lCamCraft&7> Added permission %arg 2% to %arg 1%"
 		
-command /award <text> <text>:
-	if arg 1 is "cuberunner":
-		add 150 to {coins.%arg-1%}
-		message "You have recieved 150 coins for winning the game"
 		
 		
 #^ Thanks Evho <3		
@@ -1230,7 +1461,7 @@ on script unload:
  broadcast "&c&lThis is fine, don't panic."
  broadcast "&c------------------------------------------"
 on server ping:
-	set motd to "        &7---&6&lCamCraft Server Network&7--- %newline%                   &f&lJust join already"
+	set motd to "        &7---&6&lCamCraft Server Network&7--- %newline%        &a&lNEW WEBSITE &8+ &d&lSTAFF APPS OPEN!"
   
 command /rain:
  permission: cc.rain
@@ -1289,6 +1520,19 @@ command /fly <text>:
 			set player's flight mode to false
 			message "&6&lCamCraft&7>Fight disabled."
 			stop
+		else:
+			if {rank.%player%} is "&d&lWONDERFUL":
+				if player in in world "world":
+					if arg 1 is "enable":
+						set player's flight mode to true
+						message "&6&lCamCraft&7>Flight enabled."
+						stop
+  
+					if arg 1 is "disable":
+						set player's flight mode to false
+						message "&6&lCamCraft&7>Fight disabled."
+						stop
+					
   
  
   
@@ -1351,10 +1595,6 @@ command /kill <player>:
  trigger: 
   kill player argument 1
   broadcast "&6&lCamCraft&7>%player% &ckilled &7%arg 1%."
-on right click:
-	if player is holding 413:
-		remove 1 413 from player
-		heal player by 2
 on hunger bar change:
 	if player is in world "world":
 		cancel event
@@ -1387,7 +1627,7 @@ on join:
 
 on quit:		
 	subtract 1 from {players.online}
-every 20 seconds:
+every 5 seconds:
 		loop all players:
 				if loop-player's world is "world":
 				wipe loop-player's sidebar
@@ -1398,8 +1638,8 @@ every 20 seconds:
 				set score "&cRank&f: " in sidebar of loop-player to 12
 				set score "%{rank.%loop-player%}%" in sidebar of loop-player to 11
 				else:
-				if loop-player is op:
-					set score "&f&lOP (Every rank)" in sidebar of loop-player to 11
+						if loop-player is op:
+						set score "&f&lOP (Every rank)" in sidebar of loop-player to 11
 				set score "&6 " in sidebar of loop-player to 10
 				set score "&7Player&f: " in sidebar of loop-player to 9
 				set score "&d%loop-player%" in sidebar of loop-player to 8
@@ -1456,7 +1696,7 @@ command /fakesay <text> <text>:
   
 command /nv [<text>]:
     permission: cc.nightvision
-	permission message: {@denied}
+    permission message: {@denied}
     trigger:
         if arg-1 is "enable":
             apply potion of night vision of tier 225 to player for 99999999 seconds and hide particle effects

@@ -1,4 +1,3 @@
 ***DISCONTINUED!***
-*I'm no longer working on this project!, Check out my Java project on my profile!*
-*and my twitter too! ;) twitter.com/Camnation407*
+*I'm no longer working on this project, go see my updated stuff, or read the description for what happened.
 
